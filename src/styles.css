@@ -180,6 +180,138 @@ button {
     pointer-events: none
 }
 
+.hero-car {
+    position: absolute;
+    z-index: 1;
+    top: 53%;
+    right: 3%;
+    width: clamp(220px, 30vw, 350px);
+    padding: 0;
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    border: 0;
+    background: transparent;
+    color: #777383;
+    cursor: pointer;
+    transform: rotate(-5deg);
+    transition: filter .25s, transform .25s
+}
+
+.hero-car svg {
+    display: block;
+    width: 100%;
+    overflow: visible;
+    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, .45))
+}
+
+.hero-car span {
+    font: 9px var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .7
+}
+
+.hero-car:hover,
+.hero-car:focus-visible {
+    filter: brightness(1.2);
+    transform: translateY(-5px) rotate(-2deg)
+}
+
+.hero-car:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 7px;
+    border-radius: 12px
+}
+
+.toy-car__wheel,
+.toy-car__chassis,
+.toy-car__shell,
+.toy-car__glass,
+.toy-car__spoiler {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform .75s cubic-bezier(.2, .8, .2, 1)
+}
+
+.toy-car__wheel circle:first-child {
+    fill: #17171d;
+    stroke: #777482;
+    stroke-width: 3
+}
+
+.toy-car__wheel .toy-car__rim {
+    fill: #a7a4b0;
+    stroke: #292831;
+    stroke-width: 3
+}
+
+.toy-car__wheel .toy-car__hub {
+    fill: #272630
+}
+
+.toy-car__chassis path:first-child {
+    fill: #25232d;
+    stroke: #111116;
+    stroke-width: 3
+}
+
+.toy-car__chassis-detail {
+    fill: none;
+    stroke: #777482;
+    stroke-width: 2
+}
+
+.toy-car__shell path:first-child {
+    fill: #d93848;
+    stroke: #ff7b78;
+    stroke-width: 2
+}
+
+.toy-car__shell .toy-car__stripe {
+    fill: #ffd76f
+}
+
+.toy-car__shell .toy-car__light {
+    fill: #fff0c2
+}
+
+.toy-car__glass path {
+    fill: #252738;
+    stroke: #9898b2;
+    stroke-width: 2
+}
+
+.toy-car__spoiler path {
+    fill: #a82437;
+    stroke: #ff7b78;
+    stroke-width: 2
+}
+
+.hero-car.is-disassembled .toy-car__wheel--rear {
+    transform: translate(-43px, 34px) rotate(-80deg)
+}
+
+.hero-car.is-disassembled .toy-car__wheel--front {
+    transform: translate(45px, 35px) rotate(80deg)
+}
+
+.hero-car.is-disassembled .toy-car__chassis {
+    transform: translate(-5px, 48px) rotate(3deg)
+}
+
+.hero-car.is-disassembled .toy-car__shell {
+    transform: translate(-8px, -28px) rotate(-5deg)
+}
+
+.hero-car.is-disassembled .toy-car__glass {
+    transform: translate(16px, -56px) rotate(8deg)
+}
+
+.hero-car.is-disassembled .toy-car__spoiler {
+    transform: translate(-38px, -52px) rotate(-16deg)
+}
+
 .hero h1 {
     font-size: clamp(54px, 8.5vw, 112px);
     line-height: .99;
@@ -933,8 +1065,26 @@ button {
         min-height: 610px
     }
 
+    .hero-car {
+        top: 70%;
+        right: 0;
+        width: clamp(190px, 52vw, 250px);
+        opacity: .8
+    }
+
     .hero h1 {
         font-size: clamp(49px, 12vw, 78px)
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+        .hero-car,
+        .toy-car__wheel,
+        .toy-car__chassis,
+        .toy-car__shell,
+        .toy-car__glass,
+        .toy-car__spoiler {
+            transition-duration: .01ms
+        }
     }
 
     .hero-intro {

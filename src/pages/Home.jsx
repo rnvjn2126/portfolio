@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 
 import { motion, useScroll, useTransform } from 'motion/react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { site } from '../data/site'
 import { projects } from '../data/projects'
 import Reveal from '../components/Reveal'
@@ -21,6 +21,7 @@ const paperUrl = 'https://ieee-shortened-format.tiiny.site/?mode=suggestions'
 
 function Hero() {
   const ref = useRef(null)
+  const [carDisassembled, setCarDisassembled] = useState(false)
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -33,6 +34,45 @@ function Hero() {
   return (
     <section className="hero shell" ref={ref}>
       <motion.div className="hero-glow" style={{ y }} />
+
+      <button
+        className={`hero-car${carDisassembled ? ' is-disassembled' : ''}`}
+        type="button"
+        aria-label={carDisassembled ? 'Reassemble the toy race car' : 'Disassemble the toy race car'}
+        aria-pressed={carDisassembled}
+        onClick={() => setCarDisassembled(!carDisassembled)}
+      >
+        <svg viewBox="0 0 360 170" aria-hidden="true">
+          <g className="toy-car__wheel toy-car__wheel--rear">
+            <circle cx="89" cy="119" r="22" />
+            <circle className="toy-car__rim" cx="89" cy="119" r="9" />
+            <circle className="toy-car__hub" cx="89" cy="119" r="3" />
+          </g>
+          <g className="toy-car__wheel toy-car__wheel--front">
+            <circle cx="279" cy="119" r="22" />
+            <circle className="toy-car__rim" cx="279" cy="119" r="9" />
+            <circle className="toy-car__hub" cx="279" cy="119" r="3" />
+          </g>
+          <g className="toy-car__chassis">
+            <path d="M43 105h278l-7 19H47z" />
+            <path className="toy-car__chassis-detail" d="M125 117h117" />
+          </g>
+          <g className="toy-car__shell">
+            <path d="m43 107 8-20q3-8 14-10l53-7 28-29q8-8 20-8h43q15 0 26 12l29 31 39 8q12 3 15 14l4 14H43z" />
+            <path className="toy-car__stripe" d="m53 93 47-5-7 8-43 5z" />
+            <path className="toy-car__light" d="m303 91 15 5 3 8h-18z" />
+          </g>
+          <g className="toy-car__glass">
+            <path d="m133 68 22-23q4-4 11-4h14v27z" />
+            <path d="M188 41h18q11 0 19 9l17 18h-54z" />
+          </g>
+          <g className="toy-car__spoiler">
+            <path d="M56 77h8l-3 15h-7z" />
+            <path d="M48 75h25v5H48z" />
+          </g>
+        </svg>
+        <span>{carDisassembled ? 'Click to reassemble' : 'Click to disassemble'}</span>
+      </button>
 
       <motion.div className="hero-content" style={{ opacity }}>
         <div className="eyebrow hero-eyebrow">
