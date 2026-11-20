@@ -90,6 +90,106 @@ function Hero() {
   )
 }
 
+function CoffeeHeartArt() {
+  return (
+    <figure
+      className="coffee-art"
+      role="img"
+      aria-label="Milk is poured into a cup of coffee and forms a heart in the latte art."
+    >
+      <svg viewBox="0 0 260 190" aria-hidden="true">
+        <defs>
+          <linearGradient id="coffee-ceramic" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stopColor="#fffdf8" />
+            <stop offset=".28" stopColor="#e9e2d9" />
+            <stop offset=".68" stopColor="#b6aea6" />
+            <stop offset="1" stopColor="#f7f0e7" />
+          </linearGradient>
+          <linearGradient id="coffee-cup-shade" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stopColor="#77716d" stopOpacity=".05" />
+            <stop offset=".52" stopColor="#fff" stopOpacity=".35" />
+            <stop offset="1" stopColor="#504a46" stopOpacity=".24" />
+          </linearGradient>
+          <radialGradient id="coffee-crema" cx=".34" cy=".2" r=".88">
+            <stop offset="0" stopColor="#aa7043" />
+            <stop offset=".34" stopColor="#78472c" />
+            <stop offset=".76" stopColor="#45271b" />
+            <stop offset="1" stopColor="#261812" />
+          </radialGradient>
+          <linearGradient id="coffee-metal" x1="0" x2="1">
+            <stop offset="0" stopColor="#62666b" />
+            <stop offset=".22" stopColor="#b9bdc0" />
+            <stop offset=".42" stopColor="#f3f2ef" />
+            <stop offset=".68" stopColor="#92969a" />
+            <stop offset="1" stopColor="#52565b" />
+          </linearGradient>
+          <linearGradient id="coffee-foam" x1=".2" x2=".8" y1="0" y2="1">
+            <stop offset="0" stopColor="#fffdf4" />
+            <stop offset=".58" stopColor="#f5e6ca" />
+            <stop offset="1" stopColor="#e7c9a0" />
+          </linearGradient>
+          <linearGradient id="coffee-milk" x1="0" x2="1">
+            <stop offset="0" stopColor="#e9d8bd" />
+            <stop offset=".5" stopColor="#fffdf5" />
+            <stop offset="1" stopColor="#e4d1b3" />
+          </linearGradient>
+          <clipPath id="coffee-surface-clip">
+            <ellipse cx="130" cy="82" rx="70" ry="29" />
+          </clipPath>
+        </defs>
+
+        <ellipse className="coffee-art__shadow" cx="130" cy="151" rx="103" ry="22" />
+        <ellipse className="coffee-art__saucer" cx="130" cy="143" rx="103" ry="27" />
+        <ellipse className="coffee-art__saucer-inset" cx="130" cy="140" rx="91" ry="21" />
+        <path className="coffee-art__saucer-groove" d="M43 143 C68 160 193 166 218 143" />
+        <path className="coffee-art__handle-shadow" d="M204 91 C246 81 252 124 222 139 C215 142 208 139 202 135" />
+        <path className="coffee-art__handle" d="M204 91 C246 81 252 124 222 139 C215 142 208 139 202 135" />
+        <path className="coffee-art__cup" d="M44 83 C48 140 71 163 130 163 C189 163 212 140 216 83 Z" />
+        <path className="coffee-art__cup-shade" d="M48 91 C56 135 80 154 130 156 C180 154 204 135 212 91 C195 116 65 116 48 91 Z" />
+        <path className="coffee-art__cup-highlight" d="M61 111 C67 138 88 151 112 153" />
+        <ellipse className="coffee-art__rim" cx="130" cy="83" rx="86" ry="38" />
+        <ellipse className="coffee-art__surface" cx="130" cy="82" rx="70" ry="29" />
+        <g clipPath="url(#coffee-surface-clip)">
+          <ellipse className="coffee-art__surface-glint" cx="105" cy="71" rx="38" ry="10" />
+          <path className="coffee-art__crema" d="M72 85 C91 62 111 57 133 59 C154 61 172 72 187 86" />
+          <path className="coffee-art__crema-swirl" d="M80 91 C98 76 119 72 143 77 C158 80 171 87 180 95" />
+          <circle className="coffee-art__bubble" cx="76" cy="78" r="1.7" />
+          <circle className="coffee-art__bubble" cx="84" cy="67" r="1.1" />
+          <circle className="coffee-art__bubble" cx="171" cy="66" r="1.4" />
+          <circle className="coffee-art__bubble" cx="183" cy="82" r="1.8" />
+          <g className="coffee-art__ripples">
+            <ellipse className="coffee-art__ripple coffee-art__ripple--one" cx="130" cy="83" rx="13" ry="5" />
+            <ellipse className="coffee-art__ripple coffee-art__ripple--two" cx="130" cy="83" rx="22" ry="8" />
+          </g>
+        </g>
+
+        <g className="coffee-art__steam">
+          <path d="M94 55 C88 48 100 44 95 36 C92 31 96 28 99 24" />
+          <path d="M130 51 C124 44 136 39 131 31 C128 27 132 23 135 20" />
+          <path d="M164 54 C159 47 170 42 167 35 C165 31 168 28 171 25" />
+        </g>
+
+        <g className="coffee-art__pitcher">
+          <path className="coffee-art__pitcher-handle" d="M216 10 C237 6 240 22 221 29" />
+          <path className="coffee-art__pitcher-body" d="M182 8 C181 6 184 5 188 6 L215 7 C219 7 220 10 218 14 L215 23 C207 29 196 31 187 26 L180 16 Z" />
+          <path className="coffee-art__pitcher-rim" d="M183 8 C192 4 207 5 218 8" />
+          <path className="coffee-art__pitcher-glint" d="M188 11 L191 22" />
+          <path className="coffee-art__spout" d="M184 20 C174 23 164 30 155 39" />
+        </g>
+
+        <path className="coffee-art__milk" d="M155 39 C145 50 135 64 130 82" />
+        <path className="coffee-art__milk-glint" d="M153 41 C144 52 136 65 131 79" />
+        <g className="coffee-art__heart">
+          <path d="M130 109 C120 101 103 91 102 81 C101 70 114 66 123 74 C126 76 128 79 130 83 C136 72 147 68 154 76 C163 86 151 98 130 109 Z" />
+          <path className="coffee-art__heart-highlight" d="M109 79 C111 72 118 71 123 76 M148 77 C153 79 154 83 152 87" />
+          <path className="coffee-art__heart-detail" d="M130 83 C127 92 128 101 130 106" />
+        </g>
+      </svg>
+      <figcaption>LATTE ART, IN THE MAKING</figcaption>
+    </figure>
+  )
+}
+
 function About() {
   return (
     <section className="section shell about-section" id="about">
@@ -102,11 +202,14 @@ function About() {
 
       <div className="about-grid">
         <Reveal>
-          <h2 className="section-heading">
-            Curiosity meets
-            <br />
-            <span className="muted">craft.</span>
-          </h2>
+          <div className="about-heading-art">
+            <h2 className="section-heading">
+              Curiosity meets
+              <br />
+              <span className="muted">craft.</span>
+            </h2>
+            <CoffeeHeartArt />
+          </div>
         </Reveal>
 
         <Reveal delay={.12}>
