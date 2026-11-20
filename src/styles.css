@@ -234,6 +234,26 @@ button {
     transition: transform .75s cubic-bezier(.2, .8, .2, 1)
 }
 
+.toy-car__wheel--rear {
+    transition-delay: .08s
+}
+
+.toy-car__wheel--front {
+    transition-delay: .16s
+}
+
+.toy-car__chassis {
+    transition-delay: .12s
+}
+
+.toy-car__glass {
+    transition-delay: .1s
+}
+
+.toy-car__spoiler {
+    transition-delay: .04s
+}
+
 .toy-car__wheel circle:first-child {
     fill: url(#racecar-tire);
     stroke: #72757e;
@@ -355,27 +375,39 @@ button {
     stroke-width: 1
 }
 
-.hero-car.is-disassembled .toy-car__wheel--rear {
+.hero-car.is-disassembled .toy-car__wheel--rear,
+.hero-car:hover .toy-car__wheel--rear,
+.hero-car:focus-visible .toy-car__wheel--rear {
     transform: translate(-43px, 34px) rotate(-80deg)
 }
 
-.hero-car.is-disassembled .toy-car__wheel--front {
+.hero-car.is-disassembled .toy-car__wheel--front,
+.hero-car:hover .toy-car__wheel--front,
+.hero-car:focus-visible .toy-car__wheel--front {
     transform: translate(45px, 35px) rotate(80deg)
 }
 
-.hero-car.is-disassembled .toy-car__chassis {
+.hero-car.is-disassembled .toy-car__chassis,
+.hero-car:hover .toy-car__chassis,
+.hero-car:focus-visible .toy-car__chassis {
     transform: translate(-5px, 48px) rotate(3deg)
 }
 
-.hero-car.is-disassembled .toy-car__shell {
+.hero-car.is-disassembled .toy-car__shell,
+.hero-car:hover .toy-car__shell,
+.hero-car:focus-visible .toy-car__shell {
     transform: translate(-8px, -28px) rotate(-5deg)
 }
 
-.hero-car.is-disassembled .toy-car__glass {
+.hero-car.is-disassembled .toy-car__glass,
+.hero-car:hover .toy-car__glass,
+.hero-car:focus-visible .toy-car__glass {
     transform: translate(16px, -56px) rotate(8deg)
 }
 
-.hero-car.is-disassembled .toy-car__spoiler {
+.hero-car.is-disassembled .toy-car__spoiler,
+.hero-car:hover .toy-car__spoiler,
+.hero-car:focus-visible .toy-car__spoiler {
     transform: translate(-38px, -52px) rotate(-16deg)
 }
 

@@ -106,7 +106,7 @@ function Hero() {
             <path className="toy-car__spoiler-highlight" d="M51 76h19" />
           </g>
         </svg>
-        <span>{carDisassembled ? 'Click to reassemble' : 'Click to disassemble'}</span>
+        <span>Hover to disassemble</span>
       </button>
 
       <motion.div className="hero-content" style={{ opacity }}>
