@@ -97,7 +97,7 @@ button {
     gap: 34px
 }
 
-.nav-links>a:not(.nav-cta) {
+.nav-links>a {
     font-size: 12px;
     color: #aaaab2;
     transition: color .2s
@@ -106,16 +106,6 @@ button {
 .nav-links>a:hover,
 .nav-links a.active {
     color: #fff
-}
-
-.nav-cta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid var(--line);
-    padding: 11px 15px;
-    border-radius: 30px;
-    font-size: 12px
 }
 
 .menu-toggle {
@@ -893,10 +883,6 @@ button {
 
     .nav-links.is-open {
         display: flex
-    }
-
-    .nav-cta {
-        justify-content: center
     }
 
     .hero {
