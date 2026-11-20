@@ -183,7 +183,8 @@ button {
 .hero-car {
     position: absolute;
     z-index: 1;
-    top: 30%;
+    top: auto;
+    bottom: 72px;
     right: 3%;
     width: clamp(220px, 30vw, 350px);
     padding: 0;
@@ -194,14 +195,22 @@ button {
     background: transparent;
     color: #777383;
     cursor: pointer;
-    transform: rotate(-5deg);
     transition: filter .25s, transform .25s
 }
 
-.hero-car svg {
+.hero-car__viewport {
+    position: relative;
     display: block;
     width: 100%;
-    overflow: visible;
+    aspect-ratio: 12 / 5;
+    overflow: visible
+}
+
+.hero-car__canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
     filter: drop-shadow(0 12px 22px rgba(0, 0, 0, .45))
 }
 
@@ -215,7 +224,7 @@ button {
 .hero-car:hover,
 .hero-car:focus-visible {
     filter: brightness(1.2);
-    transform: translateY(-5px) rotate(-2deg)
+    transform: translateY(-5px)
 }
 
 .hero-car:focus-visible {
@@ -224,191 +233,8 @@ button {
     border-radius: 12px
 }
 
-.toy-car__wheel,
-.toy-car__chassis,
-.toy-car__shell,
-.toy-car__glass,
-.toy-car__spoiler {
-    transform-box: fill-box;
-    transform-origin: center;
-    transition: transform .75s cubic-bezier(.2, .8, .2, 1)
-}
-
-.toy-car__wheel--rear {
-    transition-delay: .08s
-}
-
-.toy-car__wheel--front {
-    transition-delay: .16s
-}
-
-.toy-car__chassis {
-    transition-delay: .12s
-}
-
-.toy-car__glass {
-    transition-delay: .1s
-}
-
-.toy-car__spoiler {
-    transition-delay: .04s
-}
-
-.toy-car__wheel circle:first-child {
-    fill: url(#racecar-tire);
-    stroke: #72757e;
-    stroke-width: 3
-}
-
-.toy-car__wheel .toy-car__tire-inset {
-    fill: none;
-    stroke: #555860;
-    stroke-width: 1.5;
-    stroke-dasharray: 1.5 2.5
-}
-
-.toy-car__wheel .toy-car__rim {
-    fill: url(#racecar-rim);
-    stroke: #272a32;
-    stroke-width: 2.5
-}
-
-.toy-car__wheel .toy-car__spokes {
-    fill: none;
-    stroke: #545861;
-    stroke-width: 1.5
-}
-
-.toy-car__wheel .toy-car__hub {
-    fill: #d7d9de;
-    stroke: #555861;
-    stroke-width: 1
-}
-
-.toy-car__chassis path:first-child {
-    fill: #25232d;
-    stroke: #111116;
-    stroke-width: 3
-}
-
-.toy-car__chassis-detail {
-    fill: none;
-    stroke: #777482;
-    stroke-width: 2
-}
-
-.toy-car__shell path:first-child {
-    fill: url(#racecar-paint);
-    stroke: #ff9a94;
-    stroke-width: 2
-}
-
-.toy-car__shell .toy-car__body-reflection {
-    fill: rgba(255,255,255,.2);
-    stroke: rgba(255,255,255,.32);
-    stroke-width: .8
-}
-
-.toy-car__shell .toy-car__stripe {
-    fill: #f5cf76;
-    stroke: rgba(255,255,255,.8);
-    stroke-width: .8
-}
-
-.toy-car__shell .toy-car__light {
-    fill: #fff2c4;
-    stroke: #fff;
-    stroke-width: 1
-}
-
-.toy-car__shell .toy-car__door-seam {
-    fill: none;
-    stroke: rgba(63,8,19,.65);
-    stroke-width: 1.5
-}
-
-.toy-car__shell .toy-car__handle {
-    fill: none;
-    stroke: #ffd3c9;
-    stroke-width: 1.5;
-    stroke-linecap: round
-}
-
-.toy-car__shell .toy-car__tail-light {
-    fill: #ff7780;
-    stroke: #ffd2cc;
-    stroke-width: 1
-}
-
-.toy-car__shell .toy-car__grille {
-    fill: #252831;
-    stroke: #9a9ca3;
-    stroke-width: 1
-}
-
-.toy-car__glass > path:nth-child(-n+2) {
-    fill: url(#racecar-glass);
-    stroke: #b7d9df;
-    stroke-width: 2
-}
-
-.toy-car__glass .toy-car__glass-shine {
-    fill: rgba(255,255,255,.28);
-    stroke: none
-}
-
-.toy-car__glass .toy-car__window-frame {
-    fill: none;
-    stroke: #22232c;
-    stroke-width: 3
-}
-
-.toy-car__spoiler path {
-    fill: url(#racecar-paint);
-    stroke: #ff9a94;
-    stroke-width: 2
-}
-
-.toy-car__spoiler .toy-car__spoiler-highlight {
-    fill: none;
-    stroke: rgba(255,255,255,.7);
-    stroke-width: 1
-}
-
-.hero-car.is-disassembled .toy-car__wheel--rear,
-.hero-car:hover .toy-car__wheel--rear,
-.hero-car:focus-visible .toy-car__wheel--rear {
-    transform: translate(-43px, 34px) rotate(-80deg)
-}
-
-.hero-car.is-disassembled .toy-car__wheel--front,
-.hero-car:hover .toy-car__wheel--front,
-.hero-car:focus-visible .toy-car__wheel--front {
-    transform: translate(45px, 35px) rotate(80deg)
-}
-
-.hero-car.is-disassembled .toy-car__chassis,
-.hero-car:hover .toy-car__chassis,
-.hero-car:focus-visible .toy-car__chassis {
-    transform: translate(-5px, 48px) rotate(3deg)
-}
-
-.hero-car.is-disassembled .toy-car__shell,
-.hero-car:hover .toy-car__shell,
-.hero-car:focus-visible .toy-car__shell {
-    transform: translate(-8px, -28px) rotate(-5deg)
-}
-
-.hero-car.is-disassembled .toy-car__glass,
-.hero-car:hover .toy-car__glass,
-.hero-car:focus-visible .toy-car__glass {
-    transform: translate(16px, -56px) rotate(8deg)
-}
-
-.hero-car.is-disassembled .toy-car__spoiler,
-.hero-car:hover .toy-car__spoiler,
-.hero-car:focus-visible .toy-car__spoiler {
-    transform: translate(-38px, -52px) rotate(-16deg)
+.hero-car__status-error {
+    color: #ff9a9a
 }
 
 .hero h1 {
@@ -1165,7 +991,8 @@ button {
     }
 
     .hero-car {
-        top: 62%;
+        top: auto;
+        bottom: 72px;
         right: 0;
         width: clamp(190px, 52vw, 250px);
         opacity: .8
@@ -1173,17 +1000,6 @@ button {
 
     .hero h1 {
         font-size: clamp(49px, 12vw, 78px)
-    }
-
-    @media(prefers-reduced-motion: reduce) {
-        .hero-car,
-        .toy-car__wheel,
-        .toy-car__chassis,
-        .toy-car__shell,
-        .toy-car__glass,
-        .toy-car__spoiler {
-            transition-duration: .01ms
-        }
     }
 
     .hero-intro {

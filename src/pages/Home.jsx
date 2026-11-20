@@ -10,18 +10,19 @@ import {
 } from 'lucide-react'
 
 import { motion, useScroll, useTransform } from 'motion/react'
-import { useRef, useState } from 'react'
+import { lazy, Suspense, useRef } from 'react'
 import { site } from '../data/site'
 import { projects } from '../data/projects'
 import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import ProjectCard from '../components/ProjectCard'
 
+const HeroCar3D = lazy(() => import('../components/HeroCar3D'))
+
 const paperUrl = 'https://ieee-shortened-format.tiiny.site/?mode=suggestions'
 
 function Hero() {
   const ref = useRef(null)
-  const [carDisassembled, setCarDisassembled] = useState(false)
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -35,79 +36,9 @@ function Hero() {
     <section className="hero shell" ref={ref}>
       <motion.div className="hero-glow" style={{ y }} />
 
-      <button
-        className={`hero-car${carDisassembled ? ' is-disassembled' : ''}`}
-        type="button"
-        aria-label={carDisassembled ? 'Reassemble the toy race car' : 'Disassemble the toy race car'}
-        aria-pressed={carDisassembled}
-        onClick={() => setCarDisassembled(!carDisassembled)}
-      >
-        <svg viewBox="0 0 360 170" aria-hidden="true">
-          <defs>
-            <linearGradient id="racecar-paint" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#ff8d8a" />
-              <stop offset=".18" stopColor="#f04d58" />
-              <stop offset=".58" stopColor="#bf1e32" />
-              <stop offset="1" stopColor="#68101f" />
-            </linearGradient>
-            <linearGradient id="racecar-glass" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#a8e4f2" />
-              <stop offset=".25" stopColor="#4d819b" />
-              <stop offset="1" stopColor="#172233" />
-            </linearGradient>
-            <radialGradient id="racecar-tire">
-              <stop offset=".58" stopColor="#292a30" />
-              <stop offset=".8" stopColor="#101115" />
-              <stop offset="1" stopColor="#3e3f47" />
-            </radialGradient>
-            <linearGradient id="racecar-rim" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#f5f2ea" />
-              <stop offset=".45" stopColor="#9296a0" />
-              <stop offset="1" stopColor="#444750" />
-            </linearGradient>
-          </defs>
-          <g className="toy-car__wheel toy-car__wheel--rear">
-            <circle cx="89" cy="119" r="22" />
-            <circle className="toy-car__tire-inset" cx="89" cy="119" r="15" />
-            <circle className="toy-car__rim" cx="89" cy="119" r="9" />
-            <path className="toy-car__spokes" d="M89 112v14m-7-7h14m-12-5 10 10m0-10-10 10" />
-            <circle className="toy-car__hub" cx="89" cy="119" r="3" />
-          </g>
-          <g className="toy-car__wheel toy-car__wheel--front">
-            <circle cx="279" cy="119" r="22" />
-            <circle className="toy-car__tire-inset" cx="279" cy="119" r="15" />
-            <circle className="toy-car__rim" cx="279" cy="119" r="9" />
-            <path className="toy-car__spokes" d="M279 112v14m-7-7h14m-12-5 10 10m0-10-10 10" />
-            <circle className="toy-car__hub" cx="279" cy="119" r="3" />
-          </g>
-          <g className="toy-car__chassis">
-            <path d="M43 107h280l-7 16H47z" />
-            <path className="toy-car__chassis-detail" d="M125 117h117m-96 6-5 4m83-4 5 4" />
-          </g>
-          <g className="toy-car__shell">
-            <path d="M43 107 51 87q3-8 14-10l53-7 28-25q9-8 23-8h38q16 0 28 13l25 24 41 8q12 3 17 15l5 11-5 6h-15c-3-30-45-30-48 0H113c-3-30-45-30-48 0H46z" />
-            <path className="toy-car__body-reflection" d="m71 81 48-7 29-25q8-7 19-7h38q12 0 22 10l-18-5h-42q-10 0-17 8l-26 26-54 8z" />
-            <path className="toy-car__stripe" d="m53 93 47-5-7 8-43 5z" />
-            <path className="toy-car__door-seam" d="m187 76-5 34m45-33 10 2 3 3" />
-            <path className="toy-car__handle" d="m198 83 11-1" />
-            <path className="toy-car__tail-light" d="m52 88 8-2-2 9-9 2z" />
-            <path className="toy-car__light" d="m305 88 12 4 5 10h-17z" />
-            <path className="toy-car__grille" d="m310 105 13 1 1 5h-15z" />
-          </g>
-          <g className="toy-car__glass">
-            <path d="m133 68 22-23q4-4 11-4h14v27z" />
-            <path d="M188 41h18q11 0 19 9l17 18h-54z" />
-            <path className="toy-car__glass-shine" d="m139 65 20-20q3-2 8-2h3l-22 22zm53-21 12-1q10 1 17 9l11 12h-8l-20-18z" />
-            <path className="toy-car__window-frame" d="m183 41 1 29" />
-          </g>
-          <g className="toy-car__spoiler">
-            <path d="M56 77h8l-3 15h-7z" />
-            <path d="M48 75h25v5H48z" />
-            <path className="toy-car__spoiler-highlight" d="M51 76h19" />
-          </g>
-        </svg>
-        <span>Hover to disassemble</span>
-      </button>
+      <Suspense fallback={null}>
+        <HeroCar3D />
+      </Suspense>
 
       <motion.div className="hero-content" style={{ opacity }}>
         <div className="eyebrow hero-eyebrow">
