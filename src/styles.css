@@ -183,7 +183,7 @@ button {
 .hero-car {
     position: absolute;
     z-index: 1;
-    top: 53%;
+    top: 30%;
     right: 3%;
     width: clamp(220px, 30vw, 350px);
     padding: 0;
@@ -235,19 +235,34 @@ button {
 }
 
 .toy-car__wheel circle:first-child {
-    fill: #17171d;
-    stroke: #777482;
+    fill: url(#racecar-tire);
+    stroke: #72757e;
     stroke-width: 3
+}
+
+.toy-car__wheel .toy-car__tire-inset {
+    fill: none;
+    stroke: #555860;
+    stroke-width: 1.5;
+    stroke-dasharray: 1.5 2.5
 }
 
 .toy-car__wheel .toy-car__rim {
-    fill: #a7a4b0;
-    stroke: #292831;
-    stroke-width: 3
+    fill: url(#racecar-rim);
+    stroke: #272a32;
+    stroke-width: 2.5
+}
+
+.toy-car__wheel .toy-car__spokes {
+    fill: none;
+    stroke: #545861;
+    stroke-width: 1.5
 }
 
 .toy-car__wheel .toy-car__hub {
-    fill: #272630
+    fill: #d7d9de;
+    stroke: #555861;
+    stroke-width: 1
 }
 
 .toy-car__chassis path:first-child {
@@ -263,29 +278,81 @@ button {
 }
 
 .toy-car__shell path:first-child {
-    fill: #d93848;
-    stroke: #ff7b78;
+    fill: url(#racecar-paint);
+    stroke: #ff9a94;
     stroke-width: 2
+}
+
+.toy-car__shell .toy-car__body-reflection {
+    fill: rgba(255,255,255,.2);
+    stroke: rgba(255,255,255,.32);
+    stroke-width: .8
 }
 
 .toy-car__shell .toy-car__stripe {
-    fill: #ffd76f
+    fill: #f5cf76;
+    stroke: rgba(255,255,255,.8);
+    stroke-width: .8
 }
 
 .toy-car__shell .toy-car__light {
-    fill: #fff0c2
+    fill: #fff2c4;
+    stroke: #fff;
+    stroke-width: 1
 }
 
-.toy-car__glass path {
-    fill: #252738;
-    stroke: #9898b2;
+.toy-car__shell .toy-car__door-seam {
+    fill: none;
+    stroke: rgba(63,8,19,.65);
+    stroke-width: 1.5
+}
+
+.toy-car__shell .toy-car__handle {
+    fill: none;
+    stroke: #ffd3c9;
+    stroke-width: 1.5;
+    stroke-linecap: round
+}
+
+.toy-car__shell .toy-car__tail-light {
+    fill: #ff7780;
+    stroke: #ffd2cc;
+    stroke-width: 1
+}
+
+.toy-car__shell .toy-car__grille {
+    fill: #252831;
+    stroke: #9a9ca3;
+    stroke-width: 1
+}
+
+.toy-car__glass > path:nth-child(-n+2) {
+    fill: url(#racecar-glass);
+    stroke: #b7d9df;
     stroke-width: 2
+}
+
+.toy-car__glass .toy-car__glass-shine {
+    fill: rgba(255,255,255,.28);
+    stroke: none
+}
+
+.toy-car__glass .toy-car__window-frame {
+    fill: none;
+    stroke: #22232c;
+    stroke-width: 3
 }
 
 .toy-car__spoiler path {
-    fill: #a82437;
-    stroke: #ff7b78;
+    fill: url(#racecar-paint);
+    stroke: #ff9a94;
     stroke-width: 2
+}
+
+.toy-car__spoiler .toy-car__spoiler-highlight {
+    fill: none;
+    stroke: rgba(255,255,255,.7);
+    stroke-width: 1
 }
 
 .hero-car.is-disassembled .toy-car__wheel--rear {
@@ -1066,7 +1133,7 @@ button {
     }
 
     .hero-car {
-        top: 70%;
+        top: 62%;
         right: 0;
         width: clamp(190px, 52vw, 250px);
         opacity: .8
