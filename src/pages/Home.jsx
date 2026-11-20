@@ -1,7 +1,6 @@
 
 import {
   ArrowDown,
-  ArrowRight,
   ArrowUpRight,
   MoveUpRight,
   Sparkles,
@@ -11,7 +10,6 @@ import {
 } from 'lucide-react'
 
 import { motion, useScroll, useTransform } from 'motion/react'
-import { Link } from 'react-router-dom'
 import { useRef } from 'react'
 import { site } from '../data/site'
 import { projects } from '../data/projects'
@@ -253,7 +251,6 @@ function Services() {
   )
 }
 
-
 function Contact() {
   const instagram = site.socials.find(
     social => social.label === 'Instagram'
@@ -280,10 +277,15 @@ function Contact() {
           </p>
 
           <div className="contact-links">
+            {/* Email card */}
             <a
-              className="contact-card"
+              className="contact-card email-card"
               href={`mailto:${site.email}`}
             >
+              <span className="contact-card-hover-art" aria-hidden="true">
+                <Mail size={115} />
+              </span>
+
               <span className="contact-card-icon">
                 <Mail size={25} />
               </span>
@@ -293,16 +295,24 @@ function Contact() {
                 <span>{site.email}</span>
               </span>
 
-              <ArrowUpRight className="contact-card-arrow" size={22} />
+              <ArrowUpRight
+                className="contact-card-arrow"
+                size={22}
+              />
             </a>
 
+            {/* Instagram card */}
             {instagram && (
               <a
-                className="contact-card"
+                className="contact-card instagram-card"
                 href={instagram.href}
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <span className="contact-card-hover-art" aria-hidden="true">
+                  <Instagram size={115} />
+                </span>
+
                 <span className="contact-card-icon">
                   <Instagram size={25} />
                 </span>
@@ -312,7 +322,10 @@ function Contact() {
                   <span>@aarnav_jain.</span>
                 </span>
 
-                <ArrowUpRight className="contact-card-arrow" size={22} />
+                <ArrowUpRight
+                  className="contact-card-arrow"
+                  size={22}
+                />
               </a>
             )}
           </div>
@@ -321,7 +334,6 @@ function Contact() {
     </section>
   )
 }
-
 
 export default function Home() {
   return (
