@@ -253,6 +253,7 @@ function Services() {
   )
 }
 
+
 function Contact() {
   const instagram = site.socials.find(
     social => social.label === 'Instagram'
@@ -280,24 +281,38 @@ function Contact() {
 
           <div className="contact-links">
             <a
-              className="text-link"
+              className="contact-card"
               href={`mailto:${site.email}`}
             >
-              <Mail size={18} />
-              Email me
-              <ArrowUpRight size={16} />
+              <span className="contact-card-icon">
+                <Mail size={25} />
+              </span>
+
+              <span className="contact-card-text">
+                <strong>Email</strong>
+                <span>{site.email}</span>
+              </span>
+
+              <ArrowUpRight className="contact-card-arrow" size={22} />
             </a>
 
             {instagram && (
               <a
-                className="text-link"
+                className="contact-card"
                 href={instagram.href}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Instagram size={18} />
-                Instagram
-                <ArrowUpRight size={16} />
+                <span className="contact-card-icon">
+                  <Instagram size={25} />
+                </span>
+
+                <span className="contact-card-text">
+                  <strong>Instagram</strong>
+                  <span>@aarnav_jain.</span>
+                </span>
+
+                <ArrowUpRight className="contact-card-arrow" size={22} />
               </a>
             )}
           </div>
@@ -306,6 +321,7 @@ function Contact() {
     </section>
   )
 }
+
 
 export default function Home() {
   return (
