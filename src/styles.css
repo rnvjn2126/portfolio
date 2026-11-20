@@ -94,18 +94,56 @@ button {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 34px
+    gap: 18px
 }
 
 .nav-links>a {
-    font-size: 12px;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
     color: #aaaab2;
-    transition: color .2s
+    transition: color .2s, border-color .2s, background .2s, transform .35s cubic-bezier(.2,.8,.2,1)
 }
 
 .nav-links>a:hover,
 .nav-links a.active {
-    color: #fff
+    color: #fff;
+    border-color: var(--line);
+    background: rgba(255,255,255,.055)
+}
+
+.nav-links:hover>a:nth-child(1) {
+    animation: nav-waterfall .7s cubic-bezier(.2,.8,.2,1) both
+}
+
+.nav-links:hover>a:nth-child(2) {
+    animation: nav-waterfall .7s .08s cubic-bezier(.2,.8,.2,1) both
+}
+
+.nav-links:hover>a:nth-child(3) {
+    animation: nav-waterfall .7s .16s cubic-bezier(.2,.8,.2,1) both
+}
+
+.nav-links>a:hover {
+    transform: translateY(-5px)
+}
+
+@keyframes nav-waterfall {
+    0% {
+        transform: translateY(-3px)
+    }
+    45% {
+        transform: translateY(7px)
+    }
+    100% {
+        transform: translateY(0)
+    }
 }
 
 .menu-toggle {
@@ -878,7 +916,12 @@ button {
         border-bottom: 1px solid var(--line);
         flex-direction: column;
         align-items: stretch;
-        gap: 20px
+        gap: 8px
+    }
+
+    .nav-links>a {
+        width: 100%;
+        min-height: 48px
     }
 
     .nav-links.is-open {
