@@ -10,7 +10,7 @@ export const site = {
   socials: [
     { label: 'GitHub', href: 'https://github.com/rnvjn2126' },
     { label: 'LinkedIn', href: 'https://linkedin.com/' },
-    { label: 'Instagram', href: 'https://www.instagram.com/aarnav_jain.21?utm_source=ig_web_button_share_sheet&fqnt=ZDNlZDc0MzIxNw==' },
+    { label: 'Instagram', href: 'https://www.instagram.com/aarnav_jain.21' },
   ],
   skills: ['React', 'JavaScript', 'TypeScript', 'Node.js', 'UI/UX', 'Figma', 'CSS', 'Supabase'],
   services: [
