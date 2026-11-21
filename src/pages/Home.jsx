@@ -281,68 +281,46 @@ function Research() {
   return (
     <section className="section shell research-section" id="research">
       <Reveal>
-        <div className="section-kicker">
+        <div className="research-topbar">
           <span>03 / RESEARCH</span>
-          <span className="line" />
+          <span>SELECTED PUBLICATION</span>
         </div>
 
-        <div className="research-content">
-          <div className="research-heading">
-            <span className="eyebrow">
-              <FileText size={14} /> CONFERENCE PAPER
-            </span>
+        <div className="research-status-row">
+          <span className="research-type">CONFERENCE PAPER</span>
+          <span className="research-unpublished">
+            <span className="research-status-dot" />
+            UNPUBLISHED MANUSCRIPT
+          </span>
+        </div>
 
-            <h2 className="section-heading">
-              Research &
-              <br />
-              <span className="muted">Publications.</span>
-            </h2>
+        <h2 className="section-heading research-main-heading">
+          Research & Publications
+        </h2>
 
-            <p className="body-copy research-intro">
-              Exploring ideas through academic research and written work.
-            </p>
+        <article className="research-publication">
+          <div className="research-author">
+            <span className="research-author-label">AUTHORED BY</span>
+            <a
+              href={paperUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="research-author-name"
+            >
+              Aarnav Jain
+            </a>
           </div>
 
-          <article className="research-publication-card">
-            <div className="research-card-topline">
-              <span className="research-card-icon">
-                <FileText size={19} />
-              </span>
-              <span className="research-status">
-                <span className="research-status-dot" />
-                NOT YET PUBLISHED
-              </span>
-            </div>
-
-            <div className="research-card-details">
-              <span className="research-card-label">CONFERENCE PAPER</span>
-              <h3>Conference paper manuscript</h3>
-              <p className="body-copy">
-                Authored by
-              </p>
-              <a
-                href={paperUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="research-author-link"
-              >
-                Aarnav Jain <ArrowUpRight size={16} />
-              </a>
-            </div>
-
-            <div className="research-card-footer">
-              <span>MANUSCRIPT PREVIEW</span>
-              <a
-                href={paperUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="research-view-link"
-              >
-                View manuscript <ArrowUpRight size={16} />
-              </a>
-            </div>
-          </article>
-        </div>
+          <a
+            href={paperUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="research-manuscript-link"
+          >
+            <span>Open manuscript</span>
+            <ArrowUpRight size={20} />
+          </a>
+        </article>
       </Reveal>
     </section>
   )
