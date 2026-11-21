@@ -14,7 +14,14 @@ import Admin from './pages/Admin';
 function App() {
   const location = useLocation();
 
-  // Automatically scroll to a section when navigating to a URL hash.
+  // Scroll to the top whenever the page changes.
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+
+  // Scroll to a specific section when a URL hash exists.
   useEffect(() => {
     if (!location.hash) return;
 
