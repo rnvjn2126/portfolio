@@ -1,5 +1,6 @@
 
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { motion } from 'motion/react';
 
 import Navbar from './components/Navbar';
@@ -12,6 +13,24 @@ import Admin from './pages/Admin';
 
 function App() {
   const location = useLocation();
+
+  // Automatically scroll to a section when navigating to a URL hash.
+  useEffect(() => {
+    if (!location.hash) return;
+
+    const targetId = decodeURIComponent(location.hash.slice(1));
+
+    const frameId = window.requestAnimationFrame(() => {
+      document
+        .getElementById(targetId)
+        ?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [location.pathname, location.hash]);
 
   return (
     <>
