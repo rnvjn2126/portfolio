@@ -287,7 +287,7 @@ function Research() {
         </div>
 
         <div className="research-content">
-          <div>
+          <div className="research-heading">
             <span className="eyebrow">
               <FileText size={14} /> CONFERENCE PAPER
             </span>
@@ -297,22 +297,51 @@ function Research() {
               <br />
               <span className="muted">Publications.</span>
             </h2>
-          </div>
 
-          <div className="research-author">
-            <a
-              href={paperUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-link research-author-link"
-            >
-              Aarnav Jain <ArrowUpRight size={18} />
-            </a>
-
-            <p className="body-copy">
-              Conference paper manuscript · Not yet published
+            <p className="body-copy research-intro">
+              Exploring ideas through academic research and written work.
             </p>
           </div>
+
+          <article className="research-publication-card">
+            <div className="research-card-topline">
+              <span className="research-card-icon">
+                <FileText size={19} />
+              </span>
+              <span className="research-status">
+                <span className="research-status-dot" />
+                NOT YET PUBLISHED
+              </span>
+            </div>
+
+            <div className="research-card-details">
+              <span className="research-card-label">CONFERENCE PAPER</span>
+              <h3>Conference paper manuscript</h3>
+              <p className="body-copy">
+                Authored by
+              </p>
+              <a
+                href={paperUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="research-author-link"
+              >
+                Aarnav Jain <ArrowUpRight size={16} />
+              </a>
+            </div>
+
+            <div className="research-card-footer">
+              <span>MANUSCRIPT PREVIEW</span>
+              <a
+                href={paperUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="research-view-link"
+              >
+                View manuscript <ArrowUpRight size={16} />
+              </a>
+            </div>
+          </article>
         </div>
       </Reveal>
     </section>
