@@ -3756,3 +3756,25 @@ body {
 
 /* Keyboard focus */
 :focus-visible { outline-color: var(--olive-primary); }
+
+
+/* Horizontal white → light beige → olive background */
+
+html,
+body {
+    min-height: 100%;
+    background: linear-gradient(
+        90deg,
+        #FFFEFC 0%,
+        #F9F6EF 25%,
+        #F1EBDD 50%,
+        #D9DDC9 75%,
+        #A8B18F 100%
+    );
+    background-attachment: fixed;
+}
+
+/* Let the gradient show through the hero section */
+.hero {
+    background: transparent;
+}
