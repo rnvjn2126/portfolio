@@ -29,13 +29,10 @@ function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '24%'])
   const opacity = useTransform(scrollYProgress, [0, .8], [1, 0])
 
   return (
     <section className="hero shell" ref={ref}>
-      <motion.div className="hero-glow" style={{ y }} />
-
       <Suspense fallback={null}>
         <HeroCar3D />
       </Suspense>
@@ -84,8 +81,6 @@ function Hero() {
         <span>{site.location}</span>
       </div>
 
-      <div className="hero-orbit orbit-one" />
-      <div className="hero-orbit orbit-two" />
     </section>
   )
 }
@@ -369,6 +364,8 @@ function Contact() {
     <section className="contact-section shell" id="contact">
       <Reveal>
         <div className="contact-panel">
+          <div className="contact-orb" />
+
           <span className="eyebrow">
             <Sparkles size={14} /> GET IN TOUCH
           </span>
