@@ -1680,20 +1680,76 @@ button {
     }
 }
 
+
+/* OLIVE GREEN THEME */
+
+:root {
+    --accent: #122311;
+}
+
+/* Brand accents */
+.brand i {
+    color: #78906b;
+}
+
+.brand-mark {
+    border-color: #52664b;
+    color: #a0b394;
+}
+
+/* Heading gradient */
 .gradient-text {
     background: linear-gradient(
         100deg,
         #ffffff 5%,
-        #122311 50%,
-        #122311 100%
+        #a0b394 55%,
+        #526b49 100%
     );
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
 
-background: radial-gradient(
-    circle,
-    rgba(18, 35, 17, 0.5),
-    transparent 68%
-);
+/* Buttons and links */
+.button-primary:hover {
+    background: #a0b394;
+}
+
+.button-secondary:hover {
+    border-color: #78906b;
+}
+
+.text-link:hover {
+    color: #a0b394;
+}
+
+/* Contact section */
+.contact-panel {
+    border-color: rgba(120, 144, 107, 0.25);
+    background: linear-gradient(
+        120deg,
+        #172117,
+        #101410 65%
+    );
+}
+
+.contact-orb {
+    background: radial-gradient(
+        circle,
+        rgba(18, 35, 17, 0.85),
+        transparent 68%
+    );
+}
+
+/* Active filters */
+.filter-chip.active,
+.filter-chip:hover {
+    background: #122311;
+    color: #ffffff;
+    border-color: #526b49;
+}
+
+/* Contact card focus */
+.contact-card:focus-visible {
+    outline-color: #78906b;
+}
