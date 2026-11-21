@@ -1679,3 +1679,21 @@ button {
         transition: none !important;
     }
 }
+
+.gradient-text {
+    background: linear-gradient(
+        100deg,
+        #ffffff 5%,
+        #122311 50%,
+        #122311 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+background: radial-gradient(
+    circle,
+    rgba(18, 35, 17, 0.5),
+    transparent 68%
+);
