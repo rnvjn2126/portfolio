@@ -953,17 +953,6 @@ button {
     background: linear-gradient(120deg, #17151f, #101014 65%)
 }
 
-.contact-orb {
-    position: absolute;
-    width: 430px;
-    height: 430px;
-    right: -60px;
-    top: -230px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(146, 112, 235, .2), transparent 68%);
-    pointer-events: none
-}
-
 .contact-panel h2 {
     font-size: clamp(48px, 7vw, 88px);
     line-height: 1;

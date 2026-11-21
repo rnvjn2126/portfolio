@@ -369,8 +369,6 @@ function Contact() {
     <section className="contact-section shell" id="contact">
       <Reveal>
         <div className="contact-panel">
-          <div className="contact-orb" />
-
           <span className="eyebrow">
             <Sparkles size={14} /> GET IN TOUCH
           </span>
