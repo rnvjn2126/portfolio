@@ -54,7 +54,7 @@ const context = await browser.newContext({
 })
 const sites = [
   { name: 'AJ Overseas', file: 'aj-overseas.png', urls: ['https://aj-overseas.in', 'https://www.aj-overseas.in'] },
-  { name: 'Career AI Pro', file: 'career-ai-pro.png', urls: ['https://resumeproject123.streamlit.app'] },
+  { name: 'Career AI Pro', file: 'career-ai-pro.png', urls: ['https://resumeproject123.streamlit.app/~/+/', 'https://resumeproject123.streamlit.app'] },
 ]
 try {
   for (const site of sites) {
