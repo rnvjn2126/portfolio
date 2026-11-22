@@ -7,6 +7,14 @@ import {
   FileText,
   Instagram,
   Mail,
+  Code2,
+  Palette,
+  Boxes,
+  BrainCircuit,
+  Server,
+  ChartNoAxesCombined,
+  Workflow,
+  Lightbulb,
 } from 'lucide-react'
 
 import { motion, useScroll, useTransform } from 'motion/react'
@@ -255,43 +263,48 @@ function About() {
   )
 }
 
-function Work() {
-  // Keep work in progress on the Projects page, leaving one intentional
-  // blank space for the next completed project on the homepage.
-  const completed = projects.filter(project => project.status !== 'work-in-progress')
+function HomeProjectCard({ project, index }) {
+  return (
+    <Link className="home-project-card" to={'/projects/' + project.slug} aria-label={'Explore ' + project.title + ' project details'}>
+      <div className="home-project-visual">
+        <img src={project.cover} alt={project.coverAlt || project.title + ' preview'}
+          loading="lazy" decoding="async"
+          onError={event => {
+            const image = event.currentTarget
+            if (project.fallbackCover && !image.dataset.fallbackApplied) {
+              image.dataset.fallbackApplied = 'true'
+              image.src = project.fallbackCover
+            }
+          }}
+        />
+        <span className="home-project-number">{String(index + 1).padStart(2, '0')}</span>
+      </div>
+      <div className="home-project-copy">
+        <span className="home-project-category">{project.category}</span>
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+        {project.customizable && <span className="home-project-special">Built to your specifications</span>}
+        {project.paper && <span className="home-project-special">Related research paper</span>}
+        <span className="home-project-action">Explore project <ArrowUpRight size={16} aria-hidden="true" /></span>
+      </div>
+    </Link>
+  )
+}
 
+function Work() {
+  const completed = projects.filter(project => project.status !== 'work-in-progress')
+  const inProgress = projects.filter(project => project.status === 'work-in-progress')
   return (
     <section className="section shell work-section" id="work">
-      <div className="section-kicker">
-        <span>02 / SELECTED WORK</span>
-        <span className="line" />
-      </div>
-
+      <div className="section-kicker"><span>02 / SELECTED WORK</span><span className="line" /></div>
       <div className="section-title-row">
-        <Reveal>
-          <h2 className="section-heading">
-            A few things
-            <br />
-            <span className="muted">I've made.</span>
-          </h2>
-        </Reveal>
-        <Reveal>
-          <p className="body-copy">
-            Business websites, AI tools and software for real workflows.
-            A closer look at the work behind the ideas.
-          </p>
-        </Reveal>
+        <Reveal><h2 className="section-heading">A few things<br /><span className="muted">I've made.</span></h2></Reveal>
+        <Reveal><p className="body-copy">Business websites, AI tools and software for real workflows. A closer look at the work behind the ideas.</p></Reveal>
       </div>
 
-      <Stagger className="project-grid work-featured-grid work-four-grid" stagger={0.1}>
-        {completed.map((project, i) => (
-          <StaggerItem key={project.slug}>
-            <SpotlightCard className="project-spotlight">
-              <TiltCard className="project-tilt">
-                <ProjectCard project={project} index={i} />
-              </TiltCard>
-            </SpotlightCard>
-          </StaggerItem>
+      <Stagger className="project-grid work-featured-grid work-four-grid home-compact-projects" stagger={0.1}>
+        {completed.map((project, index) => (
+          <StaggerItem key={project.slug}><HomeProjectCard project={project} index={index} /></StaggerItem>
         ))}
         <StaggerItem key="future-project">
           <div className="work-future-card" aria-label="Reserved space for a future project">
@@ -305,10 +318,39 @@ function Work() {
         </StaggerItem>
       </Stagger>
 
+      {inProgress.length > 0 && (
+        <section className="home-wip" aria-labelledby="home-wip-heading">
+          <div className="home-wip-heading">
+            <div><span className="home-wip-kicker">CURRENTLY BUILDING</span><h3 id="home-wip-heading">Work in progress.</h3></div>
+            <Link className="home-wip-all" to="/projects">See all projects <ArrowUpRight size={15} aria-hidden="true" /></Link>
+          </div>
+          <div className="home-wip-list">
+            {inProgress.map(project => (
+              <Link className="home-wip-entry" key={project.slug} to={'/projects/' + project.slug}>
+                <span className="home-wip-thumb">
+                  <img src={project.cover} alt="" loading="lazy" decoding="async"
+                    onError={event => {
+                      const image = event.currentTarget
+                      if (project.fallbackCover && !image.dataset.fallbackApplied) {
+                        image.dataset.fallbackApplied = 'true'
+                        image.src = project.fallbackCover
+                      }
+                    }} />
+                </span>
+                <span className="home-wip-info">
+                  <span className="home-wip-status">IN DEVELOPMENT</span>
+                  <strong>{project.title}</strong>
+                  <span>{project.description}</span>
+                </span>
+                <ArrowUpRight className="home-wip-arrow" size={21} aria-hidden="true" />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       <div className="center-action work-cta-stack">
-        <Button to="/projects" variant="secondary" magnetic={false}>
-          Explore all projects
-        </Button>
+        <Button to="/projects" variant="secondary" magnetic={false}>Explore all projects</Button>
       </div>
     </section>
   )
@@ -358,6 +400,7 @@ function Research() {
 }
 
 function Services() {
+  const icons = [Code2, Palette, Boxes, BrainCircuit, Server, ChartNoAxesCombined, Workflow, Lightbulb]
   return (
     <section className="section shell services-section" id="services">
       <div className="section-kicker">
@@ -379,16 +422,16 @@ function Services() {
       </div>
 
       <div className="service-list service-compact-grid">
-        {site.services.map(service => (
+        {site.services.map((service, index) => { const ServiceIcon = icons[index] || Sparkles; return (
           <Reveal key={service.number}>
             <article className="service-row service-tile">
               <span className="service-number">{service.number}</span>
-              <ArrowUpRight className="service-arrow" size={17} aria-hidden="true" />
+              <ServiceIcon className="service-arrow" size={17} aria-hidden="true" />
               <h3>{service.title}</h3>
               <p>{service.description}</p>
             </article>
           </Reveal>
-        ))}
+        ) })}
       </div>
     </section>
   )
