@@ -18,6 +18,17 @@ try {
         'The portfolio should honor device safe-area insets')
 
       await page.locator('#services .service-tile').first().waitFor({ state: 'visible' })
+      // Regression: reduced-motion visits do not start hidden hero transitions,
+      // and the contact CTA remains a HashRouter link to the contact section.
+      const heroMotion = await page.locator('.hero-intro').evaluate(el => ({
+        opacity: Number(getComputedStyle(el).opacity),
+        activeAnimations: el.getAnimations().filter(animation => animation.playState === 'running').length,
+      }))
+      assert(heroMotion.opacity === 1 && heroMotion.activeAnimations === 0,
+        'Reduced-motion hero text must be immediately readable without an active reveal animation')
+      const contactHref = await page.locator('.hero-actions .text-link').getAttribute('href')
+      assert(contactHref?.includes('#/#contact'),
+        'Hero contact action must use HashRouter navigation to the contact section')
       if (viewport.width > 760) {
         await page.locator('.nav-links').hover()
         const navAnimation = await page.locator('.nav-links > a').first().evaluate(
