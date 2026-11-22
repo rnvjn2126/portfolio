@@ -63,7 +63,7 @@ export default function Projects() {
         </AnimatePresence>
       </motion.div>
       {filtered.length === 0 && <p className="body-copy">No projects in this category yet.</p>}
-      <p className="projects-note">Project artwork is illustrative; use the live links above to explore each actual application.</p>
+      <p className="projects-note">Project previews are captured from live websites where available. If a live site is temporarily unavailable, a labelled design illustration appears instead. Use “View live project” to explore the working application.</p>
     </section>
   )
 }
