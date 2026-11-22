@@ -1749,3 +1749,15 @@ body {
   ::view-transition-old(root),
   ::view-transition-new(root) { animation: none !important; }
 }
+
+/* UX 11: navigation hover states reverse smoothly from the current position.
+   No restart-prone keyframe waterfall on an interruptible interaction. */
+.nav-links:hover > a { animation: none !important; }
+.nav-links > a {
+  transition: transform 180ms ease-out, color 180ms ease-out,
+    border-color 180ms ease-out, background-color 180ms ease-out;
+}
+.nav-links > a:hover { transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) {
+  .nav-links > a, .nav-links > a:hover { transition: none; transform: none; }
+}
