@@ -20,20 +20,30 @@ try {
       const serviceGrid = await page.locator('.service-compact-grid').evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length)
       assert(serviceGrid === (viewport.width < 530 ? 1 : 4),
         'Unexpected service grid at ' + viewport.width + 'px: ' + serviceGrid)
-      // Symmetrical white-beige-green cards: first half of each desktop row
-      // fades left-to-right and the second half mirrors green-beige-white.
-      const serviceGradients = await page.locator('#services .service-tile').evaluateAll(elements =>
-        elements.map(element => getComputedStyle(element).backgroundImage)
+      // Each desktop two-card pair is one continuous gradient. A second
+      // card uses the right HALF of exactly the same background canvas.
+      const serviceStyles = await page.locator('#services .service-tile').evaluateAll(elements =>
+        elements.map(element => {
+          const style = getComputedStyle(element)
+          return { image: style.backgroundImage, size: style.backgroundSize, position: style.backgroundPosition }
+        })
       )
-      const leftPositions = viewport.width > 1120 ? [0, 1, 4, 5] : [0, 2, 4, 6]
-      const rightPositions = viewport.width > 1120 ? [2, 3, 6, 7] : [1, 3, 5, 7]
-      const leftGradient = serviceGradients[leftPositions[0]]
-      const rightGradient = serviceGradients[rightPositions[0]]
-      assert(serviceGradients.length === 8 && leftGradient.includes('linear-gradient') &&
-        rightGradient.includes('linear-gradient') && leftGradient !== rightGradient &&
-        leftPositions.every(index => serviceGradients[index] === leftGradient) &&
-        rightPositions.every(index => serviceGradients[index] === rightGradient),
-        'Service cards do not maintain their mirrored left/right color patterns')
+      assert(serviceStyles.length === 8, 'Expected eight service card gradients')
+      const sameImage = (a,b) => serviceStyles[a].image === serviceStyles[b].image
+      const hasStart = i => serviceStyles[i].position.startsWith('0%') || serviceStyles[i].position.startsWith('left')
+      const hasEnd = i => serviceStyles[i].position.startsWith('100%') || serviceStyles[i].position.startsWith('right')
+      assert(sameImage(0,1) && sameImage(2,3) &&
+        sameImage(4,5) && sameImage(6,7) &&
+        !sameImage(0,2) && sameImage(0,4) && sameImage(2,6),
+        'Pairs of service cards are not sharing the intended continuous gradients')
+      if (viewport.width >= 531) {
+        assert([0,2,4,6].every(hasStart) && [1,3,5,7].every(hasEnd) &&
+          serviceStyles.every(item => item.size.includes('200%')),
+          'Each service pair must display opposite halves of a continuous gradient')
+      } else {
+        assert(serviceStyles.every(item => item.size === '100% 100%'),
+          'Single-column service cards should show complete gradients')
+      }
 
       // The site's existing hero animations and assets must remain intact.
       assert(await page.locator('.hero-car canvas').count() === 1, 'Original 3D car is missing')
@@ -150,15 +160,26 @@ try {
 
       await page.goto(root + '#/projects/ERP-Software-Demo', { waitUntil: 'domcontentloaded' })
       await page.locator('.erp-custom-banner').waitFor({ state: 'visible' })
-      const capabilityGradients = await page.locator('.detail-capability').evaluateAll(elements =>
-        elements.map(element => getComputedStyle(element).backgroundImage)
+      const capabilityGradientStyles = await page.locator('.detail-capability').evaluateAll(elements =>
+        elements.map(element => {
+          const style = getComputedStyle(element)
+          return {image: style.backgroundImage, size: style.backgroundSize, position: style.backgroundPosition}
+        })
       )
-      assert(capabilityGradients.length === 4 &&
-        capabilityGradients[0] === leftGradient &&
-        capabilityGradients[2] === leftGradient &&
-        capabilityGradients[1] === rightGradient &&
-        capabilityGradients[3] === rightGradient,
-        'ERP capability cards do not match the mirrored service card colors')
+      assert(capabilityGradientStyles.length === 4 &&
+        capabilityGradientStyles[0].image === capabilityGradientStyles[1].image &&
+        capabilityGradientStyles[2].image === capabilityGradientStyles[3].image &&
+        capabilityGradientStyles[0].image !== capabilityGradientStyles[2].image,
+        'ERP capabilities should use one continuous gradient across each pair')
+      if (viewport.width > 600) {
+        assert(capabilityGradientStyles[0].position.startsWith('0%') &&
+          capabilityGradientStyles[1].position.startsWith('100%') &&
+          capabilityGradientStyles[2].position.startsWith('0%') &&
+          capabilityGradientStyles[3].position.startsWith('100%') &&
+          capabilityGradientStyles.every(item => item.size.includes('200%')),
+          'ERP capability cards should share opposite halves of each row gradient')
+      }
+
       const erpActions = await page.locator('.detail-bottom-actions > *').evaluateAll(actions =>
         actions.map(action => ({
           width: action.getBoundingClientRect().width,

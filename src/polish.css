@@ -1536,45 +1536,72 @@ body{-webkit-font-smoothing:antialiased}
 }
 
 
-/* Mirrored split palettes for services and ERP: opaque white-beige-sage
-   on the left, sage-beige-white on the right. The midpoint is exactly 50%.
-   Both sections share the same colors, border, and shadow. */
+/* Seamless two-card gradients.
+   Cards 1+2 share ONE white → beige → soft green gradient.
+   Cards 3+4 share ONE mirrored green → beige → white gradient.
+   The same arrangement repeats on row two, and the ERP's 2-column
+   capabilities use one continuous gradient per row.
+   The 200% + gap background canvas keeps the color transition aligned
+   even though the cards remain individually rounded and spaced. */
 :root {
   --panel-split-white: #fffdf8;
   --panel-split-beige: #f1edde;
   --panel-split-green: #e1ead6;
-  --panel-split-left: linear-gradient(90deg,
+  --panel-split-left: linear-gradient(
+    90deg,
     var(--panel-split-white) 0%,
     var(--panel-split-beige) 50%,
-    var(--panel-split-green) 100%);
-  --panel-split-right: linear-gradient(90deg,
+    var(--panel-split-green) 100%
+  );
+  --panel-split-right: linear-gradient(
+    90deg,
     var(--panel-split-green) 0%,
     var(--panel-split-beige) 50%,
-    var(--panel-split-white) 100%);
+    var(--panel-split-white) 100%
+  );
 }
-.detail-capabilities-grid .detail-capability,
-.services-section .service-list.service-compact-grid .service-tile {
-  background: var(--panel-split-left);
+.services-section .service-list.service-compact-grid {
+  --pair-gap: 14px;
+}
+.detail-capabilities-grid {
+  --pair-gap: 16px;
+}
+.services-section .service-list.service-compact-grid .service-tile,
+.detail-capabilities-grid .detail-capability {
+  background-image: var(--panel-split-left);
+  background-size: calc(200% + var(--pair-gap)) 100%;
+  background-position: left center;
+  background-repeat: no-repeat;
   border: 1px solid rgba(85,107,47,.21);
   box-shadow: 0 7px 20px rgba(38,48,31,.045);
 }
+/* Flip only the DIRECTION for cards 3+4 and 7+8, not each card. */
+.services-section .service-list.service-compact-grid > :nth-child(4n + 3) .service-tile,
+.services-section .service-list.service-compact-grid > :nth-child(4n + 4) .service-tile,
+.detail-capabilities-grid > :nth-child(n + 3) {
+  background-image: var(--panel-split-right);
+}
+/* Second card of each pair displays the SECOND HALF of the same gradient. */
+.services-section .service-list.service-compact-grid > :nth-child(even) .service-tile,
 .detail-capabilities-grid > :nth-child(even) {
-  background: var(--panel-split-right);
+  background-position: right center;
 }
-@media (min-width: 1121px) {
-  /* Four service columns: first two left-to-right, last two mirrored. */
-  .services-section .service-list.service-compact-grid > :nth-child(4n + 3) .service-tile,
-  .services-section .service-list.service-compact-grid > :nth-child(4n + 4) .service-tile {
-    background: var(--panel-split-right);
+/* A single column cannot span pairs, so show complete gradients on phones. */
+@media (max-width: 530px) {
+  .services-section .service-list.service-compact-grid {
+    --pair-gap: 10px;
+  }
+  .services-section .service-list.service-compact-grid .service-tile {
+    background-size: 100% 100%;
+    background-position: center center;
   }
 }
-@media (max-width: 1120px) {
-  /* Two-column tablets and single-column phones retain alternating mirrors. */
-  .services-section .service-list.service-compact-grid > :nth-child(even) .service-tile {
-    background: var(--panel-split-right);
+@media (max-width: 600px) {
+  .detail-capabilities-grid .detail-capability {
+    background-size: 100% 100%;
+    background-position: center center;
   }
 }
-
 
 /* Hero's complementary cream-and-olive treatment: a gentle ivory-to-sage
    foundation, a soft beige feature card, and a rich olive stage for the F1 car.
