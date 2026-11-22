@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, FileText, Github, Globe } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, FileText, Github, Globe, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 
@@ -34,6 +34,12 @@ export default function ProjectCard({ project, index = 0, showActions = false })
           <h3>{project.title}<ArrowUpRight size={19} aria-hidden="true" /></h3>
         </Link>
         <p>{project.description}</p>
+        {project.customizable && (
+          <div className="project-custom-note">
+            <Sparkles size={15} aria-hidden="true" />
+            <strong>ERP built to your specifications</strong>
+          </div>
+        )}
         <div className="tag-row">
           {project.tags.slice(0, 4).map(tag => <span className="tag" key={tag}>{tag}</span>)}
         </div>
