@@ -487,3 +487,74 @@ body{-webkit-font-smoothing:antialiased}
     justify-content: center;
   }
 }
+
+/* Steel Quotes: clear local-MVP status and genuine-app screenshot gallery. */
+.project-development-note {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 15px;
+  padding: 8px 12px;
+  border: 1px solid rgba(85, 107, 47, .19);
+  border-radius: 9px;
+  background: #edf1e6;
+  color: #566c43;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.detail-gallery { margin: 8px 0 68px; }
+.detail-gallery .section-kicker { margin-bottom: 15px; }
+.detail-gallery-intro {
+  max-width: 72ch;
+  margin: 0 0 25px;
+  color: #586852;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.detail-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.detail-gallery-item {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(85,107,47,.16);
+  border-radius: 18px;
+  background: #fffdf8;
+  box-shadow: 0 13px 36px rgba(38,48,31,.055);
+}
+.detail-gallery-item[hidden] { display: none; }
+.detail-gallery-item a {
+  display: block;
+  overflow: hidden;
+  background: #f0eee7;
+}
+.detail-gallery-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.56;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform .4s ease;
+}
+.detail-gallery-item a:hover img { transform: scale(1.025); }
+.detail-gallery-item figcaption {
+  padding: 13px 18px 15px;
+  border-top: 1px solid rgba(85,107,47,.12);
+  color: #5c6b50;
+  font: 10px var(--mono);
+  line-height: 1.5;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+@media (max-width: 760px) {
+  .detail-gallery-grid { grid-template-columns: 1fr; gap: 18px; }
+  .detail-gallery { margin-bottom: 50px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .detail-gallery-item img { transition: none; }
+  .detail-gallery-item a:hover img { transform: none; }
+}
