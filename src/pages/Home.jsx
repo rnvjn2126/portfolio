@@ -16,6 +16,7 @@ import { projects } from '../data/projects'
 import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import ProjectCard from '../components/ProjectCard'
+import { Stagger, StaggerItem, TextReveal, SpotlightCard, TiltCard } from '../components/MotionPrimitives'
 
 const HeroCar3D = lazy(() => import('../components/HeroCar3D'))
 
@@ -48,9 +49,9 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: .9, ease: [.2, .8, .2, 1] }}
         >
-          {site.headline[0]}
+          <TextReveal text={site.headline[0]} as="span" />
           <br />
-          <span className="gradient-text">{site.headline[1]}</span>
+          <span className="gradient-text"><TextReveal text={site.headline[1]} as="span" /></span>
         </motion.h1>
 
         <motion.p
@@ -262,11 +263,17 @@ function Work() {
         </Reveal>
       </div>
 
-      <div className="project-grid">
+      <Stagger className="project-grid" stagger={0.12}>
         {projects.filter(p => p.featured).map((project, i) => (
-          <ProjectCard key={project.slug} project={project} index={i} />
+          <StaggerItem key={project.slug}>
+            <SpotlightCard className="project-spotlight">
+              <TiltCard className="project-tilt">
+                <ProjectCard project={project} index={i} />
+              </TiltCard>
+            </SpotlightCard>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
 
       <div className="center-action">
         <Button to="/projects" variant="secondary">
