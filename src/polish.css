@@ -59,3 +59,151 @@ body{-webkit-font-smoothing:antialiased}
 @media(max-width:760px){.shell{width:calc(100% - 38px)}.nav{min-height:66px}.hero{display:flex;flex-direction:column;gap:27px;min-height:0;height:auto;padding:110px 0 42px;overflow:visible}.hero-content{width:100%;order:0}.hero h1{font-size:clamp(43px,10vw,75px);line-height:1.06}.hero-intro{font-size:14px;margin-top:22px}.hero-actions{margin-top:24px}.hero-visual{order:1;position:relative;inset:auto;width:100%;min-height:225px;margin-top:4px;border-radius:19px}.hero-visual .hero-car{min-height:155px}.hero-visual .hero-car__viewport{min-height:150px}.hero-feature{order:2;display:block;position:relative;inset:auto;width:100%;padding:20px 23px 18px;border-radius:16px}.hero-feature strong{font-size:22px;margin:12px 0 15px}.hero-feature ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.hero-feature li{display:block;font-size:10px;line-height:1.5}.hero-feature li span{display:block;margin-bottom:6px}.hero-bottom{order:3;position:relative;inset:auto;padding-top:14px;border-top:1px solid rgba(62,77,35,.16)}.section{padding-top:90px}.about-coffee-wrap{justify-content:center;margin:25px 0 0}.project-live-button{flex:1 1 auto}}
 @media(max-width:480px){.hero{padding-top:93px}.hero h1{font-size:clamp(41px,10.4vw,58px)}.hero-visual{padding:15px 12px 11px}.hero-visual__heading,.hero-visual__footer{font-size:8px}.hero-visual__heading span:last-child{display:none}.hero-visual .hero-car{min-height:125px}.hero-visual .hero-car__viewport{min-height:120px}.hero-feature ul{grid-template-columns:1fr;gap:0}.hero-feature li{display:flex;align-items:center;gap:10px;margin-top:7px;padding-top:7px}.hero-feature li span{margin:0}.project-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.project-live-button{grid-column:1/-1}.project-details-button{margin-left:0}.project-image-wrap{aspect-ratio:1.4}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.project-image,.project-live-arrow{transition:none}}
+
+/* HERO LAYOUT CORRECTION — natural document flow, never overlapping cards.
+   A full-width introduction is followed by a balanced two-column feature row.
+   This overrides earlier absolute-positioned hero rules intentionally. */
+.hero.shell {
+  display: grid;
+  grid-template-columns: minmax(0, .83fr) minmax(0, 1.17fr);
+  grid-template-areas:
+    "intro intro"
+    "feature visual"
+    "footer footer";
+  gap: 34px 30px;
+  align-items: start;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  padding-top: 116px;
+  padding-bottom: 55px;
+  overflow: visible;
+}
+.hero .hero-content {
+  grid-area: intro;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+.hero .hero-content h1 {
+  width: 100%;
+  max-width: none;
+  margin: 23px 0 22px;
+  font-size: clamp(53px, 6.35vw, 94px);
+  line-height: 1.055;
+  letter-spacing: -.075em;
+  text-wrap: balance;
+}
+.hero .hero-content h1 .gradient-text {
+  display: inline;
+  max-width: 100%;
+}
+.hero .hero-intro {
+  position: relative;
+  max-width: 620px;
+  margin: 0;
+  font-size: clamp(14px, 1.18vw, 16px);
+  line-height: 1.8;
+}
+.hero .hero-actions {
+  position: relative;
+  z-index: 2;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+.hero .hero-feature {
+  grid-area: feature;
+  position: relative;
+  inset: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  margin: 0;
+  padding: 28px 30px;
+  align-self: stretch;
+  border-radius: 22px;
+  background: rgba(255, 253, 248, .92);
+}
+.hero .hero-feature strong {
+  display: block;
+  max-width: 290px;
+  font-size: clamp(23px, 2.4vw, 30px);
+  line-height: 1.15;
+}
+.hero .hero-visual {
+  grid-area: visual;
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  margin: 0;
+  align-self: stretch;
+  border-radius: 22px;
+}
+.hero .hero-visual .hero-car {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  opacity: 1;
+}
+.hero .hero-bottom {
+  grid-area: footer;
+  position: relative;
+  inset: auto;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(62, 77, 35, .16);
+}
+@media (max-width: 900px) {
+  .hero.shell { gap: 26px 22px; padding-top: 105px; }
+  .hero .hero-feature { padding: 23px; min-height: 260px; }
+  .hero .hero-visual { min-height: 260px; }
+  .hero .hero-feature strong { font-size: clamp(21px, 2.5vw, 25px); }
+  .hero .hero-content h1 { font-size: clamp(49px, 6.25vw, 72px); }
+}
+@media (max-width: 760px) {
+  .hero.shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "intro"
+      "visual"
+      "feature"
+      "footer";
+    gap: 25px;
+    height: auto;
+    min-height: 0;
+    padding: 104px 0 44px;
+    overflow: visible;
+  }
+  .hero .hero-content h1 {
+    font-size: clamp(43px, 8.2vw, 62px);
+    line-height: 1.07;
+    letter-spacing: -.065em;
+    text-wrap: pretty;
+  }
+  .hero .hero-intro { font-size: 14px; max-width: 58ch; }
+  .hero .hero-visual { min-height: 0; }
+  .hero .hero-visual .hero-car { min-height: 165px; }
+  .hero .hero-feature { min-height: 0; padding: 22px 24px; }
+  .hero .hero-feature strong { max-width: none; font-size: 24px; }
+  .hero .hero-feature ul { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+  .hero .hero-feature li { display: block; min-width: 0; font-size: 11px; }
+  .hero .hero-feature li span { display: block; margin-bottom: 6px; }
+  .hero .hero-bottom { padding-top: 16px; }
+}
+@media (max-width: 480px) {
+  .hero.shell { padding-top: 90px; gap: 22px; }
+  .hero .hero-content h1 { font-size: clamp(39px, 9.1vw, 44px); letter-spacing: -.07em; }
+  .hero .hero-visual .hero-car { min-height: 145px; }
+  .hero .hero-feature ul { display: block; }
+  .hero .hero-feature li { display: flex; align-items: center; gap: 10px; margin-top: 9px; padding-top: 9px; }
+  .hero .hero-feature li span { display: inline; margin-bottom: 0; }
+}
