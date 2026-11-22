@@ -42,6 +42,7 @@ export default function CursorBrushTrail() {
 
     const stop = () => {
       points = []
+      bubbles = []
       previous = null
       if (frame) window.cancelAnimationFrame(frame)
       frame = 0
