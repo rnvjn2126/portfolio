@@ -1,0 +1,71 @@
+name: Import Exact Research Manuscript to GitHub
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-exact-manuscript.yml'
+permissions:
+  contents: write
+  actions: write
+jobs:
+  import:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check existing manuscript source against uploaded PDF SHA-256
+        id: verify
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="66b4eb85eea50ce2519424cf65acb190803fd05953f47b1e22514c36aa27e909"
+          matched=false
+          for url in "https://ieee-shortened-format.tiiny.site/?mode=suggestions" "https://ieee-shortened-format.tiiny.site/"; do
+            echo "Checking an existing manuscript location (not using it as the final site link)"
+            if curl -fsSL --retry 2 --max-time 45 "$url" -o /tmp/manuscript-check.pdf; then
+              actual="$(sha256sum /tmp/manuscript-check.pdf | cut -d' ' -f1)"
+              echo "Downloaded source SHA-256: $actual"
+              if [ "$actual" = "$expected" ]; then
+                matched=true
+                break
+              fi
+            fi
+          done
+          if [ "$matched" != true ]; then
+            echo "::warning::Existing URL does not serve the exact PDF uploaded in the conversation. No substitution or upload was performed."
+            echo "exact_pdf_available=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          mkdir -p public/papers
+          cp /tmp/manuscript-check.pdf public/papers/ai-driven-resume-screening.pdf
+          echo "exact_pdf_available=true" >> "$GITHUB_OUTPUT"
+      - name: Use local PDF link in Career AI Pro
+        if: steps.verify.outputs.exact_pdf_available == 'true'
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path("src/data/projects.js")
+          source = path.read_text()
+          old = "url: 'https://ieee-shortened-format.tiiny.site/?mode=suggestions'"
+          new = "url: import.meta.env.BASE_URL + 'papers/ai-driven-resume-screening.pdf'"
+          if old not in source and new not in source:
+              raise SystemExit("Existing manuscript URL not found; refusing an unsafe edit.")
+          path.write_text(source.replace(old, new))
+          PY
+      - name: Publish exact PDF to the GitHub portfolio repository
+        if: steps.verify.outputs.exact_pdf_available == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/papers/ai-driven-resume-screening.pdf src/data/projects.js
+          if ! git diff --cached --quiet; then
+            git commit -m "Host exact research manuscript on portfolio for direct reading and download"
+            git pull --rebase origin main
+            git push origin HEAD:main
+            gh workflow run deploy.yml --ref main
+          fi
