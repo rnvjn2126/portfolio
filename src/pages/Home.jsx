@@ -18,6 +18,7 @@ import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import ProjectCard from '../components/ProjectCard'
 import HeroCar3D from '../components/HeroCar3D'
+import { EmailTrigger } from '../components/EmailContact'
 import { Stagger, StaggerItem, SpotlightCard, TiltCard } from '../components/MotionPrimitives'
 
 
@@ -255,6 +256,9 @@ function About() {
 }
 
 function Work() {
+  const featured = projects.filter(project => project.featured)
+  const additional = projects.filter(project => !project.featured)
+
   return (
     <section className="section shell work-section" id="work">
       <div className="section-kicker">
@@ -270,16 +274,16 @@ function Work() {
             <span className="muted">I've made.</span>
           </h2>
         </Reveal>
-
         <Reveal>
           <p className="body-copy">
-            A selection of business websites, practical AI tools and workflow software built to solve real problems.
+            Business websites, AI tools and software for real workflows.
+            A closer look at the work behind the ideas.
           </p>
         </Reveal>
       </div>
 
-      <Stagger className="project-grid" stagger={0.12}>
-        {projects.filter(p => p.featured).map((project, i) => (
+      <Stagger className="project-grid work-featured-grid" stagger={0.12}>
+        {featured.map((project, i) => (
           <StaggerItem key={project.slug}>
             <SpotlightCard className="project-spotlight">
               <TiltCard className="project-tilt">
@@ -290,23 +294,45 @@ function Work() {
         ))}
       </Stagger>
 
-      <div className="center-action work-cta-stack">
-        <div className="work-live-actions" aria-label="Visit live projects">
-          {projects.filter(project => project.featured && project.liveUrl).map(project => (
-            <Button
-              key={project.slug}
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              magnetic={false}
-              aria-label={'Visit live ' + project.title + ' project in a new tab'}
-            >
-              View live: {project.title}
-            </Button>
-          ))}
+      {additional.length > 0 && (
+        <div className="work-additional">
+          <div className="work-additional-title">
+            <span className="eyebrow">MORE WORK / BUSINESS SYSTEMS</span>
+            <span>{String(additional.length).padStart(2, '0')} MORE PROJECTS</span>
+          </div>
+          <div className="work-mini-grid">
+            {additional.map(project => (
+              <Link className="work-mini-card" to={'/projects/' + project.slug} key={project.slug}>
+                <div className="work-mini-preview">
+                  <img
+                    src={project.cover}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    onError={event => {
+                      const img = event.currentTarget
+                      if (project.fallbackCover && !img.dataset.fallbackApplied) {
+                        img.dataset.fallbackApplied = 'true'
+                        img.src = project.fallbackCover
+                      }
+                    }}
+                  />
+                </div>
+                <div className="work-mini-copy">
+                  <span>{project.category}</span>
+                  <h3>{project.title}</h3>
+                  <p>{project.customizable ? project.customizationHeading : project.description}</p>
+                </div>
+                <ArrowUpRight size={20} className="work-mini-arrow" aria-hidden="true" />
+              </Link>
+            ))}
+          </div>
         </div>
+      )}
+
+      <div className="center-action work-cta-stack">
         <Button to="/projects" variant="secondary" magnetic={false}>
-          View all projects
+          Explore all {projects.length} projects
         </Button>
       </div>
     </section>
@@ -372,19 +398,20 @@ function Services() {
         </h2>
 
         <p className="body-copy">
-          From a first sketch to a polished launch, I can help move your next idea forward.
+          From a responsive website to an ERP built around your business,
+          here's how I can help bring the next idea to life.
         </p>
       </div>
 
-      <div className="service-list">
+      <div className="service-list service-compact-grid">
         {site.services.map(service => (
           <Reveal key={service.number}>
-            <div className="service-row">
+            <article className="service-row service-tile">
               <span className="service-number">{service.number}</span>
+              <ArrowUpRight className="service-arrow" size={17} aria-hidden="true" />
               <h3>{service.title}</h3>
               <p>{service.description}</p>
-              <ArrowUpRight className="service-arrow" />
-            </div>
+            </article>
           </Reveal>
         ))}
       </div>
@@ -419,10 +446,7 @@ function Contact() {
 
           <div className="contact-links">
             {/* Email card */}
-            <a
-              className="contact-card email-card"
-              href={`mailto:${site.email}`}
-            >
+            <EmailTrigger className="contact-card email-card" aria-label={'Contact me by email: ' + site.email}>
               <span className="contact-card-hover-art" aria-hidden="true">
                 <Mail size={115} />
               </span>
@@ -440,7 +464,7 @@ function Contact() {
                 className="contact-card-arrow"
                 size={22}
               />
-            </a>
+            </EmailTrigger>
 
             {/* Instagram card */}
             {instagram && (
