@@ -9,7 +9,9 @@ const assert = (condition, message) => { if (!condition) throw new Error(message
 
 try {
   for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
-    const page = await browser.newPage({ viewport, reducedMotion: 'reduce' })
+    const mobile = viewport.width < 600
+    const context = await browser.newContext({ viewport, reducedMotion: 'reduce', hasTouch: mobile, isMobile: mobile })
+    const page = await context.newPage()
     const issues = []
     page.on('pageerror', error => issues.push('pageerror: ' + error.message))
     page.on('console', message => {
@@ -20,30 +22,80 @@ try {
     try {
       await page.goto(root, { waitUntil: 'domcontentloaded' })
       const car = page.locator('.hero-car')
+      const canvas = car.locator('canvas')
       await car.waitFor({ state: 'visible', timeout: 20000 })
-      const status = car.locator('.hero-car__status')
       await page.waitForFunction(() => {
         const label = document.querySelector('.hero-car > .hero-car__status')?.textContent || ''
-        return !label.startsWith('Loading 3D car')
+        return label && !label.startsWith('Loading 3D car')
       }, null, { timeout: 60000 })
-      const message = await status.innerText()
-      console.log('3D car status', viewport.width, JSON.stringify({ message, issues }))
-      assert(message.toLowerCase().includes('disassemble'), 'Car not loaded: ' + message + '\n' + issues.join('\n'))
-      const pixels = await car.locator('canvas').evaluate(canvas => {
-        const gl = canvas.getContext('webgl2') || canvas.getContext('webgl')
-        if (!gl) return { width: canvas.width, height: canvas.height, hasWebGL: false }
-        const buffer = new Uint8Array(4)
-        gl.readPixels(Math.floor(canvas.width / 2), Math.floor(canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, buffer)
-        return { width: canvas.width, height: canvas.height, hasWebGL: true, centerPixel: [...buffer] }
-      })
-      console.log('3D car canvas', viewport.width, JSON.stringify(pixels))
-      assert(pixels.width > 100 && pixels.height > 50, 'Car canvas is not correctly sized')
-      assert(!issues.some(issue => /Unable to (load|prepare)|TypeError|RangeError/.test(issue)), issues.join('\n'))
+      const message = await car.locator('.hero-car__status').innerText()
+      console.log('F1 car status', viewport.width, JSON.stringify({
+        message,
+        errorCount: issues.length,
+        firstErrors: issues.slice(0, 3),
+      }))
+      assert(message.toLowerCase().includes('disassemble'), 'F1 car not loaded: ' + message)
+      const pixels = await canvas.evaluate(element => ({
+        width: element.width,
+        height: element.height,
+      }))
+      assert(pixels.width > 100 && pixels.height > 50, 'Car canvas is not sized correctly')
+      assert(!issues.some(issue => /couldn't load texture|blob:.*violates|unable to (load|prepare)|TypeError|RangeError/i.test(issue)),
+        '3D texture/loader problem: ' + issues.slice(0, 4).join('\n'))
+
+      // An existing WebGL canvas does not guarantee a visible car. Compare
+      // browser-composited pixels with and without the canvas; no dependency.
+      const visiblePng = (await canvas.screenshot()).toString('base64')
+      await canvas.evaluate(element => { element.style.opacity = '0' })
+      const emptyPng = (await canvas.screenshot()).toString('base64')
+      await canvas.evaluate(element => { element.style.opacity = '' })
+      const visibleFraction = await page.evaluate(async images => {
+        const decode = source => new Promise((resolve, reject) => {
+          const image = new Image()
+          image.onload = () => resolve(image)
+          image.onerror = reject
+          image.src = 'data:image/png;base64,' + source
+        })
+        const [visible, empty] = await Promise.all([decode(images.visible), decode(images.empty)])
+        const bitmap = document.createElement('canvas')
+        bitmap.width = visible.width
+        bitmap.height = visible.height
+        const context = bitmap.getContext('2d', { willReadFrequently: true })
+        context.drawImage(visible, 0, 0)
+        const foreground = context.getImageData(0, 0, bitmap.width, bitmap.height).data
+        context.clearRect(0, 0, bitmap.width, bitmap.height)
+        context.drawImage(empty, 0, 0)
+        const background = context.getImageData(0, 0, bitmap.width, bitmap.height).data
+        let changed = 0
+        for (let index = 0; index < foreground.length; index += 4) {
+          const difference = Math.abs(foreground[index] - background[index])
+            + Math.abs(foreground[index + 1] - background[index + 1])
+            + Math.abs(foreground[index + 2] - background[index + 2])
+          if (difference > 45) changed += 1
+        }
+        return changed / (bitmap.width * bitmap.height)
+      }, { visible: visiblePng, empty: emptyPng })
+      console.log('F1 model visible pixel fraction', viewport.width, visibleFraction)
+      assert(visibleFraction > .005, '3D car is visually blank at ' + viewport.width + 'px')
+
+      if (mobile) {
+        await car.tap()
+        assert(await car.getAttribute('aria-pressed') === 'true', 'Touch tap must expand the car')
+        await car.tap()
+        assert(await car.getAttribute('aria-pressed') === 'false', 'Second touch tap must reassemble')
+      } else {
+        await car.focus()
+        await car.press('Enter')
+        assert(await car.getAttribute('aria-pressed') === 'true', 'Keyboard Enter must expand the car')
+        await car.press('Enter')
+        assert(await car.getAttribute('aria-pressed') === 'false', 'Second Enter must reassemble')
+      }
+      console.log('PASS: F1 car rendered and toggle worked at', viewport.width)
     } finally {
-      await page.close()
+      await context.close()
     }
   }
 } finally {
   await browser.close()
 }
-console.log('3D car loads and renders at desktop and mobile widths')
+console.log('PASS: Formula 1 3D car renders and responds on desktop/mobile')
