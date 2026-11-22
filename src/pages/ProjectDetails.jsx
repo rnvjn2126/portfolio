@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, ArrowUpRight, FileText } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Download, FileText } from 'lucide-react'
 import { projects } from '../data/projects'
 import Button from '../components/Button'
 
@@ -57,16 +57,27 @@ export default function ProjectDetails() {
               </p>
               <span className="research-paper-author">Authored by <strong>{project.paper.author}</strong></span>
             </div>
-            <a
-              className="research-paper-open"
-              href={project.paper.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={'Open research manuscript by ' + project.paper.author + ' in a new tab'}
-            >
-              <span>Read manuscript</span>
-              <ArrowUpRight size={17} aria-hidden="true" />
-            </a>
+            <div className="research-paper-links">
+              <a
+                className="research-paper-open"
+                href={project.paper.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={'Open research manuscript by ' + project.paper.author + ' in a new tab'}
+              >
+                <span>Read manuscript</span>
+                <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+              <a
+                className="research-paper-download"
+                href={project.paper.url}
+                download="ai-driven-resume-screening.pdf"
+                aria-label="Download the research manuscript PDF"
+              >
+                <Download size={17} aria-hidden="true" />
+                <span>Download PDF</span>
+              </a>
+            </div>
           </div>
         </section>
       )}
