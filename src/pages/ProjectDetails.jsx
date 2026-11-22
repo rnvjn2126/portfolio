@@ -23,9 +23,21 @@ export default function ProjectDetails() {
         <span className="eyebrow">{project.category} / {project.year}</span>
         <h1 className="page-heading">{project.title}<span className="gradient-text">.</span></h1>
         <p className="page-lede">{project.description}</p>
+        {project.liveUrl && (
+          <a
+            className="detail-live-button"
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={'View live ' + project.title + ' website in a new tab'}
+          >
+            <span>View live project</span>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
+        )}
       </div>
       <img className="detail-cover" src={project.cover} alt={project.coverAlt} decoding="async" onError={event => { const image = event.currentTarget; if (project.fallbackCover && !image.dataset.fallbackApplied) { image.dataset.fallbackApplied = 'true'; image.src = project.fallbackCover } }} />
-      <p className="projects-note">Screenshot from the live application when available, with an illustrated fallback. Open the working application from the Projects page.</p>
+      <p className="projects-note">Preview of the live application when available, with an illustrated fallback. Use the button above to explore the working project.</p>
       <div className="detail-content">
         <div>
           <span className="eyebrow">PROJECT OVERVIEW</span>
