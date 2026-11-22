@@ -47,7 +47,12 @@ try {
         const controls = performance.getEntriesByName('portfolio:f1-exploded-controls-ready')[0]?.startTime
         const modelFetches = performance.getEntriesByType('resource')
           .filter(entry => entry.name.includes('/models/formula-car.glb'))
-          .map(entry => Math.round(entry.startTime))
+          .map(entry => ({
+            startMs: Math.round(entry.startTime),
+            transferBytes: entry.transferSize,
+            encodedBytes: entry.encodedBodySize,
+            initiator: entry.initiatorType,
+          }))
         return { visible, controls, modelFetches }
       })
       assert(Number.isFinite(firstRender.visible) && firstRender.controls > firstRender.visible,
