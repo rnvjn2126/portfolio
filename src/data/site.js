@@ -13,8 +13,13 @@ export const site = {
   ],
   skills: ['React', 'JavaScript', 'Python', 'Django', 'Streamlit', 'PostgreSQL', 'SQLite', 'Docker', 'HTML & CSS', 'UI / UX', 'Responsive design', 'Git'],
   services: [
-    { number: '01', title: 'Web development', description: 'Polished websites and web applications built for speed, accessibility and everyday use.' },
-    { number: '02', title: 'Interface design', description: 'Clean layouts and intuitive flows that make your product easier to understand.' },
-    { number: '03', title: 'Product prototyping', description: 'Turning early concepts into usable digital experiences that are ready to evolve.' },
+    { number: '01', title: 'Web development', description: 'Responsive websites and web apps built for clarity, performance and daily use.' },
+    { number: '02', title: 'Interface design', description: 'Thoughtful user experiences with clear structure and comfortable navigation.' },
+    { number: '03', title: 'Custom ERP software', description: 'Business systems tailored to your processes, permissions and reports.' },
+    { number: '04', title: 'AI-assisted tools', description: 'Practical AI-powered applications for analysis, screening and workflows.' },
+    { number: '05', title: 'Backend development', description: 'Python and Django services with structured data and role-aware features.' },
+    { number: '06', title: 'Data and dashboards', description: 'Useful reporting views, application data models and operational insights.' },
+    { number: '07', title: 'Workflow automation', description: 'Digital workflows that simplify recurring tasks and reduce manual steps.' },
+    { number: '08', title: 'Product prototyping', description: 'Working MVPs to validate an idea before committing to a larger launch.' },
   ],
 }
