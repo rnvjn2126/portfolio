@@ -150,19 +150,40 @@ export default function ProjectDetails() {
       )}
 
       <div className="detail-bottom-actions">
-          {project.liveUrl && (
-            <a
-              className="detail-live-button"
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={'View live ' + project.title + ' website in a new tab'}
-            >
-              <span>View live project</span>
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </a>
-          )}
-        <Button to="/projects" variant="secondary">Browse all projects</Button>
+        {project.liveUrl ? (
+          <a
+            className="detail-live-button"
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={'View live ' + project.title + ' website in a new tab'}
+          >
+            <span>View live project</span>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
+        ) : project.customizable ? (
+          <EmailTrigger className="detail-live-button" aria-label="Discuss building an ERP to your specifications">
+            <span>Discuss your ERP</span>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </EmailTrigger>
+        ) : project.githubUrl ? (
+          <a
+            className="detail-live-button"
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={'View ' + project.title + ' source code in a new tab'}
+          >
+            <span>View project source</span>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
+        ) : (
+          <Link className="detail-live-button" to="/projects">
+            <span>Explore other projects</span>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
+        )}
+        <Button to="/projects" variant="secondary" magnetic={false}>Browse all projects</Button>
       </div>
     </section>
   )
