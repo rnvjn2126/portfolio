@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { flushSync } from 'react-dom'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowUpRight, Clock3 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
@@ -12,6 +13,17 @@ const projectsInProgress = projects.filter(project => project.status === 'work-i
 export default function Projects() {
   const categories = ['All', ...new Set(mainProjects.map(project => project.category)), 'Work in progress']
   const [active, setActive] = useState('All')
+  const reducedMotion = useReducedMotion()
+
+  const selectCategory = category => {
+    if (category === active) return
+    if (reducedMotion || typeof document.startViewTransition !== 'function') {
+      setActive(category)
+      return
+    }
+    // React state commits inside the browser's view-transition capture.
+    document.startViewTransition(() => flushSync(() => setActive(category)))
+  }
 
   const filtered = useMemo(() => {
     if (active === 'Work in progress') return []
@@ -44,7 +56,7 @@ export default function Projects() {
             <button
               key={category}
               className={'filter-chip' + (active === category ? ' active' : '')}
-              onClick={() => setActive(category)}
+              onClick={() => selectCategory(category)}
               type="button"
               aria-pressed={active === category}
             >
@@ -62,10 +74,10 @@ export default function Projects() {
               <motion.div
                 key={project.slug}
                 layout
-                initial={{ opacity: 0, y: 15 }}
+                initial={reducedMotion ? false : { opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.32, delay: index * 0.035 }}
+                exit={reducedMotion ? undefined : { opacity: 0, y: -8 }}
+                transition={{ duration: reducedMotion ? 0 : 0.2, delay: reducedMotion ? 0 : index * 0.025 }}
               >
                 <ProjectCard project={project} index={index} showActions />
               </motion.div>

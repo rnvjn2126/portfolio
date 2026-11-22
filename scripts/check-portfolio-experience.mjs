@@ -174,6 +174,9 @@ try {
       await page.keyboard.press('Escape')
       const text = await page.locator('.projects-wip-card').innerText()
       assert(text.includes('Steel Trading Quotes'), 'B2B prototype not listed in Work in Progress')
+      // Filtering stays accessible without animation for reduced-motion visitors.
+      assert(await page.getByRole('button', { name: 'All', exact: true }).getAttribute('aria-pressed') === 'true',
+        'Project filter should communicate the selected category')
       await page.getByRole('button', { name: 'Work in progress', exact: true }).click()
       assert(await page.locator('.project-grid--listing .project-card').count() === 0, 'WIP filter still shows core projects')
       assert(await page.locator('.projects-wip-card').count() === 1, 'WIP filter hides the B2B project')
