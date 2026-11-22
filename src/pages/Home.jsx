@@ -18,7 +18,7 @@ import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import ProjectCard from '../components/ProjectCard'
 import HeroCar3D from '../components/HeroCar3D'
-import { Stagger, StaggerItem, TextReveal, SpotlightCard, TiltCard } from '../components/MotionPrimitives'
+import { Stagger, StaggerItem, SpotlightCard, TiltCard } from '../components/MotionPrimitives'
 
 
 
@@ -52,15 +52,11 @@ function Hero() {
           {site.availability}
         </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 35 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: .9, ease: [.2, .8, .2, 1] }}
-        >
-          <TextReveal text={site.headline[0]} as="span" />
+        <h1>
+          {site.headline[0]}
           <br />
-          <span className="gradient-text"><TextReveal text={site.headline[1]} as="span" /></span>
-        </motion.h1>
+          <span className="gradient-text">{site.headline[1]}</span>
+        </h1>
 
         <motion.p
           className="hero-intro"
