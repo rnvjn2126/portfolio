@@ -25,6 +25,14 @@ try {
         'Brush trail should be hidden when reduced motion is preferred')
       const services = await page.locator('#services .service-tile').count()
       assert(services === 8, 'Expected eight service cards, saw ' + services)
+      const corners = await page.locator('.service-tile').first().evaluate(element => ({
+        radius: getComputedStyle(element).borderTopLeftRadius,
+        supported: CSS.supports('corner-shape', 'squircle'),
+        shape: getComputedStyle(element).getPropertyValue('corner-shape'),
+      }))
+      assert(corners.radius !== '0px', 'Fallback rounded corners should remain')
+      if (corners.supported) assert(corners.shape.trim().includes('squircle'),
+        'Supporting browsers should draw continuous squircle corners')
       assert((await page.locator('.service-tile h3').first().evaluate(
         element => getComputedStyle(element).textWrap)) === 'balance',
         'Card headlines should balance onto natural lines')
