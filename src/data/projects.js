@@ -35,4 +35,37 @@ export const projects = [
       status: 'Unpublished manuscript',
     },
   },
+  {
+    slug: 'Steel-Quotes',
+    number: '03',
+    title: 'Steel Quotes',
+    category: 'Business workflow tools',
+    year: '2026',
+    description: 'A Django workspace for steel traders to compare suppliers, protect quote margins, generate customer PDFs and manage follow-ups.',
+    longDescription: 'An actively developed, locally runnable quotation workflow for small steel-trading businesses. It brings together customer and supplier catalogues, detailed RFQs, supplier offer comparison with normalized landed costs, gross-margin-aware pricing, revisions, customer-facing PDF quotations, manual follow-ups and catalogue CSV tools. Account-scoped records and automated tests support the prototype. This is a development MVP, not a publicly deployed production service.',
+    tags: ['Python', 'Django', 'SQLite', 'ReportLab', 'Pricing logic', 'Server-rendered UI'],
+    cover: import.meta.env.BASE_URL + 'images/screenshots/steel-quotes-enquiry.png',
+    fallbackCover: import.meta.env.BASE_URL + 'images/steel-quotes-showcase.svg',
+    coverAlt: 'Steel Quotes supplier offer comparison in the running Django application with synthetic demo data',
+    githubUrl: 'https://github.com/rnvjn2126/testproj/tree/ai/steel-mvp-overnight',
+    featured: true,
+    developmentNote: 'Local development MVP. No public live deployment.',
+    screenshots: [
+      {
+        src: import.meta.env.BASE_URL + 'images/screenshots/steel-quotes-workspace.png',
+        alt: 'Steel Quotes workspace dashboard showing synthetic customers, products, enquiries and follow-ups',
+        label: '01 / Workspace dashboard',
+      },
+      {
+        src: import.meta.env.BASE_URL + 'images/screenshots/steel-quotes-enquiry.png',
+        alt: 'Running Steel Quotes application comparing real calculations from fictional supplier offers',
+        label: '02 / Supplier comparison',
+      },
+      {
+        src: import.meta.env.BASE_URL + 'images/screenshots/steel-quotes-quotation.png',
+        alt: 'Running Steel Quotes quotation detail with margin calculations and PDF option using fictional data',
+        label: '03 / Quotation pricing',
+      },
+    ],
+  },
 ]
