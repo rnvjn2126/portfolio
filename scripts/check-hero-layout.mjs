@@ -59,8 +59,8 @@ try {
         console.error('Unwanted large hero background panel:', viewport.width, heroSurface)
         failed = true
       }
-      // The hero uses a distinct complementary cream-and-olive palette,
-      // with a dark olive car stage and light text for contrast.
+      // The two inner cards retain their complementary cream-and-olive
+      // gradients, but the large hero wrapper has no background panel.
       const palette = await page.locator('.hero.shell').evaluate(hero => {
         const feature = hero.querySelector('.hero-feature')
         const visual = hero.querySelector('.hero-visual')
@@ -72,12 +72,12 @@ try {
           label: heading ? getComputedStyle(heading).color : '',
         }
       })
-      if (!palette.page.includes('linear-gradient') ||
+      if (palette.page !== 'none' ||
           !palette.feature.includes('linear-gradient') ||
           !palette.carStage.includes('linear-gradient') ||
           palette.feature === palette.carStage ||
           palette.label !== 'rgb(255, 253, 244)') {
-        console.error('Complementary hero palette is missing:',viewport.width,palette)
+        console.error('Hero inner card palette or transparent wrapper is missing:',viewport.width,palette)
         failed = true
       }
       const selectors = {
