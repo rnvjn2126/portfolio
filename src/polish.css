@@ -345,3 +345,50 @@ body{-webkit-font-smoothing:antialiased}
   .project-research-link:hover,
   .research-paper-open:hover { transform:none; }
 }
+
+/* Direct PDF reading and GitHub-hosted download for the Career AI Pro paper. */
+.research-paper-links {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.research-paper-links .research-paper-open { width: 100%; }
+.research-paper-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  padding: 13px 18px;
+  border: 1px solid rgba(85,107,47,.35);
+  border-radius: 12px;
+  background: rgba(255,253,248,.85);
+  color: #3e4d23;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+  transition: background .2s ease, border-color .2s ease;
+}
+.research-paper-download:hover {
+  background: #f1f3e9;
+  border-color: #556b2f;
+}
+@media (max-width: 960px) {
+  .research-paper-links {
+    grid-column: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .research-paper-links .research-paper-open {
+    width: auto;
+    grid-column: auto;
+  }
+}
+@media (max-width: 600px) {
+  .research-paper-links {
+    grid-column: 1;
+    flex-direction: column;
+  }
+  .research-paper-links .research-paper-open,
+  .research-paper-links .research-paper-download { width: 100%; }
+}
