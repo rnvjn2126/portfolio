@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Github, Globe } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, FileText, Github, Globe } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 
@@ -37,6 +37,17 @@ export default function ProjectCard({ project, index = 0, showActions = false })
         <div className="tag-row">
           {project.tags.slice(0, 4).map(tag => <span className="tag" key={tag}>{tag}</span>)}
         </div>
+        {project.paper && (
+          <Link
+            className="project-research-link"
+            to={'/projects/' + project.slug}
+            aria-label={'Read research related to ' + project.title}
+          >
+            <FileText size={17} aria-hidden="true" />
+            <span>Related research paper</span>
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
+        )}
         {showActions ? (
           <div className="project-actions">
             {project.liveUrl && (
