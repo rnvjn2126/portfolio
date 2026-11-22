@@ -44,6 +44,25 @@ export default function ProjectDetails() {
         </aside>
       </div>
 
+      {project.capabilities && (
+        <section className="detail-capabilities" aria-labelledby="detail-capabilities-heading">
+          <div className="section-kicker">
+            <span>WHAT THE APPLICATION DOES</span>
+            <span className="line" />
+          </div>
+          <h2 id="detail-capabilities-heading">Built around the way steel traders work.</h2>
+          <div className="detail-capabilities-grid">
+            {project.capabilities.map((capability, index) => (
+              <div className="detail-capability" key={capability.title}>
+                <span className="detail-capability-number">{String(index + 1).padStart(2, '0')}</span>
+                <h3>{capability.title}</h3>
+                <p>{capability.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {project.screenshots && (
         <section className="detail-gallery" aria-labelledby="detail-gallery-heading">
           <div className="section-kicker">
