@@ -11,6 +11,7 @@ import {
 
 import { motion, useScroll, useTransform } from 'motion/react'
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { site } from '../data/site'
 import { projects } from '../data/projects'
 import Reveal from '../components/Reveal'
@@ -235,9 +236,9 @@ function About() {
               My work moves between web development, interface design and practical AI experiments. I enjoy taking an idea from its first rough sketch to something people can actually use, always keeping clarity and reliability in focus.
             </p>
 
-            <a className="text-link" href={`mailto:${site.email}`}>
+            <Link className="text-link" to="/#contact">
               More about me <ArrowUpRight size={16} />
-            </a>
+            </Link>
             <div className="about-coffee-wrap"><CoffeeHeartArt /></div>
           </div>
         </Reveal>
