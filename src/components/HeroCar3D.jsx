@@ -151,6 +151,7 @@ export default function HeroCar3D() {
   const [hovered, setHovered] = useState(false)
   const [latched, setLatched] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [prepared, setPrepared] = useState(false)
   const [loadProgress, setLoadProgress] = useState(0)
   const [loadError, setLoadError] = useState('')
   const isActive = hovered || latched
@@ -188,6 +189,8 @@ export default function HeroCar3D() {
     renderer.toneMappingExposure = 1.2
 
     let disposed = false
+    let preparationFrame = 0
+    let preparationTimer = 0
     let resizeObserver
     let loadedScene
     let viewHeight = 2
@@ -237,6 +240,23 @@ export default function HeroCar3D() {
           const size = bounds.getSize(new THREE.Vector3())
           const center = bounds.getCenter(new THREE.Vector3())
           const modelCenter = loadedScene.worldToLocal(center.clone())
+          // Show the COMPLETE original 3D car as soon as glTF parsing ends.
+          // The expensive exploded-view mesh separation can happen after the
+          // browser has had a chance to paint this assembled model.
+          const scale = 3.7 / Math.max(size.x, size.y, size.z)
+          loadedScene.scale.setScalar(scale)
+          loadedScene.position.set(-center.x * scale, -center.y * scale, -center.z * scale)
+          viewHeight = Math.max(size.y * scale * 1.8, size.x * scale / 2.4 * 1.35)
+          resize()
+          setLoadProgress(1)
+          setLoaded(true)
+
+          // rAF followed by a new task yields at least one paint opportunity
+          // before splitting and regrouping wheel/body geometry on the main thread.
+          preparationFrame = window.requestAnimationFrame(() => {
+            preparationTimer = window.setTimeout(() => {
+              if (disposed) return
+              try {
           const materialNamesFor = mesh => {
             const meshMaterials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
             return meshMaterials.map(material => material?.name?.toLowerCase() || '').join(' ')
@@ -358,11 +378,6 @@ export default function HeroCar3D() {
             group.attach(mesh)
           })
 
-          const scale = 3.7 / Math.max(size.x, size.y, size.z)
-          loadedScene.scale.setScalar(scale)
-          loadedScene.position.set(-center.x * scale, -center.y * scale, -center.z * scale)
-
-          viewHeight = Math.max(size.y * scale * 1.8, size.x * scale / 2.4 * 1.35)
           const parts = [
             makePart(bodyGroup, [0, 0, .8], [.04, -.04, .08], 0),
             makePart(frontWingGroup, [0, -.55, 1], [.08, -.08, .06], 65),
@@ -429,9 +444,14 @@ export default function HeroCar3D() {
               updateCamera()
             },
           }
-          resize()
-          setLoadProgress(1)
-          setLoaded(true)
+                resize()
+                setPrepared(true)
+              } catch (error) {
+                console.error('Unable to prepare F1 exploded view:', error)
+                setLoadError('Full 3D car visible; exploded view unavailable.')
+              }
+            }, 0)
+          })
         } catch (error) {
           console.error('Unable to prepare the F1 car model:', error)
           setLoadError('Could not prepare the 3D car model.')
@@ -449,6 +469,8 @@ export default function HeroCar3D() {
 
     return () => {
       disposed = true
+      window.cancelAnimationFrame(preparationFrame)
+      window.clearTimeout(preparationTimer)
       resizeObserver.disconnect()
       runtimeRef.current = null
       renderer.dispose()
@@ -506,7 +528,7 @@ export default function HeroCar3D() {
 
     frame = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(frame)
-  }, [isActive, loaded])
+  }, [isActive, prepared])
 
   return (
     <button
