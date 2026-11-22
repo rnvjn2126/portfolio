@@ -9,6 +9,7 @@ const html = await readFile('dist/index.html', 'utf8')
 const app = await readFile('src/App.jsx', 'utf8')
 const policy = html.match(/<meta[^>]+http-equiv="Content-Security-Policy"[^>]*>/)?.[0] || ''
 assert(policy.includes("script-src 'self'"), 'CSP must restrict executable scripts to the same origin')
+assert(policy.includes("connect-src 'self' blob:"), 'GLTFLoader must be able to read same-origin generated texture object URLs')
 assert(policy.includes("object-src 'none'"), 'object/embed content must be blocked')
 assert(policy.includes("base-uri 'self'"), 'base URI must be restricted')
 assert(policy.includes("form-action 'none'"), 'unconnected forms must not submit')
