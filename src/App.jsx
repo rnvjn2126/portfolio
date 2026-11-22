@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { motion } from 'motion/react'
 import Navbar from './components/Navbar'
@@ -9,7 +9,6 @@ import { ScrollProgress } from './components/MotionPrimitives'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
 import ProjectDetails from './pages/ProjectDetails'
-import Admin from './pages/Admin'
 
 function App() {
   const location = useLocation()
@@ -28,7 +27,7 @@ function App() {
       <Route path="/" element={<motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4 }}><Home /></motion.div>} />
       <Route path="/projects" element={<motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4 }}><Projects /></motion.div>} />
       <Route path="/projects/:slug" element={<ProjectDetails />} />
-      <Route path="/admin/*" element={<Admin />} />
+      <Route path="/admin/*" element={<Navigate to="/" replace />} />
       <Route path="*" element={<Home />} />
     </Routes>
     {!location.pathname.startsWith('/admin') && <Footer />}
