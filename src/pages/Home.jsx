@@ -257,7 +257,7 @@ function About() {
 
 function Work() {
   const featured = projects.filter(project => project.featured)
-  const additional = projects.filter(project => !project.featured)
+  const additional = projects.filter(project => !project.featured && project.status !== 'work-in-progress')
 
   return (
     <section className="section shell work-section" id="work">
