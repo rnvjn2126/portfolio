@@ -5,6 +5,7 @@ import { ArrowUpRight, Clock3 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import ProjectCard from '../components/ProjectCard'
+import ProgressiveImage from '../components/ProgressiveImage'
 import { projects } from '../data/projects'
 
 const mainProjects = projects.filter(project => project.status !== 'work-in-progress')
@@ -99,19 +100,8 @@ export default function Projects() {
             {projectsInProgress.map(project => (
               <Link className="projects-wip-card" to={'/projects/' + project.slug} key={project.slug}>
                 <div className="projects-wip-preview">
-                  <img
-                    src={project.cover}
-                    alt={project.coverAlt}
-                    loading="lazy"
-                    decoding="async"
-                    onError={event => {
-                      const image = event.currentTarget
-                      if (project.fallbackCover && !image.dataset.fallbackApplied) {
-                        image.dataset.fallbackApplied = 'true'
-                        image.src = project.fallbackCover
-                      }
-                    }}
-                  />
+                  <ProgressiveImage src={project.cover} fallbackSrc={project.fallbackCover}
+                    alt={project.coverAlt} />
                 </div>
                 <div className="projects-wip-info">
                   <span className="projects-wip-status"><Clock3 size={13} aria-hidden="true" /> IN DEVELOPMENT / {project.year}</span>

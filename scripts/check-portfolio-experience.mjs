@@ -81,6 +81,8 @@ try {
       // Three finished projects in a two-column grid, with no fourth placeholder.
       const cards = page.locator('#work .work-four-grid > *')
       assert(await cards.count() === 3, 'Homepage should have exactly three project grid items')
+      assert(await page.locator('#work .home-project-visual .progressive-image').count() === 3,
+        'All three homepage project images should use the stable delayed-skeleton component')
       assert(await page.locator('#work .work-four-grid .home-project-card').count() === 3,
         'Homepage should show exactly three compact project cards')
       assert(await page.locator('#work .work-future-card').count() === 0,

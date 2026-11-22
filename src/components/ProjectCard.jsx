@@ -2,6 +2,7 @@ import { ArrowRight, ArrowUpRight, FileText, Github, Globe, Mail, Sparkles } fro
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import { EmailTrigger } from './EmailContact'
+import ProgressiveImage from './ProgressiveImage'
 
 
 export default function ProjectCard({ project, index = 0, showActions = false }) {
@@ -17,16 +18,9 @@ export default function ProjectCard({ project, index = 0, showActions = false })
       transition={{ duration: reduce ? 0.01 : 0.45, delay: reduce ? 0 : (index % 2) * 0.07 }}
     >
       <Link to={'/projects/' + project.slug} className="project-image-wrap" aria-label={'Read about ' + project.title}>
-        <motion.img
-          src={project.cover}
-          onError={event => { const image = event.currentTarget; if (project.fallbackCover && !image.dataset.fallbackApplied) { image.dataset.fallbackApplied = 'true'; image.src = project.fallbackCover } }}
+        <ProgressiveImage src={project.cover} fallbackSrc={project.fallbackCover}
           alt={project.coverAlt || project.title + ' project preview'}
-          className="project-image"
-          loading="lazy"
-          decoding="async"
-          whileHover={reduce ? undefined : { scale: 1.025 }}
-          transition={{ duration: 0.5 }}
-        />
+          className="project-image" />
         <span className="project-image-number">{project.number} / SELECTED WORK</span>
         <span className="image-arrow" aria-hidden="true"><ArrowUpRight size={19} /></span>
       </Link>

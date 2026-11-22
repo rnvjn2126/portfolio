@@ -1761,3 +1761,19 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .nav-links > a, .nav-links > a:hover { transition: none; transform: none; }
 }
+
+/* UX 1: delayed image skeletons live inside the final image's own aspect box. */
+.project-image-wrap, .home-project-visual,
+.home-wip-thumb, .projects-wip-preview { position: relative; overflow: hidden; }
+.progressive-image { opacity: 0; transition: opacity 180ms ease-out; }
+.progressive-image.is-ready { opacity: 1; }
+.progressive-image-skeleton {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(105deg, #e5e7e1 0%, #eeefe9 48%, #dfe4d8 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .progressive-image { transition: none; }
+}

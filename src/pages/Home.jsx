@@ -27,6 +27,7 @@ import Button from '../components/Button'
 import ProjectCard from '../components/ProjectCard'
 import HeroCar3D from '../components/HeroCar3D'
 import { EmailTrigger } from '../components/EmailContact'
+import ProgressiveImage from '../components/ProgressiveImage'
 import { Stagger, StaggerItem, SpotlightCard, TiltCard } from '../components/MotionPrimitives'
 
 
@@ -267,16 +268,8 @@ function HomeProjectCard({ project, index }) {
   return (
     <Link className="home-project-card" to={'/projects/' + project.slug} aria-label={'Explore ' + project.title + ' project details'}>
       <div className="home-project-visual">
-        <img src={project.cover} alt={project.coverAlt || project.title + ' preview'}
-          loading="lazy" decoding="async"
-          onError={event => {
-            const image = event.currentTarget
-            if (project.fallbackCover && !image.dataset.fallbackApplied) {
-              image.dataset.fallbackApplied = 'true'
-              image.src = project.fallbackCover
-            }
-          }}
-        />
+        <ProgressiveImage src={project.cover} fallbackSrc={project.fallbackCover}
+          alt={project.coverAlt || project.title + ' preview'} />
         <span className="home-project-number">{String(index + 1).padStart(2, '0')}</span>
       </div>
       <div className="home-project-copy">
@@ -318,14 +311,8 @@ function Work() {
             {inProgress.map(project => (
               <Link className="home-wip-entry" key={project.slug} to={'/projects/' + project.slug}>
                 <span className="home-wip-thumb">
-                  <img src={project.cover} alt="" loading="lazy" decoding="async"
-                    onError={event => {
-                      const image = event.currentTarget
-                      if (project.fallbackCover && !image.dataset.fallbackApplied) {
-                        image.dataset.fallbackApplied = 'true'
-                        image.src = project.fallbackCover
-                      }
-                    }} />
+                  <ProgressiveImage src={project.cover} fallbackSrc={project.fallbackCover}
+                    alt="" />
                 </span>
                 <span className="home-wip-info">
                   <span className="home-wip-status">IN DEVELOPMENT</span>
