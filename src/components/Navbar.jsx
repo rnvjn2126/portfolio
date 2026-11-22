@@ -8,7 +8,7 @@ const links = [{ label: 'Home', to: '/' }, { label: 'Projects', to: '/projects' 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   return (
-    <header className="site-header">
+    <header className="site-header" id="top">
       <nav className="nav shell">
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
           <span className="brand-mark">{site.initials}</span><span>{site.name}<i>.</i></span>
