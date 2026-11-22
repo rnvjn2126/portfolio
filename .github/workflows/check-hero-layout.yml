@@ -1,0 +1,34 @@
+name: Check Hero Layout
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'scripts/check-hero-layout.mjs'
+      - '.github/workflows/check-hero-layout.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: Run responsive layout checks
+        run: |
+          npm run dev -- --host 127.0.0.1 --port 4173 &
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/portfolio/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/check-hero-layout.mjs
