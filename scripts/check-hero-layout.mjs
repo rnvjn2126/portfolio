@@ -19,6 +19,27 @@ try {
     try {
       await page.goto('http://127.0.0.1:4173/portfolio/#/', { waitUntil: 'domcontentloaded' })
       await page.locator('.hero .hero-content h1').waitFor()
+      // Regression: both headline lines must exist on the first rendered frame.
+      // The previous per-word entrance animation hid the second line on refresh.
+      const headlineState = await page.locator('.hero .hero-content h1').evaluate(heading => {
+        const secondLine = heading.querySelector('.gradient-text')
+        const rect = secondLine?.getBoundingClientRect()
+        return {
+          text: heading.textContent.replace(/\\s+/g, ' ').trim(),
+          secondLine: secondLine?.textContent?.trim(),
+          visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+          hiddenAnimatedWords: heading.querySelectorAll('[style*="opacity: 0"], [style*="blur("]').length,
+          secondLineOpacity: secondLine ? getComputedStyle(secondLine).opacity : '0'
+        }
+      })
+      if (!headlineState.text.includes('Thoughtful design.') ||
+          headlineState.secondLine !== 'Purposeful development.' ||
+          !headlineState.visible ||
+          headlineState.hiddenAnimatedWords > 0 ||
+          headlineState.secondLineOpacity === '0') {
+        console.error('Incomplete headline on initial render:', viewport.width, headlineState)
+        failed = true
+      }
       await page.evaluate(() => document.fonts.ready)
       const selectors = {
         heading: '.hero .hero-content h1',
