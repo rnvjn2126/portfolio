@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { motion } from 'motion/react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { EmailContactProvider } from './components/EmailContact'
 import { ScrollProgress } from './components/MotionPrimitives'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
@@ -18,7 +19,7 @@ function App() {
     const frameId = window.requestAnimationFrame(() => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
     return () => window.cancelAnimationFrame(frameId)
   }, [location.pathname, location.hash])
-  return <>
+  return <EmailContactProvider>
     <ScrollProgress />
     <Navbar />
     <Routes location={location} key={location.pathname}>
@@ -29,6 +30,6 @@ function App() {
       <Route path="*" element={<Home />} />
     </Routes>
     {!location.pathname.startsWith('/admin') && <Footer />}
-  </>
+  </EmailContactProvider>
 }
 export default App
