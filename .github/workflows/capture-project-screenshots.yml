@@ -3,13 +3,14 @@ on:
   push:
     branches: [main]
     paths:
-      - 'src/**'
       - 'scripts/capture-project-screenshots.mjs'
       - '.github/workflows/capture-project-screenshots.yml'
   workflow_dispatch:
 permissions:
   contents: write
-  actions: write
+concurrency:
+  group: project-screenshot-capture
+  cancel-in-progress: true
 jobs:
   capture:
     runs-on: ubuntu-24.04
@@ -40,5 +41,4 @@ jobs:
             git commit -m "Update genuine live project screenshots"
             git pull --rebase origin main
             git push origin HEAD:main
-            gh workflow run deploy.yml --ref main
           fi
