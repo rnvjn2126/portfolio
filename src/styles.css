@@ -408,7 +408,7 @@ button {
 
 
 
-.hero-car span {
+.hero-car > .hero-car__status {
 
     font: 9px var(--mono);
 
