@@ -23,7 +23,7 @@ export default function Projects() {
             <h1 className="page-heading">Selected <span className="gradient-text">projects.</span></h1>
           </div>
           <div className="projects-intro-aside">
-            <p>From responsive business sites to AI and steel-trading workflow tools, explore what I've designed and built.</p>
+            <p>From responsive websites to AI applications and ERP software, explore what I've designed and built.</p>
             <span>Explore the work below <ArrowUpRight size={15} aria-hidden="true" /></span>
           </div>
         </div>
