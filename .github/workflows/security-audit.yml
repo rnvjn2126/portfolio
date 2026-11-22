@@ -8,6 +8,7 @@ on:
       - 'index.html'
       - 'package*.json'
       - 'scripts/security-check.mjs'
+      - 'scripts/check-live-headers.mjs'
       - '.github/workflows/security-audit.yml'
   schedule:
     - cron: '23 3 * * 1'
@@ -32,6 +33,8 @@ jobs:
         run: npm run build
       - name: Check static website safeguards
         run: node scripts/security-check.mjs
+      - name: Check deployed HTTPS and host-provided security headers
+        run: node scripts/check-live-headers.mjs
       - name: Check dependency advisories
         run: |
           npm audit --json > security-audit-results.json || true
