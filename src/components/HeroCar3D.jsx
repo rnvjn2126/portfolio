@@ -149,11 +149,11 @@ export default function HeroCar3D() {
   const canvasRef = useRef(null)
   const runtimeRef = useRef(null)
   const [hovered, setHovered] = useState(false)
-  const [focused, setFocused] = useState(false)
+  const [latched, setLatched] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [loadProgress, setLoadProgress] = useState(0)
   const [loadError, setLoadError] = useState('')
-  const isActive = hovered || focused
+  const isActive = hovered || latched
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -509,22 +509,32 @@ export default function HeroCar3D() {
   }, [isActive, loaded])
 
   return (
-    <div
+    <button
       className="hero-car"
-      role="img"
-      tabIndex={0}
-      aria-label="Formula 1 car with separate bodywork, front and rear wings, driver, steering wheel, and four wheel assemblies. Hover or focus to disassemble; move away to reassemble."
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
+      type="button"
+      aria-pressed={isActive}
+      aria-label="Interactive Formula 1 car. Hover with a mouse or press to toggle its exploded view."
+      onPointerEnter={event => {
+        if (event.pointerType !== 'touch') setHovered(true)
+      }}
+      onPointerLeave={event => {
+        if (event.pointerType !== 'touch') setHovered(false)
+      }}
+      onClick={event => {
+        // Mouse users still get hover-to-disassemble; touch and keyboard
+        // users can toggle the same interaction without a sticky hover state.
+        const isTouch = event.nativeEvent.pointerType === 'touch'
+          || window.matchMedia('(hover: none)').matches
+        if (isTouch || event.detail === 0) setLatched(previous => !previous)
+      }}
+      onBlur={() => setLatched(false)}
     >
       <div className="hero-car__viewport">
         <canvas ref={canvasRef} className="hero-car__canvas" aria-hidden="true" />
       </div>
       <span className={loadError ? 'hero-car__status-error' : ''}>
-        {loadError || (loaded ? 'Hover to disassemble' : `Loading 3D car... ${Math.round(loadProgress * 100)}%`)}
+        {loadError || (loaded ? (isActive ? 'Expanded • move away or press to reset' : 'Hover or press to disassemble') : `Loading 3D car... ${Math.round(loadProgress * 100)}%`)}
       </span>
-    </div>
+    </button>
   )
 }
