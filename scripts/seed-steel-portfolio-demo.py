@@ -9,7 +9,10 @@ import secrets
 from datetime import timedelta
 from decimal import Decimal
 from pathlib import Path
+import sys
 
+# Script lives in the portfolio checkout; Django project is the current working directory.
+sys.path.insert(0, str(Path.cwd()))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "steel_quotes.settings")
 import django
 django.setup()
