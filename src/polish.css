@@ -1812,3 +1812,15 @@ body {
 }
 .privacy-inline-email:hover { color:#718f54; }
 .privacy-contact { width: fit-content; }
+
+/* UX 13 refinement: both dimensions meet touch target minimums. */
+:where(.menu-toggle, .nav-links > a, .filter-chip, .detail-back,
+  .home-wip-all, .research-paper-download, .research-paper-open,
+  .research-view-link, .research-heading-link, .project-research-link,
+  .email-choice-close, .footer-bottom a) { min-width: 44px; }
+@media (pointer: coarse) {
+  :where(.menu-toggle, .nav-links > a, .filter-chip, .detail-back,
+    .home-wip-all, .research-paper-download, .research-paper-open,
+    .research-view-link, .research-heading-link, .project-research-link,
+    .email-choice-close, .footer-bottom a) { min-width: 48px; }
+}
