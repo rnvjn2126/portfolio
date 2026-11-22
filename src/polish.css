@@ -1414,91 +1414,11 @@ body{-webkit-font-smoothing:antialiased}
   .project-grid--listing .project-consult-button { transition: none; }
 }
 
-/* Unified action positions across all public portfolio case studies.
-   The cards share two fixed-height rows even when optional GitHub links differ. */
+/* Shared button geometry for project details, research controls, and portfolio navigation. */
 :root {
   --portfolio-action-height: 48px;
   --portfolio-action-radius: 12px;
 }
-.project-grid--listing > * {
-  display: flex;
-  min-width: 0;
-  height: 100%;
-}
-.project-grid--listing .project-card {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-.project-grid--listing .project-card-body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  min-width: 0;
-}
-.project-grid--listing .project-actions {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(2, var(--portfolio-action-height));
-  align-items: stretch;
-  gap: 10px;
-  padding-top: 17px;
-  margin-top: auto;
-  border-top: 1px solid rgba(62,77,35,.16);
-}
-.project-grid--listing .project-actions > a,
-.project-grid--listing .project-actions > button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  box-sizing: border-box;
-  min-width: 0;
-  width: 100%;
-  height: var(--portfolio-action-height);
-  min-height: var(--portfolio-action-height);
-  max-height: var(--portfolio-action-height);
-  margin: 0;
-  padding: 10px 11px;
-  border-radius: var(--portfolio-action-radius);
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 780;
-  line-height: 1.2;
-  white-space: nowrap;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-}
-.project-grid--listing .project-actions .project-primary-action {
-  grid-column: 1 / -1;
-  grid-row: 1;
-  border: 1px solid #556b2f;
-  background: #556b2f;
-  color: #fffdf8;
-}
-.project-grid--listing .project-actions .project-primary-action:hover {
-  background: #3e4d23;
-}
-.project-grid--listing .project-actions .project-source-button {
-  grid-column: 1;
-  grid-row: 2;
-  border: 1px solid rgba(85,107,47,.25);
-  background: #f6f3ea;
-  color: #405033;
-}
-.project-grid--listing .project-actions .project-details-button {
-  grid-column: 2;
-  grid-row: 2;
-  border: 1px solid rgba(85,107,47,.25);
-  background: #fffdf8;
-  color: #405033;
-}
-.project-grid--listing .project-actions .project-details-button:hover {
-  background: #eaf0e0;
-}
-.project-grid--listing .project-actions svg { flex: 0 0 auto; }
 
 /* Case-study pages have the same two CTA slots: action first, browse second. */
 .detail-page .detail-bottom-actions {
