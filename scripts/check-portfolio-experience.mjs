@@ -25,6 +25,9 @@ try {
         'Brush trail should be hidden when reduced motion is preferred')
       const services = await page.locator('#services .service-tile').count()
       assert(services === 8, 'Expected eight service cards, saw ' + services)
+      assert((await page.locator('.service-tile h3').first().evaluate(
+        element => getComputedStyle(element).textWrap)) === 'balance',
+        'Card headlines should balance onto natural lines')
       assert((await page.locator('.service-number').first().evaluate(
         element => getComputedStyle(element).fontVariantNumeric)).includes('tabular-nums'),
         'Section counters should use tabular numerals')
