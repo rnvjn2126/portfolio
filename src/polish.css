@@ -1702,3 +1702,11 @@ body {
   padding-left: max(22px, env(safe-area-inset-left, 0px));
 }
 .scroll-progress__fill { top: env(safe-area-inset-top, 0px); }
+
+/* UX 16: stable glyph widths for numbered sections, dates, and counts. */
+:where(.service-number, .detail-capability-number, .project-meta,
+  .projects-count, .project-image-number, .home-project-number,
+  .projects-wip-status, .home-wip-status, .admin-stat strong,
+  .hero-visual__footer, .project-development-note) {
+  font-variant-numeric: tabular-nums;
+}
