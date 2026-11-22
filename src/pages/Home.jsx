@@ -16,6 +16,7 @@ import { projects } from '../data/projects'
 import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import ProjectCard from '../components/ProjectCard'
+import HeroCar3D from '../components/HeroCar3D'
 import { Stagger, StaggerItem, TextReveal, SpotlightCard, TiltCard } from '../components/MotionPrimitives'
 
 
@@ -83,6 +84,11 @@ function Hero() {
         </motion.div>
       </motion.div>
 
+      <div className="hero-visual" aria-label="Interactive Formula 1 car showcase">
+        <div className="hero-visual__heading"><span>INTERACTIVE DETAIL / 001</span><span>ENGINEERING MEETS CURIOSITY</span></div>
+        <HeroCar3D />
+        <div className="hero-visual__footer"><span>FORMULA 1 / EXPLODED VIEW</span><span>HOVER OR FOCUS TO EXPLORE</span></div>
+      </div>
       <div className="hero-bottom">
         <span>SCROLL TO EXPLORE <ArrowDown size={14} /></span>
         <span>{site.location}</span>
@@ -232,6 +238,7 @@ function About() {
             <a className="text-link" href={`mailto:${site.email}`}>
               More about me <ArrowUpRight size={16} />
             </a>
+            <div className="about-coffee-wrap"><CoffeeHeartArt /></div>
           </div>
         </Reveal>
       </div>
