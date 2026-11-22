@@ -44,7 +44,7 @@ export const projects = [
     description: 'A role-aware ERP workspace for managing projects, clients, inventory, time, expenses and team communication.',
     longDescription: 'A self-hosted ERP software demo built with Django. The system brings together client and project records, staff project assignments, time and expense tracking, multi-warehouse inventory, internal team messaging and permission-based management dashboards. It also includes access controls and activity auditing. This portfolio presentation uses fictional records and screenshots captured from a disposable running demo, not a public production deployment.',
     tags: ['Python', 'Django', 'PostgreSQL', 'SQLite', 'Docker', 'Access control'],
-    cover: import.meta.env.BASE_URL + 'images/screenshots/erp-management.png',
+    cover: import.meta.env.BASE_URL + 'images/screenshots/erp-management.jpg',
     fallbackCover: import.meta.env.BASE_URL + 'images/erp-demo-showcase.svg',
     coverAlt: 'ERP Software Demo management dashboard with fictional projects, clients and staff activity',
     featured: true,
@@ -57,22 +57,22 @@ export const projects = [
     ],
     screenshots: [
       {
-        src: import.meta.env.BASE_URL + 'images/screenshots/erp-management.png',
+        src: import.meta.env.BASE_URL + 'images/screenshots/erp-management.jpg',
         alt: 'Live Django demo management dashboard with fictional projects and time entries',
         label: '01 / Management overview',
       },
       {
-        src: import.meta.env.BASE_URL + 'images/screenshots/erp-projects.png',
+        src: import.meta.env.BASE_URL + 'images/screenshots/erp-projects.jpg',
         alt: 'Live Django demo project directory with fictional clients, budgets and project status',
         label: '02 / Project directory',
       },
       {
-        src: import.meta.env.BASE_URL + 'images/screenshots/erp-inventory.png',
+        src: import.meta.env.BASE_URL + 'images/screenshots/erp-inventory.jpg',
         alt: 'Live Django demo inventory dashboard with fictional warehouse stock and movement history',
         label: '03 / Inventory control',
       },
       {
-        src: import.meta.env.BASE_URL + 'images/screenshots/erp-workspace.png',
+        src: import.meta.env.BASE_URL + 'images/screenshots/erp-workspace.jpg',
         alt: 'Live Django demo employee workspace with fictional time entries and assigned projects',
         label: '04 / Employee workspace',
       },
