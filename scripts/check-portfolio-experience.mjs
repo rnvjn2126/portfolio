@@ -79,34 +79,6 @@ try {
       const wipCount = await page.locator('.projects-wip-card').count()
       assert(mainCount === 3, 'Expected three core projects, saw ' + mainCount)
 
-      // Every project card keeps its main action at the same distance from
-      // the bottom; Details always occupies the bottom-right action slot.
-      const actionLayout = await page.locator('.project-grid--listing .project-card').evaluateAll(cards => cards.map(card => {
-        const bounds = card.getBoundingClientRect()
-        const main = card.querySelector('.project-primary-action')?.getBoundingClientRect()
-        const details = card.querySelector('.project-details-button')?.getBoundingClientRect()
-        return main && details ? {
-          mainBottom: bounds.bottom - main.bottom,
-          detailsBottom: bounds.bottom - details.bottom,
-          detailsRight: bounds.right - details.right,
-          mainHeight: main.height,
-          detailsHeight: details.height,
-        } : null
-      }))
-      assert(actionLayout.length === 3 && actionLayout.every(Boolean),
-        'Some project cards have missing primary or Details actions')
-      const aligned = (field) => Math.max(...actionLayout.map(item => item[field])) -
-        Math.min(...actionLayout.map(item => item[field])) < 3
-      assert(aligned('mainBottom') && aligned('detailsBottom') && aligned('detailsRight'),
-        'Project card buttons are not placed consistently: ' + JSON.stringify(actionLayout))
-      assert(actionLayout.every(item => Math.abs(item.mainHeight - 48) < 2 &&
-        Math.abs(item.detailsHeight - 48) < 2),
-        'Project card action heights should be 48px: ' + JSON.stringify(actionLayout))
-      assert(await page.locator('.project-grid--listing .project-primary-action').count() === 3,
-        'All three project cards require a primary action')
-      assert((await page.locator('.project-grid--listing .project-primary-action').nth(2).innerText())
-        .includes('Discuss your ERP'), 'ERP card should have a relevant primary contact button')
-
       assert(wipCount === 1, 'Expected one B2B Work in Progress project, saw ' + wipCount)
       // Every listing card must put its primary and secondary actions in
       // identical positions despite varying descriptions, research or notes.
