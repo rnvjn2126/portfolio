@@ -50,7 +50,7 @@ export default function ProjectDetails() {
             <span>WHAT THE APPLICATION DOES</span>
             <span className="line" />
           </div>
-          <h2 id="detail-capabilities-heading">Built around the way steel traders work.</h2>
+          <h2 id="detail-capabilities-heading">Built for real business operations.</h2>
           <div className="detail-capabilities-grid">
             {project.capabilities.map((capability, index) => (
               <div className="detail-capability" key={capability.title}>
