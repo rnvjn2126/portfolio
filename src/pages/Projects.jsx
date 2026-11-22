@@ -63,7 +63,7 @@ export default function Projects() {
         </AnimatePresence>
       </motion.div>
       {filtered.length === 0 && <p className="body-copy">No projects in this category yet.</p>}
-      <p className="projects-note">Previews are captured from live websites or running local demos when available. A design illustration appears if a screenshot is unavailable. Publicly deployed applications have a “View live project” link; development MVPs link to their source code.</p>
+      <p className="projects-note">Previews are captured from live websites or running local demos when available. A design illustration appears if a screenshot is unavailable. Public applications have a “View live project” link, while the private ERP demo is presented through real screenshots.</p>
     </section>
   )
 }
