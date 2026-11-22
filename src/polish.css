@@ -1723,3 +1723,13 @@ body {
   .projects-intro-aside p, .email-choice-dialog p) {
   text-wrap: pretty;
 }
+
+/* UX 18: progressive continuous corners; border-radius is the fallback. */
+@supports (corner-shape: squircle) {
+  :where(.project-card, .home-project-card, .projects-wip-card,
+    .home-wip-entry, .service-tile, .detail-capability,
+    .email-choice-dialog, .erp-custom-banner, .research-paper-card,
+    .hero-feature, .hero-visual, .contact-card, .button) {
+    corner-shape: squircle;
+  }
+}
