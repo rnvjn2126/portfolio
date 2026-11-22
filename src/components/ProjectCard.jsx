@@ -37,6 +37,7 @@ export default function ProjectCard({ project, index = 0, showActions = false })
         <div className="tag-row">
           {project.tags.slice(0, 4).map(tag => <span className="tag" key={tag}>{tag}</span>)}
         </div>
+        {project.developmentNote && <span className="project-development-note">{project.developmentNote}</span>}
         {project.paper && (
           <Link
             className="project-research-link"
