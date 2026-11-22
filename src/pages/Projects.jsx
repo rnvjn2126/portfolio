@@ -23,7 +23,7 @@ export default function Projects() {
             <h1 className="page-heading">Selected <span className="gradient-text">projects.</span></h1>
           </div>
           <div className="projects-intro-aside">
-            <p>From thoughtful business websites to practical AI tools, here's a look at what I've designed and built.</p>
+            <p>From responsive business sites to AI and steel-trading workflow tools, explore what I've designed and built.</p>
             <span>Explore the work below <ArrowUpRight size={15} aria-hidden="true" /></span>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function Projects() {
         </AnimatePresence>
       </motion.div>
       {filtered.length === 0 && <p className="body-copy">No projects in this category yet.</p>}
-      <p className="projects-note">Project previews are captured from live websites where available. If a live site is temporarily unavailable, a labelled design illustration appears instead. Use “View live project” to explore the working application.</p>
+      <p className="projects-note">Previews are captured from live websites or running local demos when available. A design illustration appears if a screenshot is unavailable. Publicly deployed applications have a “View live project” link; development MVPs link to their source code.</p>
     </section>
   )
 }
