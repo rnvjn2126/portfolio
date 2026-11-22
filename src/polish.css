@@ -1711,6 +1711,11 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Ensure the utility survives earlier font shorthands on the service counters. */
+.services-section .service-list .service-tile .service-number {
+  font-variant-numeric: tabular-nums;
+}
+
 /* UX 17: balanced short headings and readable paragraph line breaks. */
 :where(.section-heading, .page-heading, .detail-capabilities h2,
   .service-tile h3, .project-title-link h3, .home-project-copy h3,
