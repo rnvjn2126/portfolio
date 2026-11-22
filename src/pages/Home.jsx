@@ -17,7 +17,7 @@ import {
   Lightbulb,
 } from 'lucide-react'
 
-import { motion, useScroll, useTransform } from 'motion/react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { site } from '../data/site'
@@ -36,6 +36,7 @@ import { Stagger, StaggerItem, SpotlightCard, TiltCard } from '../components/Mot
 
 function Hero() {
   const ref = useRef(null)
+  const reduceMotion = useReducedMotion()
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -56,7 +57,7 @@ function Hero() {
         </ul>
       </aside>
 
-      <motion.div className="hero-content" style={{ opacity }}>
+      <motion.div className="hero-content" style={{ opacity: reduceMotion ? 1 : opacity }}>
         <div className="eyebrow hero-eyebrow">
           <span className="status-dot" />
           {site.availability}
@@ -70,24 +71,24 @@ function Hero() {
 
         <motion.p
           className="hero-intro"
-          initial={{ opacity: 0 }}
+          initial={reduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: .35, duration: .8 }}
+          transition={{ delay: reduceMotion ? 0 : .35, duration: reduceMotion ? 0 : .8 }}
         >
           {site.intro}
         </motion.p>
 
         <motion.div
           className="hero-actions"
-          initial={{ opacity: 0, y: 12 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: .5 }}
+          transition={{ delay: reduceMotion ? 0 : .5, duration: reduceMotion ? 0 : .3 }}
         >
           <Button to="/projects">Explore my work</Button>
 
-          <a className="text-link" href="#contact">
+          <Link className="text-link" to="/#contact">
             Contact <MoveUpRight size={16} />
-          </a>
+          </Link>
         </motion.div>
       </motion.div>
 
