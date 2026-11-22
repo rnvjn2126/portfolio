@@ -3,7 +3,7 @@ export const site = {
   initials: 'AJ',
   role: 'Independent Developer & Designer',
   headline: ['Thoughtful design.', 'Purposeful development.'],
-  intro: 'I create clear, responsive websites and useful digital tools for people and businesses — with equal attention to design, performance and the details that matter.',
+  intro: 'I create clear, responsive websites and useful digital tools for people and businesses, with equal attention to design, performance and the details that matter.',
   email: 'jainaarnav2126@gmail.com',
   location: 'Based in India · Collaborating worldwide',
   availability: 'Open to new projects',
