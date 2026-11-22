@@ -31,7 +31,7 @@ export const projects = [
     featured: true,
     paper: {
       author: 'Aarnav Jain',
-      url: 'https://ieee-shortened-format.tiiny.site/?mode=suggestions',
+      url: import.meta.env.BASE_URL + 'papers/ai-driven-resume-screening.pdf',
       status: 'Unpublished manuscript',
     },
   },
