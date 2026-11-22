@@ -58,8 +58,56 @@ jobs:
                               print('HTML reference:',key,repr(val[:250]))
               parser=Links();parser.feed(data.decode('utf-8', errors='replace'))
           PY
+      - name: Check PDF bytes loaded inside original viewer
+        if: steps.verify.outputs.exact_pdf_available == 'false'
+        id: browser
+        shell: bash
+        run: |
+          npm install --no-save --package-lock=false playwright@1.57.0
+          npx playwright install --with-deps chromium
+          node --input-type=module - <<'JS'
+          import { chromium } from 'playwright'
+          import { createHash } from 'node:crypto'
+          import { writeFileSync, mkdirSync } from 'node:fs'
+          const expected = '66b4eb85eea50ce2519424cf65acb190803fd05953f47b1e22514c36aa27e909'
+          let exact = false
+          const inspected = []
+          const tasks = []
+          const browser = await chromium.launch({headless:true})
+          const page = await browser.newPage({viewport:{width:1280,height:900}})
+          page.on('response', response => {
+            const type = response.headers()['content-type'] || ''
+            const url = response.url()
+            if (!/pdf|octet-stream/i.test(type) && !/\.pdf(?:$|\?)/i.test(url)) return
+            tasks.push((async () => {
+              try {
+                const bytes = await response.body()
+                const signature = bytes.subarray(0,4).toString()
+                const sha = createHash('sha256').update(bytes).digest('hex')
+                inspected.push({url:url.slice(0,250),size:bytes.length,type,signature,sha})
+                if (signature === '%PDF' && sha === expected) {
+                  mkdirSync('public/papers',{recursive:true})
+                  writeFileSync('public/papers/ai-driven-resume-screening.pdf',bytes)
+                  exact = true
+                }
+              } catch(e) { console.log('Viewer PDF response not readable:',String(e)) }
+            })())
+          })
+          try {
+            await page.goto('https://ieee-shortened-format.tiiny.site/?mode=suggestions', {waitUntil:'domcontentloaded',timeout:40000})
+            await page.waitForTimeout(18000)
+            await Promise.allSettled(tasks)
+            console.log('PDF responses observed:',JSON.stringify(inspected).slice(0,7000))
+            console.log('Matching the exact user-uploaded PDF:',exact)
+          } catch(e) { console.log('Viewer inspection failed:',String(e)) }
+          finally {
+            await browser.close()
+            const { appendFileSync } = await import('node:fs')
+            appendFileSync(process.env.GITHUB_OUTPUT, 'exact_pdf_available='+String(exact)+'\n')
+          }
+          JS
       - name: Use local PDF link in Career AI Pro
-        if: steps.verify.outputs.exact_pdf_available == 'true'
+        if: steps.verify.outputs.exact_pdf_available == 'true' || steps.browser.outputs.exact_pdf_available == 'true'
         shell: bash
         run: |
           python3 - <<'PY'
@@ -73,7 +121,7 @@ jobs:
           path.write_text(source.replace(old, new))
           PY
       - name: Publish exact PDF to the GitHub portfolio repository
-        if: steps.verify.outputs.exact_pdf_available == 'true'
+        if: steps.verify.outputs.exact_pdf_available == 'true' || steps.browser.outputs.exact_pdf_available == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
