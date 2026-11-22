@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { motion } from 'motion/react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import CursorBrushTrail from './components/CursorBrushTrail'
 import { EmailContactProvider } from './components/EmailContact'
 import { ScrollProgress } from './components/MotionPrimitives'
 import Home from './pages/Home'
@@ -20,6 +21,7 @@ function App() {
     return () => window.cancelAnimationFrame(frameId)
   }, [location.pathname, location.hash])
   return <EmailContactProvider>
+    {!location.pathname.startsWith('/admin') && <CursorBrushTrail />}
     <ScrollProgress />
     <Navbar />
     <Routes location={location} key={location.pathname}>
