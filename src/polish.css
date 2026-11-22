@@ -988,3 +988,83 @@ body{-webkit-font-smoothing:antialiased}
   .service-row.service-tile:hover,
   .erp-custom-cta:hover { transform:none; }
 }
+
+/* Selected Work: three case studies + one intentionally open future project. */
+.work-section .work-four-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+.work-four-grid > * { min-width: 0; height: 100%; }
+.work-four-grid .project-spotlight,
+.work-four-grid .project-tilt,
+.work-four-grid .project-card { height: 100%; }
+.work-four-grid .project-image-wrap { aspect-ratio: 1.77; }
+.work-four-grid .project-card-body { padding: 13px 14px 13px; }
+.work-four-grid .project-title-link h3 { font-size: clamp(23px, 2.4vw, 29px); }
+.work-four-grid .project-card-body > p { font-size: 12px; line-height: 1.7; max-width: none; }
+.work-four-grid .project-card .tag-row { margin-top: 16px; }
+.work-four-grid .project-case-link { padding-top: 17px; }
+.work-four-grid .project-development-note { margin-top: 12px; }
+.work-four-grid .project-custom-note { margin-top: 12px; }
+.work-future-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 360px;
+  height: 100%;
+  padding: clamp(23px, 3.2vw, 33px);
+  overflow: hidden;
+  border: 1.5px dashed rgba(85, 107, 47, .34);
+  border-radius: 23px;
+  background:
+    radial-gradient(circle at 78% 26%, rgba(167, 180, 138, .13), transparent 45%),
+    linear-gradient(138deg, rgba(255,253,248,.82), rgba(245,241,230,.62));
+  color: #617451;
+}
+.work-future-label,
+.work-future-footnote {
+  font: 10px var(--mono);
+  line-height: 1.5;
+  letter-spacing: .1em;
+  color: #748568;
+}
+.work-future-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: auto 0;
+  text-align: center;
+  color: #748766;
+}
+.work-future-plus {
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  padding-bottom: 5px;
+  border: 1px solid rgba(85,107,47,.22);
+  border-radius: 50%;
+  background: rgba(255,253,248,.65);
+  color: #829471;
+  font-size: 46px;
+  font-weight: 250;
+  line-height: 1;
+}
+.work-future-center > span:last-child {
+  font-size: clamp(17px, 2vw, 23px);
+  font-weight: 500;
+  letter-spacing: -.035em;
+}
+.work-future-footnote { text-align: right; }
+@media (max-width: 760px) {
+  .work-section .work-four-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+    gap: 18px;
+  }
+  .work-future-card { min-height: 275px; }
+}
