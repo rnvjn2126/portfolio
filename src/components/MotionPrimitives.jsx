@@ -4,16 +4,16 @@ import { motion, useMotionValue, useReducedMotion, useSpring, useScroll } from '
 const revealEase = [0.22, 1, 0.36, 1]
 export function Stagger({ children, className = '', delay = 0, stagger = 0.09, ...props }) {
   const reduce = useReducedMotion()
-  return <motion.div className={className} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.12 }} variants={{ hidden: {}, visible: { transition: { delayChildren: reduce ? 0 : delay, staggerChildren: reduce ? 0 : stagger } } }} {...props}>{children}</motion.div>
+  return <motion.div className={className} initial={reduce ? false : 'hidden'} whileInView="visible" viewport={{ once: true, amount: 0.12 }} variants={{ hidden: {}, visible: { transition: { delayChildren: reduce ? 0 : delay, staggerChildren: reduce ? 0 : stagger } } }} {...props}>{children}</motion.div>
 }
 export function StaggerItem({ children, className = '', ...props }) {
   const reduce = useReducedMotion()
-  return <motion.div className={className} variants={{ hidden: { opacity: 0, y: reduce ? 0 : 24, filter: reduce ? 'none' : 'blur(7px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.72, ease: revealEase } } }} {...props}>{children}</motion.div>
+  return <motion.div className={className} variants={{ hidden: { opacity: 0, y: reduce ? 0 : 24, filter: reduce ? 'none' : 'blur(7px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: reduce ? 0 : 0.72, ease: revealEase } } }} {...props}>{children}</motion.div>
 }
 export function TextReveal({ text, className = '', delay = 0, as = 'span' }) {
   const reduce = useReducedMotion()
   const Tag = motion[as] || motion.span
-  return <Tag className={className} aria-label={text} initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { delayChildren: reduce ? 0 : delay, staggerChildren: reduce ? 0 : 0.075 } } }}>{String(text).split(' ').map((word, index) => <motion.span key={word + index} aria-hidden="true" style={{ display: 'inline-block', marginRight: '0.24em' }} variants={{ hidden: { opacity: 0, y: reduce ? 0 : 28, filter: reduce ? 'none' : 'blur(8px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.72, ease: revealEase } } }}>{word}</motion.span>)}</Tag>
+  return <Tag className={className} aria-label={text} initial={reduce ? false : 'hidden'} animate="visible" variants={{ hidden: {}, visible: { transition: { delayChildren: reduce ? 0 : delay, staggerChildren: reduce ? 0 : 0.075 } } }}>{String(text).split(' ').map((word, index) => <motion.span key={word + index} aria-hidden="true" style={{ display: 'inline-block', marginRight: '0.24em' }} variants={{ hidden: { opacity: 0, y: reduce ? 0 : 28, filter: reduce ? 'none' : 'blur(8px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: reduce ? 0 : 0.72, ease: revealEase } } }}>{word}</motion.span>)}</Tag>
 }
 export function Magnetic({ children, className = '', strength = 0.22, ...props }) {
   const ref = useRef(null), reduce = useReducedMotion(), rawX = useMotionValue(0), rawY = useMotionValue(0)
