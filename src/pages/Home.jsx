@@ -321,32 +321,26 @@ function Research() {
         </div>
 
         <h2 className="section-heading research-main-heading">
-          Research & Publications
+          <Link className="research-heading-link" to="/projects/Career AI Pro">
+            Research & Publications <ArrowUpRight size={25} aria-hidden="true" />
+          </Link>
         </h2>
 
-        <article className="research-publication">
+        <Link
+          className="research-publication research-publication--link"
+          to="/projects/Career AI Pro"
+          aria-label="Explore the Career AI Pro research paper and project details"
+        >
           <div className="research-author">
             <span className="research-author-label">AUTHORED BY</span>
-            <a
-              href={paperUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="research-author-name"
-            >
-              Aarnav Jain
-            </a>
+            <span className="research-author-name">Aarnav Jain</span>
+            <span className="research-project-caption">Career AI Pro · Related research manuscript</span>
           </div>
-
-          <a
-            href={paperUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="research-manuscript-link"
-          >
-            <span>Open manuscript</span>
+          <span className="research-manuscript-link">
+            <span>Explore research paper</span>
             <ArrowUpRight size={20} />
-          </a>
-        </article>
+          </span>
+        </Link>
       </Reveal>
     </section>
   )
