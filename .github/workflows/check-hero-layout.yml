@@ -6,6 +6,7 @@ on:
       - 'src/**'
       - 'scripts/check-hero-layout.mjs'
       - 'scripts/check-portfolio-experience.mjs'
+      - 'scripts/check-security-browser.mjs'
       - '.github/workflows/check-hero-layout.yml'
   workflow_dispatch:
 permissions:
@@ -34,3 +35,4 @@ jobs:
           done
           node scripts/check-hero-layout.mjs
           node scripts/check-portfolio-experience.mjs
+          node scripts/check-security-browser.mjs
