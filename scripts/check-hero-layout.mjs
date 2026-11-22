@@ -41,6 +41,24 @@ try {
         failed = true
       }
       await page.evaluate(() => document.fonts.ready)
+      // The large hero wrapper should remain visually unboxed.
+      // Its two inner cards (Ideas and the F1 car) stay styled separately.
+      const heroSurface = await page.locator('.hero.shell').evaluate(element => {
+        const style = getComputedStyle(element)
+        return {
+          backgroundColor: style.backgroundColor,
+          backgroundImage: style.backgroundImage,
+          boxShadow: style.boxShadow,
+          borderRadius: style.borderTopLeftRadius,
+        }
+      })
+      if (heroSurface.backgroundColor !== 'rgba(0, 0, 0, 0)' ||
+          heroSurface.backgroundImage !== 'none' ||
+          heroSurface.boxShadow !== 'none' ||
+          heroSurface.borderRadius !== '0px') {
+        console.error('Unwanted large hero background panel:', viewport.width, heroSurface)
+        failed = true
+      }
       // The hero uses a distinct complementary cream-and-olive palette,
       // with a dark olive car stage and light text for contrast.
       const palette = await page.locator('.hero.shell').evaluate(hero => {
