@@ -35,6 +35,6 @@ jobs:
             sleep 1
           done
           node scripts/check-hero-layout.mjs
+          node scripts/check-3d-car.mjs
           node scripts/check-portfolio-experience.mjs
           node scripts/check-security-browser.mjs
-          node scripts/check-3d-car.mjs
