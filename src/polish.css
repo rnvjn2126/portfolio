@@ -1534,3 +1534,43 @@ body{-webkit-font-smoothing:antialiased}
     transition: none;
   }
 }
+
+
+/* Mirrored split palettes for services and ERP: opaque white-beige-sage
+   on the left, sage-beige-white on the right. The midpoint is exactly 50%.
+   Both sections share the same colors, border, and shadow. */
+:root {
+  --panel-split-white: #fffdf8;
+  --panel-split-beige: #f1edde;
+  --panel-split-green: #e1ead6;
+  --panel-split-left: linear-gradient(90deg,
+    var(--panel-split-white) 0%,
+    var(--panel-split-beige) 50%,
+    var(--panel-split-green) 100%);
+  --panel-split-right: linear-gradient(90deg,
+    var(--panel-split-green) 0%,
+    var(--panel-split-beige) 50%,
+    var(--panel-split-white) 100%);
+}
+.detail-capabilities-grid .detail-capability,
+.services-section .service-list.service-compact-grid .service-tile {
+  background: var(--panel-split-left);
+  border: 1px solid rgba(85,107,47,.21);
+  box-shadow: 0 7px 20px rgba(38,48,31,.045);
+}
+.detail-capabilities-grid > :nth-child(even) {
+  background: var(--panel-split-right);
+}
+@media (min-width: 1121px) {
+  /* Four service columns: first two left-to-right, last two mirrored. */
+  .services-section .service-list.service-compact-grid > :nth-child(4n + 3) .service-tile,
+  .services-section .service-list.service-compact-grid > :nth-child(4n + 4) .service-tile {
+    background: var(--panel-split-right);
+  }
+}
+@media (max-width: 1120px) {
+  /* Two-column tablets and single-column phones retain alternating mirrors. */
+  .services-section .service-list.service-compact-grid > :nth-child(even) .service-tile {
+    background: var(--panel-split-right);
+  }
+}

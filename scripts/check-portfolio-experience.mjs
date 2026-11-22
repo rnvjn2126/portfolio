@@ -20,6 +20,20 @@ try {
       const serviceGrid = await page.locator('.service-compact-grid').evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length)
       assert(serviceGrid === (viewport.width < 530 ? 1 : 4),
         'Unexpected service grid at ' + viewport.width + 'px: ' + serviceGrid)
+      // Symmetrical white-beige-green cards: first half of each desktop row
+      // fades left-to-right and the second half mirrors green-beige-white.
+      const serviceGradients = await page.locator('#services .service-tile').evaluateAll(elements =>
+        elements.map(element => getComputedStyle(element).backgroundImage)
+      )
+      const leftPositions = viewport.width > 1120 ? [0, 1, 4, 5] : [0, 2, 4, 6]
+      const rightPositions = viewport.width > 1120 ? [2, 3, 6, 7] : [1, 3, 5, 7]
+      const leftGradient = serviceGradients[leftPositions[0]]
+      const rightGradient = serviceGradients[rightPositions[0]]
+      assert(serviceGradients.length === 8 && leftGradient.includes('linear-gradient') &&
+        rightGradient.includes('linear-gradient') && leftGradient !== rightGradient &&
+        leftPositions.every(index => serviceGradients[index] === leftGradient) &&
+        rightPositions.every(index => serviceGradients[index] === rightGradient),
+        'Service cards do not maintain their mirrored left/right color patterns')
 
       // The site's existing hero animations and assets must remain intact.
       assert(await page.locator('.hero-car canvas').count() === 1, 'Original 3D car is missing')
@@ -136,6 +150,15 @@ try {
 
       await page.goto(root + '#/projects/ERP-Software-Demo', { waitUntil: 'domcontentloaded' })
       await page.locator('.erp-custom-banner').waitFor({ state: 'visible' })
+      const capabilityGradients = await page.locator('.detail-capability').evaluateAll(elements =>
+        elements.map(element => getComputedStyle(element).backgroundImage)
+      )
+      assert(capabilityGradients.length === 4 &&
+        capabilityGradients[0] === leftGradient &&
+        capabilityGradients[2] === leftGradient &&
+        capabilityGradients[1] === rightGradient &&
+        capabilityGradients[3] === rightGradient,
+        'ERP capability cards do not match the mirrored service card colors')
       const erpActions = await page.locator('.detail-bottom-actions > *').evaluateAll(actions =>
         actions.map(action => ({
           width: action.getBoundingClientRect().width,
