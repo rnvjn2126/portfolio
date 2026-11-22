@@ -248,6 +248,7 @@ export default function HeroCar3D() {
           loadedScene.position.set(-center.x * scale, -center.y * scale, -center.z * scale)
           viewHeight = Math.max(size.y * scale * 1.8, size.x * scale / 2.4 * 1.35)
           resize()
+          performance.mark('portfolio:f1-complete-model-rendered')
           setLoadProgress(1)
           setLoaded(true)
 
@@ -445,6 +446,7 @@ export default function HeroCar3D() {
             },
           }
                 resize()
+                performance.mark('portfolio:f1-exploded-controls-ready')
                 setPrepared(true)
               } catch (error) {
                 console.error('Unable to prepare F1 exploded view:', error)
