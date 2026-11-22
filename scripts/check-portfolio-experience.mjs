@@ -269,6 +269,32 @@ try {
     }
   }
 
+  // UX 1: simulate a slow screenshot to verify the skeleton is delayed
+  // and occupies the image's final dimensions without layout movement.
+  const slowPage = await browser.newPage({ viewport: { width: 1280, height: 850 }, reducedMotion: 'reduce' })
+  try {
+    await slowPage.route('**/images/screenshots/aj-overseas.png', async route => {
+      await new Promise(resolve => setTimeout(resolve, 750))
+      await route.continue()
+    })
+    await slowPage.goto(root + '#/', { waitUntil: 'domcontentloaded' })
+    const preview = slowPage.locator('.home-project-visual').first()
+    await preview.scrollIntoViewIfNeeded()
+    const before = await preview.boundingBox()
+    await preview.locator('.progressive-image-skeleton').waitFor({ state: 'visible', timeout: 1200 })
+    await slowPage.waitForFunction(() => {
+      const image = document.querySelector('.home-project-visual .progressive-image')
+      return Boolean(image?.complete && image.naturalWidth > 0)
+    }, null, { timeout: 5000 })
+    await preview.locator('.progressive-image-skeleton').waitFor({ state: 'hidden', timeout: 3000 })
+    const after = await preview.boundingBox()
+    assert(Math.abs(before.height - after.height) < 2 &&
+      Math.abs(before.width - after.width) < 2, 'Image loading must not move surrounding layout')
+    console.log('PASS: delayed screenshot skeleton reserves real image dimensions')
+  } finally {
+    await slowPage.close()
+  }
+
   // Desktop mouse interaction: verify the trail is painted, never intercepts
   // pointer events, and disappears on its own after a fraction of a second.
   const brushPage = await browser.newPage({
