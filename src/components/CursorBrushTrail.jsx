@@ -18,9 +18,12 @@ export default function CursorBrushTrail() {
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const lifetime = 320
+    const bubbleLifetime = 380
+    const maxBubbles = 9
     const maximumLength = 90
     const maximumPoints = 36
     let points = []
+    let bubbles = []
     let frame = 0
     let previous = null
     let active = false
@@ -33,6 +36,7 @@ export default function CursorBrushTrail() {
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
       context.clearRect(0, 0, window.innerWidth, window.innerHeight)
       points = []
+      bubbles = []
       previous = null
     }
 
@@ -50,6 +54,7 @@ export default function CursorBrushTrail() {
       const height = window.innerHeight
       context.clearRect(0, 0, width, height)
       points = points.filter(point => now - point.time < lifetime)
+      bubbles = bubbles.filter(bubble => now - bubble.time < bubbleLifetime)
 
       if (points.length > 1) {
         context.lineCap = 'round'
@@ -70,7 +75,21 @@ export default function CursorBrushTrail() {
         }
       }
 
-      if (points.length > 0) frame = window.requestAnimationFrame(render)
+      // Tiny translucent bubble at click location, slightly expanding
+      // and fading naturally, without covering the clicked control.
+      for (const bubble of bubbles) {
+        const life = Math.max(0, 1 - (now - bubble.time) / bubbleLifetime)
+        const radius = 2.5 + 5 * (1 - life)
+        context.beginPath()
+        context.arc(bubble.x, bubble.y, radius, 0, Math.PI * 2)
+        context.fillStyle = `rgba(183, 198, 157, ${(0.28 * life).toFixed(3)})`
+        context.fill()
+        context.strokeStyle = `rgba(79, 105, 55, ${(0.68 * life).toFixed(3)})`
+        context.lineWidth = 1.1
+        context.stroke()
+      }
+
+      if (points.length > 0 || bubbles.length > 0) frame = window.requestAnimationFrame(render)
     }
 
     const onMove = (event) => {
@@ -107,6 +126,14 @@ export default function CursorBrushTrail() {
       if (!frame) frame = window.requestAnimationFrame(render)
     }
 
+    const onClick = (event) => {
+      if (!active || (event.pointerType !== 'mouse' && event.pointerType !== 'pen')) return
+      if (event.button !== 0) return
+      bubbles.push({ x: event.clientX, y: event.clientY, time: performance.now() })
+      if (bubbles.length > maxBubbles) bubbles.splice(0, bubbles.length - maxBubbles)
+      if (!frame) frame = window.requestAnimationFrame(render)
+    }
+
     const updatePreference = () => {
       active = finePointer.matches && !reducedMotion.matches
       canvas.hidden = !active
@@ -120,6 +147,7 @@ export default function CursorBrushTrail() {
 
     window.addEventListener('resize', resize, { passive: true })
     document.addEventListener('pointermove', onMove, { capture: true, passive: true })
+    document.addEventListener('pointerdown', onClick, { capture: true, passive: true })
     window.addEventListener('blur', stop)
     document.addEventListener('visibilitychange', onVisibility)
     finePointer.addEventListener('change', updatePreference)
@@ -129,6 +157,7 @@ export default function CursorBrushTrail() {
     return () => {
       window.removeEventListener('resize', resize)
       document.removeEventListener('pointermove', onMove, true)
+      document.removeEventListener('pointerdown', onClick, true)
       window.removeEventListener('blur', stop)
       document.removeEventListener('visibilitychange', onVisibility)
       finePointer.removeEventListener('change', updatePreference)
