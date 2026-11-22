@@ -4218,3 +4218,70 @@ body {
     background-attachment: scroll;
   }
 }
+
+
+/* =========================================================
+   INTERACTIVE MOTION PRIMITIVES + HAikei visual layers
+   ========================================================= */
+:root {
+  --rc-text: #26301F;
+  --rc-background: #FFFCF5;
+  --rc-primary: #556B2F;
+  --rc-secondary: #F2EBDD;
+  --rc-accent: #A7B48A;
+  --rc-border: rgba(62, 77, 35, .16);
+  --rc-muted: #656957;
+  --rc-focus: #3E4D23;
+  --rc-gradient: linear-gradient(110deg, #FFFCF5 0%, #F6EEDC 48%, #D6E0C3 100%);
+}
+::selection { color: #FFFCF5; background: var(--rc-primary); }
+:focus-visible { outline: 2px solid var(--rc-focus); outline-offset: 4px; }
+.scroll-progress__fill {
+  position: fixed; z-index: 100; inset: 0 auto auto 0; width: 100%; height: 3px;
+  background: linear-gradient(90deg, #3E4D23, #7A8A52, #D6E0C3);
+  transform-origin: 0 50%; pointer-events: none;
+}
+.hero h1 > span, .hero h1 .gradient-text > span { display: inline; }
+.hero h1 .gradient-text { display: inline-block; }
+.magnetic-wrap { display: inline-flex; width: fit-content; }
+.button { will-change: transform; }
+.spotlight-card { --spotlight-x: 50%; --spotlight-y: 50%; position: relative; isolation: isolate; min-width: 0; border-radius: inherit; }
+.spotlight-card::before {
+  content: ""; position: absolute; z-index: 3; inset: 0; border-radius: inherit; pointer-events: none;
+  opacity: 0; background: radial-gradient(260px circle at var(--spotlight-x) var(--spotlight-y), rgba(167,180,138,.22), transparent 68%);
+  transition: opacity .35s ease;
+}
+.spotlight-card:hover::before { opacity: 1; }
+.project-spotlight { height: 100%; border-radius: 20px; }
+.project-tilt { height: 100%; transform-style: preserve-3d; }
+.project-tilt .project-card { height: 100%; }
+.service-spotlight { border-radius: 14px; }
+.service-spotlight::before { background: radial-gradient(340px circle at var(--spotlight-x) var(--spotlight-y), rgba(167,180,138,.17), transparent 70%); }
+.about-section { position: relative; isolation: isolate; }
+.about-section::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none; width: min(66vw,760px); height: 560px;
+  right: -18%; top: 5%; opacity: .34; background: url('./assets/haikei-about.svg') center / contain no-repeat;
+}
+.contact-panel { position: relative; isolation: isolate; overflow: hidden; }
+.contact-panel::after {
+  content: ""; position: absolute; z-index: -1; inset: auto -5% -35% -5%; height: 78%; pointer-events: none;
+  opacity: .58; background: url('./assets/haikei-contact.svg') center bottom / 100% 100% no-repeat;
+}
+.hero::before { animation: haikei-drift 18s ease-in-out infinite alternate; }
+.contact-orb { animation: orb-breathe 9s ease-in-out infinite alternate; }
+@keyframes haikei-drift { from { transform: translate3d(-1.2%,0,0) scale(1); } to { transform: translate3d(1.2%,-1.2%,0) scale(1.035); } }
+@keyframes orb-breathe { from { transform: scale(.94) translate3d(-2%,1%,0); opacity:.55; } to { transform: scale(1.08) translate3d(2%,-1%,0); opacity:.85; } }
+@media (hover:none), (pointer:coarse) { .spotlight-card::before { display:none; } }
+@media (max-width:760px) {
+  .about-section::before { width:100vw; height:420px; right:-35%; top:12%; opacity:.22; }
+  .contact-panel::after { opacity:.32; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero::before, .contact-orb { animation:none !important; }
+  .spotlight-card::before, .scroll-progress__fill { display:none; }
+}
+.filter-chip { position:relative; isolation:isolate; }
+.filter-chip-indicator { position:absolute; z-index:-1; inset:0; border-radius:inherit; background:var(--olive-primary); }
+.filter-chip-label { position:relative; z-index:1; }
+.filter-chip.active { color:#FFFCF5; }
+.project-grid > div { min-width:0; }
