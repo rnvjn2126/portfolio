@@ -290,8 +290,22 @@ function Work() {
         ))}
       </Stagger>
 
-      <div className="center-action">
-        <Button to="/projects" variant="secondary">
+      <div className="center-action work-cta-stack">
+        <div className="work-live-actions" aria-label="Visit live projects">
+          {projects.filter(project => project.featured && project.liveUrl).map(project => (
+            <Button
+              key={project.slug}
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              magnetic={false}
+              aria-label={'Visit live ' + project.title + ' project in a new tab'}
+            >
+              View live: {project.title}
+            </Button>
+          ))}
+        </div>
+        <Button to="/projects" variant="secondary" magnetic={false}>
           View all projects
         </Button>
       </div>
