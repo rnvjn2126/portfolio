@@ -269,6 +269,21 @@ try {
       return true
     })
     assert(faded, 'Mouse brush trail should fade out completely after movement stops')
+    // A left click creates a small translucent olive ring, using the same
+    // canvas without preventing the original click.
+    await brushPage.mouse.click(600, 360)
+    await brushPage.waitForTimeout(55)
+    const bubbleVisible = await brush.evaluate(canvas => {
+      const data = canvas.getContext('2d').getImageData(590, 350, 20, 20).data
+      return data.some((channel, index) => index % 4 === 3 && channel > 0)
+    })
+    assert(bubbleVisible, 'Left click should leave a tiny fading bubble')
+    await brushPage.waitForTimeout(440)
+    const bubbleGone = await brush.evaluate(canvas => {
+      const data = canvas.getContext('2d').getImageData(590, 350, 20, 20).data
+      return !data.some((channel, index) => index % 4 === 3 && channel > 0)
+    })
+    assert(bubbleGone, 'Click bubble should fade away completely')
     console.log('PASS: cursor brush stroke is visible, fades away and never blocks interaction')
   } finally {
     await brushPage.close()
