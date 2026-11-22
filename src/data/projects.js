@@ -50,6 +50,12 @@ export const projects = [
     githubUrl: 'https://github.com/rnvjn2126/testproj/tree/ai/steel-mvp-overnight',
     featured: true,
     developmentNote: 'Local development MVP. No public live deployment.',
+    capabilities: [
+      { title: 'Supplier cost comparison', description: 'Normalize purchase units, availability, freight and incidental landed costs.' },
+      { title: 'Margin-aware quotations', description: 'Price with gross-margin targets, review guardrails, revisions and customer PDF export.' },
+      { title: 'Sales follow-up workflow', description: 'Track enquiries, quotations and manually actioned reminders in one workspace.' },
+      { title: 'Controlled catalogues', description: 'Manage account-scoped customer, supplier and steel-product records with CSV import and export.' },
+    ],
     screenshots: [
       {
         src: import.meta.env.BASE_URL + 'images/screenshots/steel-quotes-workspace.png',
