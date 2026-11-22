@@ -306,16 +306,6 @@ function Work() {
         {completed.map((project, index) => (
           <StaggerItem key={project.slug}><HomeProjectCard project={project} index={index} /></StaggerItem>
         ))}
-        <StaggerItem key="future-project">
-          <div className="work-future-card" aria-label="Reserved space for a future project">
-            <span className="work-future-label">04 / RESERVED</span>
-            <div className="work-future-center">
-              <span className="work-future-plus" aria-hidden="true">+</span>
-              <span>Space for what's next.</span>
-            </div>
-            <span className="work-future-footnote">A FUTURE PROJECT</span>
-          </div>
-        </StaggerItem>
       </Stagger>
 
       {inProgress.length > 0 && (
