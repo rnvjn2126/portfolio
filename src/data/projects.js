@@ -95,7 +95,8 @@ export const projects = [
     coverAlt: 'Real Steel Trading Quotes Django quotation screen with synthetic supplier prices and margin calculations',
     githubUrl: 'https://github.com/rnvjn2126/testproj/tree/ai/steel-mvp-overnight',
     featured: false,
-    developmentNote: 'Local B2B prototype. Not publicly hosted.',
+    status: 'work-in-progress',
+    developmentNote: 'Work in progress. Local B2B prototype, not publicly hosted.',
     capabilities: [
       { title: 'RFQ and supplier offers', description: 'Capture steel enquiries and compare supplier availability, prices, freight and lead times.' },
       { title: 'Transparent quote pricing', description: 'Normalize purchase units, calculate landed costs and use gross-margin guardrails.' },
