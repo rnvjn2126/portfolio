@@ -430,3 +430,35 @@ body{-webkit-font-smoothing:antialiased}
   .detail-live-button { transition: none; }
   .detail-live-button:hover { transform: none; }
 }
+
+/* Featured project live links precede the all-projects navigation action. */
+.work-cta-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.work-live-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.work-live-actions .button {
+  min-height: 46px;
+  border-radius: 12px;
+  background: #556b2f;
+  border-color: #556b2f;
+  color: #fffdf8;
+  font-size: 12px;
+  font-weight: 750;
+}
+.work-live-actions .button:hover {
+  background: #3e4d23;
+  border-color: #3e4d23;
+}
+@media (max-width: 480px) {
+  .work-live-actions { flex-direction: column; width: 100%; }
+  .work-live-actions .button { justify-content: center; width: 100%; }
+}
