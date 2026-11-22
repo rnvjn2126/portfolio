@@ -17,6 +17,7 @@ export default function ProjectCard({ project, index = 0, showActions = false })
       <Link to={'/projects/' + project.slug} className="project-image-wrap" aria-label={'Read about ' + project.title}>
         <motion.img
           src={project.cover}
+          onError={event => { const image = event.currentTarget; if (project.fallbackCover && !image.dataset.fallbackApplied) { image.dataset.fallbackApplied = 'true'; image.src = project.fallbackCover } }}
           alt={project.coverAlt || project.title + ' project preview'}
           className="project-image"
           loading="lazy"
@@ -40,7 +41,7 @@ export default function ProjectCard({ project, index = 0, showActions = false })
           <div className="project-actions">
             {project.liveUrl && (
               <a className="project-live-button" href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={'Open live demo of ' + project.title + ' in a new tab'}>
-                <Globe size={16} aria-hidden="true" /> View live project <ArrowUpRight size={16} aria-hidden="true" />
+                <Globe size={17} aria-hidden="true" /> <span>View live project</span> <ArrowUpRight className="project-live-arrow" size={16} aria-hidden="true" />
               </a>
             )}
             {project.githubUrl && (
