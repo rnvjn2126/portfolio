@@ -25,19 +25,16 @@ try {
       assert(await page.locator('.hero-car canvas').count() === 1, 'Original 3D car is missing')
       assert(await page.locator('.coffee-art svg').count() === 1, 'Original coffee art is missing')
 
-      // The homepage is a true two-by-two grid: three finished projects and
-      // one deliberately unfilled, non-clickable space for the next project.
+      // Three finished projects in a two-column grid, with no fourth placeholder.
       const cards = page.locator('#work .work-four-grid > *')
-      assert(await cards.count() === 4, 'Homepage should have four grid slots')
+      assert(await cards.count() === 3, 'Homepage should have exactly three project grid items')
       assert(await page.locator('#work .work-four-grid .home-project-card').count() === 3,
         'Homepage should show exactly three compact project cards')
-      assert(await page.locator('#work .work-future-card').count() === 1,
-        'Homepage future project placeholder is missing')
+      assert(await page.locator('#work .work-future-card').count() === 0,
+        'The fourth position must remain completely blank')
       const names = await page.locator('#work .work-four-grid .home-project-copy h3').allInnerTexts()
       assert(names.join(' | ') === 'AJ Overseas | Career AI Pro | ERP Software Demo',
         'Unexpected homepage featured projects: ' + names.join(' | '))
-      assert(await page.locator('#work .work-future-card a').count() === 0,
-        'Empty future project card must not be a broken link')
       const wipPreview = page.locator('#work .home-wip-entry')
       assert(await wipPreview.count() === 1, 'Homepage needs one small Work in Progress preview')
       assert((await wipPreview.innerText()).includes('Steel Trading Quotes'),
@@ -50,20 +47,18 @@ try {
       const arrows = await page.locator('#services .service-arrow.lucide-arrow-up-right').count()
       assert(arrows === 0, 'Decorative service arrows were not replaced with meaningful icons')
 
-      const rectangles = await Promise.all([0,1,2,3].map(index => cards.nth(index).boundingBox()))
-      assert(rectangles.every(Boolean), 'A homepage grid cell has no layout box')
+      const rectangles = await Promise.all([0,1,2].map(index => cards.nth(index).boundingBox()))
+      assert(rectangles.every(Boolean), 'A homepage project has no layout box')
       const same = (a,b) => Math.abs(a-b) < 6
       if (viewport.width >= 761) {
         assert(same(rectangles[0].y,rectangles[1].y) &&
-               same(rectangles[2].y,rectangles[3].y) &&
                same(rectangles[0].x,rectangles[2].x) &&
-               same(rectangles[1].x,rectangles[3].x),
-          'Homepage projects are not arranged in two rows and two columns')
+               rectangles[2].y > rectangles[0].y,
+          'Homepage projects should occupy top left, top right, and bottom left')
       } else {
         assert(rectangles[0].y < rectangles[1].y &&
-               rectangles[1].y < rectangles[2].y &&
-               rectangles[2].y < rectangles[3].y,
-          'Homepage project grid does not stack correctly on mobile')
+               rectangles[1].y < rectangles[2].y,
+          'Homepage project cards do not stack correctly on mobile')
       }
 
 
