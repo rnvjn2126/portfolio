@@ -41,6 +41,27 @@ try {
         failed = true
       }
       await page.evaluate(() => document.fonts.ready)
+      // The hero uses a distinct complementary cream-and-olive palette,
+      // with a dark olive car stage and light text for contrast.
+      const palette = await page.locator('.hero.shell').evaluate(hero => {
+        const feature = hero.querySelector('.hero-feature')
+        const visual = hero.querySelector('.hero-visual')
+        const heading = visual?.querySelector('.hero-visual__heading')
+        return {
+          page: getComputedStyle(hero).backgroundImage,
+          feature: feature ? getComputedStyle(feature).backgroundImage : '',
+          carStage: visual ? getComputedStyle(visual).backgroundImage : '',
+          label: heading ? getComputedStyle(heading).color : '',
+        }
+      })
+      if (!palette.page.includes('linear-gradient') ||
+          !palette.feature.includes('linear-gradient') ||
+          !palette.carStage.includes('linear-gradient') ||
+          palette.feature === palette.carStage ||
+          palette.label !== 'rgb(255, 253, 244)') {
+        console.error('Complementary hero palette is missing:',viewport.width,palette)
+        failed = true
+      }
       const selectors = {
         heading: '.hero .hero-content h1',
         intro: '.hero .hero-intro',
