@@ -25,7 +25,11 @@ export default function ProjectDetails() {
         <p className="page-lede">{project.description}</p>
       </div>
       <img className="detail-cover" src={project.cover} alt={project.coverAlt} decoding="async" onError={event => { const image = event.currentTarget; if (project.fallbackCover && !image.dataset.fallbackApplied) { image.dataset.fallbackApplied = 'true'; image.src = project.fallbackCover } }} />
-      <p className="projects-note">Preview of the live application when available, with an illustrated fallback. Use the View live project button below to explore the working project.</p>
+      <p className="projects-note">
+        {project.developmentNote
+          ? 'A genuine screenshot from a temporary Django demo with synthetic example records. This project runs locally and is not publicly hosted.'
+          : 'Preview of the live application when available, with an illustrated fallback. Use the View live project button below to explore the working project.'}
+      </p>
       <div className="detail-content">
         <div>
           <span className="eyebrow">PROJECT OVERVIEW</span>
@@ -39,6 +43,35 @@ export default function ProjectDetails() {
           {project.githubUrl && <a className="text-link" href={project.githubUrl} target="_blank" rel="noopener noreferrer">View source on GitHub <ArrowUpRight size={16} /></a>}
         </aside>
       </div>
+
+      {project.screenshots && (
+        <section className="detail-gallery" aria-labelledby="detail-gallery-heading">
+          <div className="section-kicker">
+            <span id="detail-gallery-heading">APPLICATION WALKTHROUGH</span>
+            <span className="line" />
+          </div>
+          <p className="detail-gallery-intro">Screenshots captured from the actual running application with fictional customer, supplier and quotation data.</p>
+          <div className="detail-gallery-grid">
+            {project.screenshots.map(image => (
+              <figure className="detail-gallery-item" key={image.src}>
+                <a href={image.src} target="_blank" rel="noopener noreferrer" aria-label={'Open full size screenshot: ' + image.label}>
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
+                    decoding="async"
+                    onError={event => {
+                      const figure = event.currentTarget.closest('figure')
+                      if (figure) figure.hidden = true
+                    }}
+                  />
+                </a>
+                <figcaption>{image.label}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
 
       {project.paper && (
         <section className="research-paper-section" id="research-paper" aria-labelledby="research-paper-heading">
