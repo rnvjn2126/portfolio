@@ -1641,3 +1641,22 @@ body{-webkit-font-smoothing:antialiased}
 @media (max-width: 760px) {
   .hero.shell { border-radius: 0; }
 }
+
+
+/* Delicate mouse brush stroke. The overlay does not change the cursor or
+   intercept hover, clicks, selection, drags, or the interactive 3D car. */
+.cursor-brush-trail {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1500;
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
+  opacity: 1;
+}
+.cursor-brush-trail[hidden] { display: none !important; }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-brush-trail { display: none !important; }
+}
