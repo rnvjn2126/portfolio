@@ -529,10 +529,10 @@ export default function HeroCar3D() {
       }}
       onBlur={() => setLatched(false)}
     >
-      <div className="hero-car__viewport">
+      <span className="hero-car__viewport">
         <canvas ref={canvasRef} className="hero-car__canvas" aria-hidden="true" />
-      </div>
-      <span className={loadError ? 'hero-car__status-error' : ''}>
+      </span>
+      <span className={'hero-car__status' + (loadError ? ' hero-car__status-error' : '')}>
         {loadError || (loaded ? (isActive ? 'Expanded • move away or press to reset' : 'Hover or press to disassemble') : `Loading 3D car... ${Math.round(loadProgress * 100)}%`)}
       </span>
     </button>
