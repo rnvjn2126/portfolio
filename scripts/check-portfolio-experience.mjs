@@ -15,6 +15,11 @@ try {
     try {
       await page.goto(root + '#/', { waitUntil: 'domcontentloaded' })
       await page.locator('#services .service-tile').first().waitFor({ state: 'visible' })
+      // Accessibility: reduced-motion visitors do not get cursor trails.
+      assert(await page.locator('.cursor-brush-trail').count() === 1,
+        'Brush canvas is not mounted on a public page')
+      assert(!(await page.locator('.cursor-brush-trail').isVisible()),
+        'Brush trail should be hidden when reduced motion is preferred')
       const services = await page.locator('#services .service-tile').count()
       assert(services === 8, 'Expected eight service cards, saw ' + services)
       const serviceGrid = await page.locator('.service-compact-grid').evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length)
@@ -224,6 +229,49 @@ try {
     } finally {
       await page.close()
     }
+  }
+
+  // Desktop mouse interaction: verify the trail is painted, never intercepts
+  // pointer events, and disappears on its own after a fraction of a second.
+  const brushPage = await browser.newPage({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: 'no-preference',
+  })
+  try {
+    await brushPage.goto(root + '#/', { waitUntil: 'domcontentloaded' })
+    const brush = brushPage.locator('.cursor-brush-trail')
+    await brush.waitFor({ state: 'visible' })
+    const canvasStyle = await brush.evaluate(element => {
+      const style = getComputedStyle(element)
+      return { pointerEvents: style.pointerEvents, position: style.position, width: element.width }
+    })
+    assert(canvasStyle.pointerEvents === 'none' && canvasStyle.position === 'fixed' &&
+      canvasStyle.width > 0, 'Brush overlay should not block car, coffee, buttons or links')
+    await brushPage.mouse.move(360, 365)
+    await brushPage.mouse.move(440, 390, { steps: 12 })
+    await brushPage.waitForTimeout(65)
+    const painted = await brush.evaluate(canvas => {
+      const context = canvas.getContext('2d')
+      const pixels = context.getImageData(350, 350, 120, 65).data
+      for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] > 0) return true
+      }
+      return false
+    })
+    assert(painted, 'Mouse movement should draw a short translucent olive brush line')
+    await brushPage.waitForTimeout(420)
+    const faded = await brush.evaluate(canvas => {
+      const context = canvas.getContext('2d')
+      const pixels = context.getImageData(350, 350, 120, 65).data
+      for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] > 0) return false
+      }
+      return true
+    })
+    assert(faded, 'Mouse brush trail should fade out completely after movement stops')
+    console.log('PASS: cursor brush stroke is visible, fades away and never blocks interaction')
+  } finally {
+    await brushPage.close()
   }
 } finally {
   await browser.close()
