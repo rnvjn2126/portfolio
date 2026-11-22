@@ -256,8 +256,9 @@ function About() {
 }
 
 function Work() {
-  const featured = projects.filter(project => project.featured)
-  const additional = projects.filter(project => !project.featured && project.status !== 'work-in-progress')
+  // Keep work in progress on the Projects page, leaving one intentional
+  // blank space for the next completed project on the homepage.
+  const completed = projects.filter(project => project.status !== 'work-in-progress')
 
   return (
     <section className="section shell work-section" id="work">
@@ -282,8 +283,8 @@ function Work() {
         </Reveal>
       </div>
 
-      <Stagger className="project-grid work-featured-grid" stagger={0.12}>
-        {featured.map((project, i) => (
+      <Stagger className="project-grid work-featured-grid work-four-grid" stagger={0.1}>
+        {completed.map((project, i) => (
           <StaggerItem key={project.slug}>
             <SpotlightCard className="project-spotlight">
               <TiltCard className="project-tilt">
@@ -292,47 +293,21 @@ function Work() {
             </SpotlightCard>
           </StaggerItem>
         ))}
+        <StaggerItem key="future-project">
+          <div className="work-future-card" aria-label="Reserved space for a future project">
+            <span className="work-future-label">04 / RESERVED</span>
+            <div className="work-future-center">
+              <span className="work-future-plus" aria-hidden="true">+</span>
+              <span>Space for what's next.</span>
+            </div>
+            <span className="work-future-footnote">A FUTURE PROJECT</span>
+          </div>
+        </StaggerItem>
       </Stagger>
-
-      {additional.length > 0 && (
-        <div className="work-additional">
-          <div className="work-additional-title">
-            <span className="eyebrow">MORE WORK / BUSINESS SYSTEMS</span>
-            <span>{String(additional.length).padStart(2, '0')} MORE PROJECTS</span>
-          </div>
-          <div className="work-mini-grid">
-            {additional.map(project => (
-              <Link className="work-mini-card" to={'/projects/' + project.slug} key={project.slug}>
-                <div className="work-mini-preview">
-                  <img
-                    src={project.cover}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    onError={event => {
-                      const img = event.currentTarget
-                      if (project.fallbackCover && !img.dataset.fallbackApplied) {
-                        img.dataset.fallbackApplied = 'true'
-                        img.src = project.fallbackCover
-                      }
-                    }}
-                  />
-                </div>
-                <div className="work-mini-copy">
-                  <span>{project.category}</span>
-                  <h3>{project.title}</h3>
-                  <p>{project.customizable ? project.customizationHeading : project.description}</p>
-                </div>
-                <ArrowUpRight size={20} className="work-mini-arrow" aria-hidden="true" />
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
 
       <div className="center-action work-cta-stack">
         <Button to="/projects" variant="secondary" magnetic={false}>
-          Explore all {projects.length} projects
+          Explore all projects
         </Button>
       </div>
     </section>
