@@ -1606,12 +1606,12 @@ body{-webkit-font-smoothing:antialiased}
 /* Hero's complementary cream-and-olive treatment: a gentle ivory-to-sage
    foundation, a soft beige feature card, and a rich olive stage for the F1 car.
    All decorative changes are CSS only; the 3D car and coffee stay untouched. */
+/* Let the hero content sit directly on the site's page background.
+   Keep the two individual feature cards and the interactive F1 stage intact. */
 .hero.shell {
-  background:
-    radial-gradient(ellipse at 82% 65%, rgba(179, 197, 157, .19), transparent 45%),
-    linear-gradient(112deg, rgba(255,253,248,.80) 0%, rgba(245,240,229,.85) 50%, rgba(222,233,209,.70) 100%);
-  border-radius: clamp(18px, 2.3vw, 30px);
-  box-shadow: inset 0 0 0 1px rgba(85, 107, 47, .07);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
 }
 .hero.shell .hero-feature {
   background: linear-gradient(135deg, #fffdf8 0%, #f3eee2 58%, #e6eddc 100%);
@@ -1639,5 +1639,5 @@ body{-webkit-font-smoothing:antialiased}
   filter: drop-shadow(0 17px 19px rgba(24, 38, 17, .30));
 }
 @media (max-width: 760px) {
-  .hero.shell { border-radius: 19px; }
+  .hero.shell { border-radius: 0; }
 }
