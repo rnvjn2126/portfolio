@@ -1413,3 +1413,204 @@ body{-webkit-font-smoothing:antialiased}
 @media (prefers-reduced-motion: reduce) {
   .project-grid--listing .project-consult-button { transition: none; }
 }
+
+/* Unified action positions across all public portfolio case studies.
+   The cards share two fixed-height rows even when optional GitHub links differ. */
+:root {
+  --portfolio-action-height: 48px;
+  --portfolio-action-radius: 12px;
+}
+.project-grid--listing > * {
+  display: flex;
+  min-width: 0;
+  height: 100%;
+}
+.project-grid--listing .project-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.project-grid--listing .project-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+.project-grid--listing .project-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, var(--portfolio-action-height));
+  align-items: stretch;
+  gap: 10px;
+  padding-top: 17px;
+  margin-top: auto;
+  border-top: 1px solid rgba(62,77,35,.16);
+}
+.project-grid--listing .project-actions > a,
+.project-grid--listing .project-actions > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  height: var(--portfolio-action-height);
+  min-height: var(--portfolio-action-height);
+  max-height: var(--portfolio-action-height);
+  margin: 0;
+  padding: 10px 11px;
+  border-radius: var(--portfolio-action-radius);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 780;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.project-grid--listing .project-actions .project-primary-action {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  border: 1px solid #556b2f;
+  background: #556b2f;
+  color: #fffdf8;
+}
+.project-grid--listing .project-actions .project-primary-action:hover {
+  background: #3e4d23;
+}
+.project-grid--listing .project-actions .project-source-button {
+  grid-column: 1;
+  grid-row: 2;
+  border: 1px solid rgba(85,107,47,.25);
+  background: #f6f3ea;
+  color: #405033;
+}
+.project-grid--listing .project-actions .project-details-button {
+  grid-column: 2;
+  grid-row: 2;
+  border: 1px solid rgba(85,107,47,.25);
+  background: #fffdf8;
+  color: #405033;
+}
+.project-grid--listing .project-actions .project-details-button:hover {
+  background: #eaf0e0;
+}
+.project-grid--listing .project-actions svg { flex: 0 0 auto; }
+
+/* Case-study pages have the same two CTA slots: action first, browse second. */
+.detail-page .detail-bottom-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 225px));
+  align-items: stretch;
+  justify-content: start;
+  gap: 12px;
+  margin-top: 20px;
+}
+.detail-page .detail-bottom-actions > a,
+.detail-page .detail-bottom-actions > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  margin: 0;
+  padding: 10px 15px;
+  border-radius: var(--portfolio-action-radius);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+.detail-page .detail-bottom-actions > :first-child {
+  border: 1px solid #556b2f;
+  background: #556b2f;
+  color: #fffdf8;
+}
+.detail-page .detail-bottom-actions > :first-child:hover {
+  background: #3e4d23;
+}
+.detail-page .detail-bottom-actions > :last-child {
+  border: 1px solid rgba(85,107,47,.35);
+  background: transparent;
+  color: #3e4d23;
+}
+.detail-page .detail-bottom-actions > :last-child:hover {
+  background: rgba(167,180,138,.16);
+}
+
+/* Equal-sized research controls, regardless of viewport or text length. */
+.detail-page .research-paper-links {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  align-self: center;
+}
+.detail-page .research-paper-links > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  margin: 0;
+  padding: 10px 13px;
+  border-radius: var(--portfolio-action-radius);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.2;
+  text-align: center;
+}
+.home-compact-projects .home-project-copy { align-self: stretch; }
+.home-compact-projects .home-project-action {
+  min-height: 23px;
+  align-items: center;
+  margin-top: auto;
+}
+.work-cta-stack .button,
+.erp-custom-cta {
+  box-sizing: border-box;
+  min-height: var(--portfolio-action-height);
+  border-radius: var(--portfolio-action-radius);
+}
+
+@media (max-width: 960px) and (min-width: 601px) {
+  .detail-page .research-paper-links {
+    grid-column: 2;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (max-width: 600px) {
+  .detail-page .research-paper-links {
+    grid-column: 1;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 530px) {
+  .detail-page .detail-bottom-actions {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 480px;
+  }
+  .project-grid--listing .project-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-grid--listing .project-actions > a,
+  .project-grid--listing .project-actions > button,
+  .detail-page .detail-bottom-actions > * {
+    transition: none;
+  }
+}
