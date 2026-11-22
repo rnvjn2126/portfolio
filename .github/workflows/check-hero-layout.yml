@@ -29,7 +29,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Run responsive layout checks
         run: |
-          npm run dev -- --host 127.0.0.1 --port 4173 &
+          npm run build
+          npm run preview -- --host 127.0.0.1 --port 4173 &
           for attempt in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:4173/portfolio/ >/dev/null; then break; fi
             sleep 1
