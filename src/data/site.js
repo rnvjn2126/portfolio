@@ -11,7 +11,7 @@ export const site = {
     { label: 'GitHub', href: 'https://github.com/rnvjn2126' },
     { label: 'Instagram', href: 'https://www.instagram.com/aarnav_jain.21' },
   ],
-  skills: ['React', 'JavaScript', 'Python', 'Django', 'Streamlit', 'SQLite', 'ReportLab', 'HTML & CSS', 'UI / UX', 'Responsive design', 'Git'],
+  skills: ['React', 'JavaScript', 'Python', 'Django', 'Streamlit', 'PostgreSQL', 'SQLite', 'Docker', 'HTML & CSS', 'UI / UX', 'Responsive design', 'Git'],
   services: [
     { number: '01', title: 'Web development', description: 'Polished websites and web applications built for speed, accessibility and everyday use.' },
     { number: '02', title: 'Interface design', description: 'Clean layouts and intuitive flows that make your product easier to understand.' },
