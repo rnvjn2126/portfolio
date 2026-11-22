@@ -1710,3 +1710,16 @@ body {
   .hero-visual__footer, .project-development-note) {
   font-variant-numeric: tabular-nums;
 }
+
+/* UX 17: balanced short headings and readable paragraph line breaks. */
+:where(.section-heading, .page-heading, .detail-capabilities h2,
+  .service-tile h3, .project-title-link h3, .home-project-copy h3,
+  .projects-wip-heading h2, .home-wip-heading h3,
+  .research-paper-info h2, .erp-custom-banner h2, .footer-top h2) {
+  text-wrap: balance;
+}
+:where(.body-copy, .page-lede, .detail-description, .service-tile p,
+  .project-card-body > p, .home-project-copy p, .footer-description,
+  .projects-intro-aside p, .email-choice-dialog p) {
+  text-wrap: pretty;
+}
