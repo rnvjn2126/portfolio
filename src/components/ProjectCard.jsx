@@ -1,7 +1,7 @@
 import { ArrowRight, ArrowUpRight, FileText, Github, Globe, Mail, Sparkles } from 'lucide-react'
-import { EmailTrigger } from './EmailContact'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
+import { EmailTrigger } from './EmailContact'
 import { EmailTrigger } from './EmailContact'
 
 export default function ProjectCard({ project, index = 0, showActions = false }) {
