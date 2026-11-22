@@ -18,6 +18,13 @@ try {
         'The portfolio should honor device safe-area insets')
 
       await page.locator('#services .service-tile').first().waitFor({ state: 'visible' })
+      if (viewport.width > 760) {
+        await page.locator('.nav-links').hover()
+        const navAnimation = await page.locator('.nav-links > a').first().evaluate(
+          element => getComputedStyle(element).animationName
+        )
+        assert(navAnimation === 'none', 'Navigation hover animations must be interruptible')
+      }
       // Accessibility: reduced-motion visitors do not get cursor trails.
       assert(await page.locator('.cursor-brush-trail').count() === 1,
         'Brush canvas is not mounted on a public page')
