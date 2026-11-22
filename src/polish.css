@@ -17,7 +17,7 @@ body{-webkit-font-smoothing:antialiased}
 .hero-visual .hero-car:hover,.hero-visual .hero-car:focus-visible{transform:none;filter:brightness(1.025)}
 .hero-visual .hero-car__viewport{aspect-ratio:2.75;min-height:170px}
 .hero-visual .hero-car__canvas{filter:drop-shadow(0 17px 18px rgba(38,48,31,.18))}
-.hero-visual .hero-car>span{font-size:9px;opacity:.85;color:#566b40}
+.hero-visual .hero-car>.hero-car__status{font-size:9px;opacity:.85;color:#566b40}
 .hero-feature{left:0;right:auto;bottom:132px;width:min(32%,355px);background:rgba(255,253,248,.92);padding:25px 28px 22px;box-shadow:0 15px 45px rgba(38,48,31,.045)}
 .hero-feature strong{font-size:clamp(20px,2.4vw,27px)}
 .hero-bottom{bottom:28px}
@@ -1628,7 +1628,7 @@ body{-webkit-font-smoothing:antialiased}
 }
 .hero.shell .hero-visual__heading,
 .hero.shell .hero-visual__footer,
-.hero.shell .hero-visual .hero-car > span {
+.hero.shell .hero-visual .hero-car > .hero-car__status {
   color: #fffdf4;
   text-shadow: 0 1px 5px rgba(35, 51, 25, .24);
 }
