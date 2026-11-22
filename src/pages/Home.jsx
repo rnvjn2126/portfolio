@@ -273,7 +273,7 @@ function Work() {
 
         <Reveal>
           <p className="body-copy">
-            A closer look at recent work: a business website built for clarity and a practical AI-powered application.
+            A selection of business websites, practical AI tools and workflow software built to solve real problems.
           </p>
         </Reveal>
       </div>
