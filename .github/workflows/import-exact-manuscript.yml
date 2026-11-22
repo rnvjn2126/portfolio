@@ -40,6 +40,24 @@ jobs:
           mkdir -p public/papers
           cp /tmp/manuscript-check.pdf public/papers/ai-driven-resume-screening.pdf
           echo "exact_pdf_available=true" >> "$GITHUB_OUTPUT"
+      - name: Inspect previous hosting response without replacing the manuscript
+        if: steps.verify.outputs.exact_pdf_available == 'false'
+        shell: bash
+        run: |
+          file -bi /tmp/manuscript-check.pdf || true
+          python3 - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          data = Path('/tmp/manuscript-check.pdf').read_bytes()
+          print('Response bytes:',len(data),'signature:',repr(data[:64]))
+          if data[:4] != b'%PDF':
+              class Links(HTMLParser):
+                  def handle_starttag(self,tag,attrs):
+                      for key,val in attrs:
+                          if key in ('href','src','data') and val:
+                              print('HTML reference:',key,repr(val[:250]))
+              parser=Links();parser.feed(data.decode('utf-8', errors='replace'))
+          PY
       - name: Use local PDF link in Career AI Pro
         if: steps.verify.outputs.exact_pdf_available == 'true'
         shell: bash
