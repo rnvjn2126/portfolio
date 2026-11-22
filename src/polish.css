@@ -1322,3 +1322,94 @@ body{-webkit-font-smoothing:antialiased}
   .home-project-card:hover { transform: none; }
   .home-project-card:hover .home-project-action svg { transform: none; }
 }
+
+/* Project listing: one shared action baseline across every card.
+   Reserve the same two action rows for live demos, source, and details. */
+.project-grid--listing > div,
+.project-grid--listing .project-card { height: 100%; }
+.project-grid--listing .project-card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.project-grid--listing .project-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 47px 47px;
+  align-content: end;
+  gap: 9px;
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 121px;
+  margin-top: auto;
+  padding-top: 17px;
+  border-top: 1px solid rgba(62,77,35,.16);
+}
+.project-grid--listing .project-actions-primary,
+.project-grid--listing .project-actions-secondary {
+  display: grid;
+  min-width: 0;
+  height: 47px;
+}
+.project-grid--listing .project-actions-primary {
+  grid-template-columns: minmax(0, 1fr);
+}
+.project-grid--listing .project-actions-secondary {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+.project-grid--listing .project-live-button,
+.project-grid--listing .project-source-button,
+.project-grid--listing .project-details-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  grid-column: auto;
+  width: 100%;
+  height: 47px;
+  min-height: 47px;
+  margin: 0;
+  padding: 10px 13px;
+  border-radius: 11px;
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 750;
+  white-space: nowrap;
+  text-align: center;
+}
+.project-grid--listing .project-consult-button {
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 5px 14px rgba(85,107,47,.1);
+}
+.project-grid--listing .project-details-button {
+  border: 1px solid rgba(62,77,35,.18);
+  background: #f6f3ea;
+  color: #405033;
+}
+.project-grid--listing .project-source-button {
+  border: 1px solid rgba(62,77,35,.18);
+}
+.project-grid--listing .project-details-button:hover {
+  background: #eaf0e0;
+}
+.project-grid--listing .project-source-blank,
+.project-grid--listing .project-action-blank {
+  display: block;
+  min-width: 0;
+  pointer-events: none;
+}
+@media (max-width: 480px) {
+  .project-grid--listing .project-actions {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 47px 47px;
+  }
+  .project-grid--listing .project-actions-secondary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-grid--listing .project-consult-button { transition: none; }
+}
