@@ -228,7 +228,7 @@ function About() {
         <Reveal delay={.12}>
           <div className="about-copy">
             <p className="large-copy">
-              Good digital experiences should be simple to use and carefully made.
+              I care about the details people feel, even when they can't quite explain why.
             </p>
 
             <p className="body-copy">
