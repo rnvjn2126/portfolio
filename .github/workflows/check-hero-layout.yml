@@ -5,6 +5,7 @@ on:
     paths:
       - 'src/**'
       - 'scripts/check-hero-layout.mjs'
+      - 'scripts/check-portfolio-experience.mjs'
       - '.github/workflows/check-hero-layout.yml'
   workflow_dispatch:
 permissions:
@@ -32,3 +33,4 @@ jobs:
             sleep 1
           done
           node scripts/check-hero-layout.mjs
+          node scripts/check-portfolio-experience.mjs
