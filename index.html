@@ -16,6 +16,9 @@
     <meta property="og:description" content="Thoughtful design. Purposeful development. Explore selected web and AI projects." />
     <meta property="og:url" content="https://rnvjn2126.github.io/portfolio/" />
     <title>Aarnav Jain | Developer &amp; Designer</title>
+    <!-- Start fetching the actual above-the-fold 3D car before React loads.
+         Its model URL is Vite-base-aware for GitHub Pages' /portfolio/ path. -->
+    <link rel="preload" as="fetch" href="%BASE_URL%models/formula-car.glb" type="model/gltf-binary" crossorigin="anonymous" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
