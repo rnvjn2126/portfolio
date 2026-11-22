@@ -83,3 +83,36 @@ Official references:
 vulnerabilities or certify compliance with every law.** Before moving
 real client operations, forms, accounts or payments to this site, commission
 a targeted penetration test and an India-qualified legal review.
+
+## Follow-up accessibility and navigation remediation (23 November 2026)
+
+The original eight built / twelve skipped UX decisions remain unchanged. A
+separate reduced-motion and routing review identified additional gaps in
+existing features. These have been addressed without adding dependencies:
+
+- `src/App.jsx`: top-level page entrance transitions are skipped when reduced
+  motion is requested, section navigation uses non-animated scrolling, and
+  malformed percent-encoded fragments are safely ignored.
+- `src/pages/Home.jsx`: hero text and action entrance animations are skipped
+  with reduced motion, and scroll-linked hero opacity stays fully visible.
+  The hero Contact link now uses the existing React Router HashRouter path.
+- `src/components/MotionPrimitives.jsx`: shared staggered card and word
+  reveal components do not start hidden or animate for reduced-motion users.
+- `scripts/check-portfolio-experience.mjs`: browser regression assertions
+  check that reduced-motion hero text is readable without an active entrance
+  animation and that the hero Contact CTA points to the correct hash route.
+
+The existing animated coffee, pointer/click bubbles, car assembly,
+filter transitions and CSS hover treatments already have reduced-motion
+fallbacks. This improves accessibility but is not an independent WCAG audit.
+
+**Remaining operational/legal boundary:** full response-header controls,
+including frame-ancestors anti-framing protections, require hosting with
+customizable HTTP headers, not just changes to GitHub Pages HTML. India
+DPDP's phased commencement includes core processing provisions scheduled
+for **13 May 2027** under Gazette notification G.S.R. 843(E). The site's
+privacy notice, no-tracking design, and documented handling are readiness
+measures; they do not independently certify every applicable business law.
+
+Official commencement notification:
+https://egazette.gov.in/WriteReadData/2025/267647.pdf
