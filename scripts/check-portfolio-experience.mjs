@@ -29,15 +29,27 @@ try {
       // one deliberately unfilled, non-clickable space for the next project.
       const cards = page.locator('#work .work-four-grid > *')
       assert(await cards.count() === 4, 'Homepage should have four grid slots')
-      assert(await page.locator('#work .work-four-grid .project-card').count() === 3,
-        'Homepage should show exactly three actual projects')
+      assert(await page.locator('#work .work-four-grid .home-project-card').count() === 3,
+        'Homepage should show exactly three compact project cards')
       assert(await page.locator('#work .work-future-card').count() === 1,
         'Homepage future project placeholder is missing')
-      const names = await page.locator('#work .work-four-grid .project-title-link h3').allInnerTexts()
+      const names = await page.locator('#work .work-four-grid .home-project-copy h3').allInnerTexts()
       assert(names.join(' | ') === 'AJ Overseas | Career AI Pro | ERP Software Demo',
         'Unexpected homepage featured projects: ' + names.join(' | '))
       assert(await page.locator('#work .work-future-card a').count() === 0,
         'Empty future project card must not be a broken link')
+      const wipPreview = page.locator('#work .home-wip-entry')
+      assert(await wipPreview.count() === 1, 'Homepage needs one small Work in Progress preview')
+      assert((await wipPreview.innerText()).includes('Steel Trading Quotes'),
+        'Homepage WIP preview does not show the current B2B project')
+      const cardHeights = await page.locator('#work .home-project-card').evaluateAll(
+        elements => elements.map(element => element.getBoundingClientRect().height)
+      )
+      assert(cardHeights.every(height => height <= 350),
+        'Homepage cards have not been reduced in height: ' + cardHeights.join(', '))
+      const arrows = await page.locator('#services .service-arrow.lucide-arrow-up-right').count()
+      assert(arrows === 0, 'Decorative service arrows were not replaced with meaningful icons')
+
       const rectangles = await Promise.all([0,1,2,3].map(index => cards.nth(index).boundingBox()))
       assert(rectangles.every(Boolean), 'A homepage grid cell has no layout box')
       const same = (a,b) => Math.abs(a-b) < 6
