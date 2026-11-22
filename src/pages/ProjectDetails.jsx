@@ -24,8 +24,8 @@ export default function ProjectDetails() {
         <h1 className="page-heading">{project.title}<span className="gradient-text">.</span></h1>
         <p className="page-lede">{project.description}</p>
       </div>
-      <img className="detail-cover" src={project.cover} alt={project.coverAlt} decoding="async" />
-      <p className="projects-note">Illustrative project artwork. The real, working application is linked directly on the Projects page.</p>
+      <img className="detail-cover" src={project.cover} alt={project.coverAlt} decoding="async" onError={event => { const image = event.currentTarget; if (project.fallbackCover && !image.dataset.fallbackApplied) { image.dataset.fallbackApplied = 'true'; image.src = project.fallbackCover } }} />
+      <p className="projects-note">Screenshot from the live application when available, with an illustrated fallback. Open the working application from the Projects page.</p>
       <div className="detail-content">
         <div>
           <span className="eyebrow">PROJECT OVERVIEW</span>
