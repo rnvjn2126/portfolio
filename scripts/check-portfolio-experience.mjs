@@ -303,19 +303,32 @@ try {
   // and occupies the image's final dimensions without layout movement.
   const slowPage = await browser.newPage({ viewport: { width: 1280, height: 850 }, reducedMotion: 'reduce' })
   try {
+    // Hold the requested image until the 300ms skeleton is visible.
+    // A fixed 750ms request delay is racy on slow CI/SwiftShader machines:
+    // WebGL model preparation can block the browser main thread.
+    let releaseImage
+    const imageGate = new Promise(resolve => { releaseImage = resolve })
+    let imageIntercepted = false
+    await slowPage.route('**/models/formula-car.glb', route => route.abort())
     await slowPage.route('**/images/screenshots/aj-overseas.png', async route => {
-      await new Promise(resolve => setTimeout(resolve, 750))
+      imageIntercepted = true
+      await imageGate
       await route.continue()
     })
     await slowPage.goto(root + '#/', { waitUntil: 'domcontentloaded' })
     const preview = slowPage.locator('.home-project-visual').first()
     await preview.scrollIntoViewIfNeeded()
     const before = await preview.boundingBox()
-    await preview.locator('.progressive-image-skeleton').waitFor({ state: 'visible', timeout: 1200 })
+    try {
+      await preview.locator('.progressive-image-skeleton').waitFor({ state: 'visible', timeout: 6000 })
+    } finally {
+      releaseImage()
+    }
+    assert(imageIntercepted, 'Screenshot throttling route did not intercept the expected asset')
     await slowPage.waitForFunction(() => {
       const image = document.querySelector('.home-project-visual .progressive-image')
       return Boolean(image?.complete && image.naturalWidth > 0)
-    }, null, { timeout: 5000 })
+    }, null, { timeout: 8000 })
     await preview.locator('.progressive-image-skeleton').waitFor({ state: 'hidden', timeout: 3000 })
     const after = await preview.boundingBox()
     assert(Math.abs(before.height - after.height) < 2 &&
