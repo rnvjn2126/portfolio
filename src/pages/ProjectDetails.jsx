@@ -41,19 +41,34 @@ export default function ProjectDetails() {
       </div>
 
       {project.paper && (
-        <div className="research-paper-section">
-          <div className="section-kicker"><span>RESEARCH & PUBLICATIONS</span><span className="line" /></div>
+        <section className="research-paper-section" id="research-paper" aria-labelledby="research-paper-heading">
+          <div className="section-kicker">
+            <span>RESEARCH & PUBLICATIONS</span>
+            <span className="line" />
+          </div>
           <div className="research-paper-card">
-            <div className="research-paper-icon"><FileText size={24} /></div>
+            <div className="research-paper-icon"><FileText size={27} aria-hidden="true" /></div>
             <div className="research-paper-info">
               <span className="eyebrow">CONFERENCE PAPER / {project.paper.status.toUpperCase()}</span>
-              <h2>Related research manuscript</h2>
-              <a href={project.paper.url} target="_blank" rel="noopener noreferrer" className="text-link">
-                {project.paper.author} <ArrowUpRight size={16} />
-              </a>
+              <h2 id="research-paper-heading">Research behind {project.title}</h2>
+              <p>
+                An accompanying manuscript exploring AI-assisted résumé screening, job matching,
+                and career guidance. Discover the research alongside the working application.
+              </p>
+              <span className="research-paper-author">Authored by <strong>{project.paper.author}</strong></span>
             </div>
+            <a
+              className="research-paper-open"
+              href={project.paper.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={'Open research manuscript by ' + project.paper.author + ' in a new tab'}
+            >
+              <span>Read manuscript</span>
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
           </div>
-        </div>
+        </section>
       )}
 
       <Button to="/projects" variant="secondary">Browse all projects</Button>
