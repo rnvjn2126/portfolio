@@ -1,13 +1,63 @@
-import { ArrowUpRight, Github } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Github, Globe } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
-export default function ProjectCard({ project, index = 0 }) {
+
+export default function ProjectCard({ project, index = 0, showActions = false }) {
   const reduce = useReducedMotion()
-  return <motion.article className="project-card" initial={{ opacity: 0, y: reduce ? 0 : 24 }} whileInView={{ opacity: 1, y: 0 }} whileHover={reduce ? undefined : { y: -6 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: reduce ? 0.01 : 0.65, delay: reduce ? 0 : (index % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}>
-    <Link to={`/projects/${project.slug}`} className="project-image-wrap"><motion.img src={project.cover} alt={`${project.title} preview`} className="project-image" whileHover={reduce ? undefined : { scale: 1.045 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} /><span className="image-arrow"><ArrowUpRight size={20} /></span></Link>
-    <div className="project-meta"><span>{project.category}</span><span>{project.year}</span></div>
-    <Link to={`/projects/${project.slug}`} className="project-title-link"><h3>{project.title}<ArrowUpRight size={19} /></h3></Link>
-    <p>{project.description}</p><div className="tag-row">{project.tags.map(tag => <span className="tag" key={tag}>{tag}</span>)}</div>
-    {project.githubUrl && <a className="github-project-link" href={project.githubUrl} target="_blank" rel="noopener noreferrer"><Github size={16} />View source code<ArrowUpRight size={14} /></a>}
-  </motion.article>
+
+  return (
+    <motion.article
+      className={'project-card' + (showActions ? ' project-card--listing' : '')}
+      initial={{ opacity: 0, y: reduce ? 0 : 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={reduce ? undefined : { y: -3 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: reduce ? 0.01 : 0.45, delay: reduce ? 0 : (index % 2) * 0.07 }}
+    >
+      <Link to={'/projects/' + project.slug} className="project-image-wrap" aria-label={'Read about ' + project.title}>
+        <motion.img
+          src={project.cover}
+          alt={project.coverAlt || project.title + ' project preview'}
+          className="project-image"
+          loading="lazy"
+          decoding="async"
+          whileHover={reduce ? undefined : { scale: 1.025 }}
+          transition={{ duration: 0.5 }}
+        />
+        <span className="project-image-number">{project.number} / SELECTED WORK</span>
+        <span className="image-arrow" aria-hidden="true"><ArrowUpRight size={19} /></span>
+      </Link>
+      <div className="project-card-body">
+        <div className="project-meta"><span>{project.category}</span><span>{project.year}</span></div>
+        <Link to={'/projects/' + project.slug} className="project-title-link">
+          <h3>{project.title}<ArrowUpRight size={19} aria-hidden="true" /></h3>
+        </Link>
+        <p>{project.description}</p>
+        <div className="tag-row">
+          {project.tags.slice(0, 4).map(tag => <span className="tag" key={tag}>{tag}</span>)}
+        </div>
+        {showActions ? (
+          <div className="project-actions">
+            {project.liveUrl && (
+              <a className="project-live-button" href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={'Open live demo of ' + project.title + ' in a new tab'}>
+                <Globe size={16} aria-hidden="true" /> View live project <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+            )}
+            {project.githubUrl && (
+              <a className="project-source-button" href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={'View ' + project.title + ' source code'}>
+                <Github size={17} aria-hidden="true" /> Source
+              </a>
+            )}
+            <Link className="project-details-button" to={'/projects/' + project.slug} aria-label={'Read the ' + project.title + ' case study'}>
+              Details <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+        ) : (
+          <Link className="project-case-link" to={'/projects/' + project.slug}>
+            View project details <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
+        )}
+      </div>
+    </motion.article>
+  )
 }

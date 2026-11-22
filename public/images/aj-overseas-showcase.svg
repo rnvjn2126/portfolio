@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 920" role="img" aria-labelledby="t d">
+<title id="t">AJ Overseas — editorial project showcase</title><desc id="d">A carefully illustrated desktop website concept using the portfolio's olive, beige and cream theme. Not a literal screenshot of the live website.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8f4e9"/><stop offset=".53" stop-color="#e6e6d7"/><stop offset="1" stop-color="#b5c09d"/></linearGradient>
+  <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#798079"/><stop offset=".15" stop-color="#d5dad6"/><stop offset=".33" stop-color="#f8f9f6"/><stop offset=".52" stop-color="#929995"/><stop offset=".75" stop-color="#e2e6e1"/><stop offset="1" stop-color="#69716d"/></linearGradient>
+  <linearGradient id="site" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fbfaf4"/><stop offset="1" stop-color="#f0f1e7"/></linearGradient>
+  <filter id="sh"><feDropShadow dx="0" dy="28" stdDeviation="25" flood-color="#3e4d23" flood-opacity=".18"/></filter>
+  <clipPath id="mask"><rect x="92" y="82" width="1256" height="746" rx="22"/></clipPath>
+</defs>
+<rect width="1440" height="920" fill="url(#bg)"/>
+<circle cx="85" cy="105" r="190" fill="#fffdf5" opacity=".45"/><circle cx="1375" cy="835" r="250" fill="#5c7550" opacity=".13"/>
+<path d="M0 775C340 650 515 908 880 797s424-156 560-94" fill="none" stroke="#74885f" stroke-opacity=".18" stroke-width="2"/>
+<rect x="92" y="82" width="1256" height="746" rx="22" fill="#ffffff" filter="url(#sh)"/>
+<g clip-path="url(#mask)">
+<rect x="92" y="82" width="1256" height="54" fill="#f8f9f4"/>
+<circle cx="124" cy="109" r="6.5" fill="#c9a19c"/><circle cx="146" cy="109" r="6.5" fill="#ddc6a1"/><circle cx="168" cy="109" r="6.5" fill="#a9b99b"/>
+<rect x="535" y="97" width="373" height="25" rx="12" fill="#e9ede3"/><text x="721" y="114" text-anchor="middle" font-size="12" fill="#69795d" font-family="Arial,sans-serif">aj-overseas.in</text>
+<rect x="92" y="136" width="1256" height="692" fill="url(#site)"/>
+<rect x="92" y="136" width="1256" height="85" fill="#fffefa"/>
+<g fill="#3e4d23"><rect x="151" y="160" width="44" height="38" rx="9"/><path d="M160 187l12-17 13 17" fill="none" stroke="#fffefa" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="210" y="183" font-family="Arial,sans-serif" font-weight="800" font-size="22" letter-spacing=".8" fill="#26301f">AJ OVERSEAS</text>
+<g fill="#586650" font-size="14" font-family="Arial,sans-serif"><text x="852" y="183">Home</text><text x="936" y="183">About</text><text x="1021" y="183">Products</text></g>
+<rect x="1150" y="156" width="144" height="42" rx="21" fill="#526b39"/><text x="1222" y="183" text-anchor="middle" font-size="13" font-weight="700" fill="#fffdf8" font-family="Arial,sans-serif">Get in touch</text>
+<line x1="92" x2="1348" y1="221" y2="221" stroke="#e4e8db" stroke-width="1"/>
+<rect x="92" y="221" width="1256" height="468" fill="#f8f8f0"/>
+<circle cx="1165" cy="359" r="210" fill="#e7ebdd"/><circle cx="1179" cy="359" r="155" fill="#d2dcc3" opacity=".7"/>
+<rect x="155" y="289" width="252" height="35" rx="18" fill="#e8eddf"/><circle cx="179" cy="306" r="5" fill="#5c7848"/>
+<text x="196" y="311" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="1.1" fill="#4e6a3b">QUALITY-FIRST APPROACH</text>
+<text x="156" y="390" font-family="Arial,sans-serif" font-size="60" font-weight="750" letter-spacing="-2" fill="#273522">Built on quality.</text>
+<text x="156" y="457" font-family="Arial,sans-serif" font-size="60" font-weight="750" letter-spacing="-2" fill="#5c7548">Driven by trust.</text>
+<text x="159" y="507" font-family="Arial,sans-serif" font-size="17" fill="#70806b">Thoughtful sourcing, dependable service,</text>
+<text x="159" y="536" font-family="Arial,sans-serif" font-size="17" fill="#70806b">and a commitment to lasting partnerships.</text>
+<rect x="156" y="574" width="205" height="52" rx="10" fill="#526b39"/><text x="258" y="606" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#fffdfa">Explore products  ↗</text>
+<g transform="translate(775 354) rotate(-18)">
+  <rect x="0" y="0" width="390" height="57" rx="18" fill="#8c968e" opacity=".18" transform="translate(0 21)"/>
+  <rect x="0" y="0" width="390" height="51" rx="14" fill="url(#steel)" stroke="#8d9891" stroke-width="2"/>
+  <rect x="24" y="12" width="344" height="8" rx="4" fill="#fff" opacity=".55"/>
+  <rect x="24" y="36" width="330" height="4" rx="2" fill="#606963" opacity=".26"/>
+  <circle cx="38" cy="25" r="9" fill="#88938c" stroke="#f7f9f6" stroke-width="3"/><circle cx="352" cy="25" r="9" fill="#88938c" stroke="#f7f9f6" stroke-width="3"/>
+</g>
+<g transform="translate(793 448) rotate(10)">
+  <rect x="0" y="0" width="390" height="52" rx="13" fill="url(#steel)" stroke="#9ba59f" stroke-width="2"/>
+  <rect x="20" y="10" width="348" height="8" rx="4" fill="#fff" opacity=".45"/>
+  <rect x="21" y="37" width="346" height="4" rx="2" fill="#55625a" opacity=".32"/>
+  <circle cx="37" cy="26" r="9" fill="#7c8780" stroke="#e7eae4" stroke-width="3"/><circle cx="353" cy="26" r="9" fill="#7c8780" stroke="#e7eae4" stroke-width="3"/>
+</g>
+<g transform="translate(880 535) rotate(-9)">
+  <rect x="0" y="0" width="310" height="39" rx="10" fill="url(#steel)" stroke="#aab2aa" stroke-width="2"/>
+  <rect x="18" y="8" width="275" height="6" rx="3" fill="#fff" opacity=".5"/>
+</g>
+<rect x="92" y="689" width="1256" height="139" fill="#fffefa"/>
+<text x="156" y="737" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.6" fill="#748363">OUR FOCUS</text>
+<g font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#37482f"><text x="156" y="780">Consistency</text><text x="462" y="780">Quality</text><text x="767" y="780">Partnerships</text><text x="1081" y="780">Service</text></g>
+<g stroke="#e0e5da"><line x1="421" y1="729" x2="421" y2="803"/><line x1="726" y1="729" x2="726" y2="803"/><line x1="1040" y1="729" x2="1040" y2="803"/></g>
+</g>
+<text x="92" y="878" font-family="Arial,sans-serif" font-weight="700" font-size="14" letter-spacing="2" fill="#617452">AJ OVERSEAS  /  WEBSITE PROJECT</text>
+<text x="1348" y="878" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#617452">ILLUSTRATIVE SHOWCASE</text>
+</svg>

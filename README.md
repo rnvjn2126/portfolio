@@ -1,40 +1,29 @@
-# Premium React Portfolio
+# Aarnav Jain — Portfolio
 
-A responsive dark portfolio starter built with React, Vite, Motion and React Router.
+Personal portfolio built with React, Vite and Motion, showcasing selected business website and AI application projects.
 
-## Run locally
+## Design
 
-1. Install Node.js (LTS).
-2. Extract this folder and open it in VS Code.
-3. In the terminal, run:
+Warm whites, beige and olive green are the site's core colors. The project art in `public/images` consists of original, scalable editorial illustrations of the work. **They are not screenshots of the live applications.** Use the **View live project** links on the Projects page to see the actual projects.
 
-   ```bash
-   npm install
-   npm run dev
-   ```
+## Local development
 
-4. Open the local URL printed by Vite (usually http://localhost:5173).
+```sh
+npm ci
+npm run dev
+npm run build
+```
 
-## Customize first
+The Vite base path is `/portfolio/` for GitHub Pages. The site uses `HashRouter` so project routes work on Pages refreshes.
 
-- Replace `Alex Morgan` in `src/data/site.js` with your name.
-- Replace the sample projects in `src/data/projects.js` with your real work.
-- Update email and social links in `src/data/site.js`.
-- Update services and skills in `src/data/site.js`.
+## Projects
 
-## Included
+Project metadata, live demo and source URLs are maintained in `src/data/projects.js`. Site information and services are in `src/data/site.js`.
 
-- Responsive animated homepage
-- Reusable navigation, footer, buttons, reveal and project-card components
-- Project listing with category filters
-- Individual project detail routes
-- Admin UI scaffold (not yet connected to authentication/database)
-- Contact form UI (connect a real email/form backend before launch)
+## Deployment
 
-## Important production notes
+Pushing to the `main` branch runs the GitHub Pages deployment workflow in `.github/workflows/deploy.yml`. The build must succeed before Pages can publish. Public website: https://rnvjn2126.github.io/portfolio/
 
-The admin page in this starter is only a visual scaffold. It is NOT secure authentication and must not be used to protect private data until Supabase Auth and Row Level Security are configured.
+## Production considerations
 
-Payment processing is intentionally not enabled yet. For Razorpay, create orders and verify signatures/webhooks on a trusted server (for example, a suitable commercial hosting plan with server functions). Never expose Razorpay Key Secret in frontend code or any `VITE_` environment variable.
-
-Review hosting provider terms for commercial use before accepting freelance payments.
+The `/admin` page is a UI scaffold, not a secured backend. Do not store private information in it. Any future server-side integration should use authenticated APIs and suitable access controls.

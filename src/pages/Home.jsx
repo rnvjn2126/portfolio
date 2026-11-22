@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 
 import { motion, useScroll, useTransform } from 'motion/react'
-import { lazy, Suspense, useRef } from 'react'
+import { useRef } from 'react'
 import { site } from '../data/site'
 import { projects } from '../data/projects'
 import Reveal from '../components/Reveal'
@@ -18,7 +18,7 @@ import Button from '../components/Button'
 import ProjectCard from '../components/ProjectCard'
 import { Stagger, StaggerItem, TextReveal, SpotlightCard, TiltCard } from '../components/MotionPrimitives'
 
-const HeroCar3D = lazy(() => import('../components/HeroCar3D'))
+
 
 const paperUrl = 'https://ieee-shortened-format.tiiny.site/?mode=suggestions'
 
@@ -34,9 +34,15 @@ function Hero() {
 
   return (
     <section className="hero shell" ref={ref}>
-      <Suspense fallback={null}>
-        <HeroCar3D />
-      </Suspense>
+      <aside className="hero-feature" aria-label="Services at a glance">
+        <span>WHAT I BRING TO THE TABLE</span>
+        <strong>Ideas, refined into experiences.</strong>
+        <ul>
+          <li><span>01</span> Business websites</li>
+          <li><span>02</span> Useful digital tools</li>
+          <li><span>03</span> Interface design</li>
+        </ul>
+      </aside>
 
       <motion.div className="hero-content" style={{ opacity }}>
         <div className="eyebrow hero-eyebrow">
@@ -204,18 +210,23 @@ function About() {
               <br />
               <span className="muted">craft.</span>
             </h2>
-            <CoffeeHeartArt />
+            <div className="about-principles">
+              <span>MY APPROACH</span>
+              <div><b>01</b><strong>Understand the real problem</strong></div>
+              <div><b>02</b><strong>Design for clarity</strong></div>
+              <div><b>03</b><strong>Build with care</strong></div>
+            </div>
           </div>
         </Reveal>
 
         <Reveal delay={.12}>
           <div className="about-copy">
             <p className="large-copy">
-              I care about the details people feel, even when they can't quite explain why.
+              Good digital experiences should be simple to use and carefully made.
             </p>
 
             <p className="body-copy">
-              I bring ideas to life through thoughtful design, purposeful interaction and clean, dependable code. This is where you can add your story, experience and the kind of work you love doing.
+              My work moves between web development, interface design and practical AI experiments. I enjoy taking an idea from its first rough sketch to something people can actually use, always keeping clarity and reliability in focus.
             </p>
 
             <a className="text-link" href={`mailto:${site.email}`}>
@@ -258,7 +269,7 @@ function Work() {
 
         <Reveal>
           <p className="body-copy">
-            A selection of experiments, collaborations and digital products. Replace these sample projects with your own accomplishments.
+            A closer look at recent work: a business website built for clarity and a practical AI-powered application.
           </p>
         </Reveal>
       </div>
@@ -437,7 +448,7 @@ function Contact() {
 
                 <span className="contact-card-text">
                   <strong>Instagram</strong>
-                  <span>@aarnav_jain.</span>
+                  <span>@aarnav_jain.21</span>
                 </span>
 
                 <ArrowUpRight

@@ -1,36 +1,69 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
+import { ArrowUpRight } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import ProjectCard from '../components/ProjectCard'
-import { SpotlightCard, TiltCard } from '../components/MotionPrimitives'
 import { projects } from '../data/projects'
 
 export default function Projects() {
-  const categories = ['All', ...new Set(projects.map(p => p.category))]
+  const categories = ['All', ...new Set(projects.map(project => project.category))]
   const [active, setActive] = useState('All')
-  const filtered = useMemo(() => active === 'All' ? projects : projects.filter(p => p.category === active), [active])
+  const filtered = useMemo(
+    () => active === 'All' ? projects : projects.filter(project => project.category === active),
+    [active],
+  )
 
   return (
-    <section className="page-section shell">
+    <section className="page-section shell projects-page">
       <Reveal>
-        <div className="section-kicker"><span>THE ARCHIVE</span><span className="line" /></div>
-        <h1 className="page-heading">Selected <span className="gradient-text">work.</span></h1>
-        <p className="page-lede">A closer look at the projects, ideas and details I've brought together.</p>
+        <div className="section-kicker"><span>01 / PORTFOLIO</span><span className="line" /></div>
+        <div className="projects-intro">
+          <div>
+            <span className="eyebrow projects-eyebrow">A CURATED SELECTION OF RECENT WORK</span>
+            <h1 className="page-heading">Selected <span className="gradient-text">projects.</span></h1>
+          </div>
+          <div className="projects-intro-aside">
+            <p>From thoughtful business websites to practical AI tools, here's a look at what I've designed and built.</p>
+            <span>Explore the work below <ArrowUpRight size={15} aria-hidden="true" /></span>
+          </div>
+        </div>
       </Reveal>
-      <div className="filter-row">
-        {categories.map(category => <button key={category} className={`filter-chip ${active === category ? 'active' : ''}`} onClick={() => setActive(category)}>
-          {active === category && <motion.span className="filter-chip-indicator" layoutId="active-filter" transition={{ type: 'spring', stiffness: 420, damping: 34 }} />}
-          <span className="filter-chip-label">{category}</span>
-        </button>)}
+
+      <div className="projects-toolbar">
+        <div className="filter-row" role="group" aria-label="Filter projects">
+          {categories.map(category => (
+            <button
+              key={category}
+              className={'filter-chip' + (active === category ? ' active' : '')}
+              onClick={() => setActive(category)}
+              type="button"
+              aria-pressed={active === category}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+        <span className="projects-count">{String(filtered.length).padStart(2, '0')} PROJECT{filtered.length === 1 ? '' : 'S'}</span>
       </div>
-      <motion.div layout className="project-grid">
+
+      <motion.div layout className="project-grid project-grid--listing">
         <AnimatePresence mode="popLayout">
-          {filtered.map((project, i) => <motion.div key={project.slug} layout initial={{ opacity: 0, y: 24, scale: .97, filter: 'blur(7px)' }} animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -12, scale: .97, filter: 'blur(5px)' }} transition={{ duration: .42, delay: i * .045, ease: [.22, 1, .36, 1] }}>
-            <SpotlightCard className="project-spotlight"><TiltCard className="project-tilt"><ProjectCard project={project} index={i} /></TiltCard></SpotlightCard>
-          </motion.div>)}
+          {filtered.map((project, index) => (
+            <motion.div
+              key={project.slug}
+              layout
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.32, delay: index * 0.035 }}
+            >
+              <ProjectCard project={project} index={index} showActions />
+            </motion.div>
+          ))}
         </AnimatePresence>
       </motion.div>
       {filtered.length === 0 && <p className="body-copy">No projects in this category yet.</p>}
+      <p className="projects-note">Project artwork is illustrative; use the live links above to explore each actual application.</p>
     </section>
   )
 }
