@@ -242,6 +242,15 @@ try {
       await page.locator('[role="dialog"][data-email-dialog]').waitFor({ state: 'visible' })
       await page.keyboard.press('Escape')
 
+      await page.goto(root + '#/privacy', { waitUntil: 'domcontentloaded' })
+      await page.getByRole('heading', { name: 'Privacy notice.' }).waitFor({ state: 'visible' })
+      assert(await page.getByText('GitHub Pages, which hosts this website', { exact: false }).count() === 1,
+        'Privacy notice must explain the hosting provider')
+      await page.goto(root + '#/admin', { waitUntil: 'domcontentloaded' })
+      await page.locator('.hero .hero-content h1').waitFor({ state: 'visible' })
+      assert(await page.locator('.admin-shell').count() === 0,
+        'Unprotected admin scaffold must not be publicly accessible')
+
       await page.goto(root + '#/projects/Steel-Quotes', { waitUntil: 'domcontentloaded' })
       await page.locator('h1.page-heading').waitFor({ state: 'visible' })
       assert(await page.locator('.detail-gallery-item').count() === 3, 'B2B prototype screenshot walkthrough missing')

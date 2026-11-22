@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Mail } from 'lucide-react'
 import { site } from '../data/site'
+import { EmailTrigger } from '../components/EmailContact'
 
 export default function Privacy() {
   return (
@@ -20,7 +21,7 @@ export default function Privacy() {
           <h2>Who runs this website?</h2>
           <p>This is the independent professional portfolio of {site.name}, based in India.
             For privacy questions, corrections, or deletion requests, contact
-            <a href={'mailto:' + site.email}> {site.email}</a>.</p>
+            <EmailTrigger className="privacy-inline-email"> {site.email}</EmailTrigger>.</p>
         </section>
         <section>
           <h2>What information is collected?</h2>

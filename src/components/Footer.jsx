@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import { site } from '../data/site'
+import { Link } from 'react-router-dom'
 import { EmailTrigger } from './EmailContact'
 
 export default function Footer() {
@@ -24,7 +25,7 @@ export default function Footer() {
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
-        <div>{site.socials.map(s => <a key={s.label} href={s.href} target="_blank" rel="noreferrer">{s.label} ↗</a>)}</div>
+        <div>{site.socials.map(s => <a key={s.label} href={s.href} target="_blank" rel="noreferrer">{s.label} ↗</a>)}<Link to="/privacy">Privacy</Link></div>
         <a href="#top">Back to top ↑</a>
       </div>
     </footer>

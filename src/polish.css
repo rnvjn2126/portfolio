@@ -1777,3 +1777,38 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .progressive-image { transition: none; }
 }
+
+/* Privacy notice: plain-language information presented consistently with the portfolio. */
+.privacy-page { max-width: 1020px; }
+.privacy-page .page-lede { max-width: 60ch; }
+.privacy-updated {
+  margin: 16px 0 30px;
+  font: 11px var(--mono);
+  color: #6b7a5a;
+}
+.privacy-content {
+  display: grid;
+  gap: 25px;
+  margin: 32px 0 36px;
+}
+.privacy-content section {
+  border-top: 1px solid rgba(85,107,47,.16);
+  padding-top: 20px;
+}
+.privacy-content h2 { font-size: clamp(19px, 2.5vw, 25px); color:#34492a; margin: 0 0 10px; text-wrap: balance; }
+.privacy-content p { max-width: 76ch; font-size: 14px; line-height: 1.9; color:#53664d; margin: 0 0 10px; text-wrap: pretty; }
+.privacy-inline-email {
+  appearance: none;
+  display: inline;
+  background: none;
+  border: 0;
+  padding: 0 2px;
+  min-height: 44px;
+  color: #405e2a;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  overflow-wrap: anywhere;
+}
+.privacy-inline-email:hover { color:#718f54; }
+.privacy-contact { width: fit-content; }

@@ -9,6 +9,7 @@ import { ScrollProgress } from './components/MotionPrimitives'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
 import ProjectDetails from './pages/ProjectDetails'
+import Privacy from './pages/Privacy'
 
 function App() {
   const location = useLocation()
@@ -27,6 +28,7 @@ function App() {
       <Route path="/" element={<motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4 }}><Home /></motion.div>} />
       <Route path="/projects" element={<motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4 }}><Projects /></motion.div>} />
       <Route path="/projects/:slug" element={<ProjectDetails />} />
+      <Route path="/privacy" element={<Privacy />} />
       <Route path="/admin/*" element={<Navigate to="/" replace />} />
       <Route path="*" element={<Home />} />
     </Routes>
