@@ -558,3 +558,55 @@ body{-webkit-font-smoothing:antialiased}
   .detail-gallery-item img { transition: none; }
   .detail-gallery-item a:hover img { transform: none; }
 }
+
+/* Purpose-built Steel Quotes capability grid, matching the existing palette. */
+.detail-capabilities { margin: 0 0 72px; }
+.detail-capabilities .section-kicker { margin-bottom: 21px; }
+.detail-capabilities h2 {
+  margin: 0 0 27px;
+  max-width: 780px;
+  color: #324526;
+  font-size: clamp(26px, 3.5vw, 44px);
+  line-height: 1.15;
+  letter-spacing: -.055em;
+  font-weight: 650;
+}
+.detail-capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 16px;
+}
+.detail-capability {
+  min-width: 0;
+  min-height: 180px;
+  padding: 25px 27px;
+  border: 1px solid rgba(85,107,47,.16);
+  border-radius: 17px;
+  background: linear-gradient(125deg,rgba(255,253,248,.97),rgba(239,240,228,.82));
+}
+.detail-capability-number {
+  display: block;
+  margin-bottom: 17px;
+  color: #748663;
+  font: 11px var(--mono);
+  letter-spacing: .1em;
+}
+.detail-capability h3 {
+  margin: 0 0 9px;
+  color: #3d502e;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+.detail-capability p {
+  max-width: 52ch;
+  margin: 0;
+  color: #63705a;
+  font-size: 13px;
+  line-height: 1.8;
+}
+@media (max-width: 600px) {
+  .detail-capabilities { margin-bottom: 52px; }
+  .detail-capabilities-grid { grid-template-columns: 1fr; }
+  .detail-capability { min-height: 0; padding: 23px; }
+}
