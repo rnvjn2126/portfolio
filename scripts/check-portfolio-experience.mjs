@@ -79,6 +79,52 @@ try {
       const wipCount = await page.locator('.projects-wip-card').count()
       assert(mainCount === 3, 'Expected three core projects, saw ' + mainCount)
       assert(wipCount === 1, 'Expected one B2B Work in Progress project, saw ' + wipCount)
+      // Every listing card must put its primary and secondary actions in
+      // identical positions despite varying descriptions, research or notes.
+      const listingActionLayout = await page.locator('.project-grid--listing .project-card').evaluateAll(cards => (
+        cards.map(card => {
+          const cardBounds = card.getBoundingClientRect()
+          const primary = card.querySelector('.project-actions-primary')
+          const secondary = card.querySelector('.project-actions-secondary')
+          const details = card.querySelector('.project-details-button')
+          const action = primary?.querySelector('a,button')
+          const rect = element => element?.getBoundingClientRect()
+          return {
+            title: card.querySelector('.project-title-link h3')?.textContent?.trim(),
+            cardBottom: cardBounds.bottom,
+            primaryTop: rect(primary)?.top,
+            secondaryTop: rect(secondary)?.top,
+            detailsBottom: rect(details)?.bottom,
+            detailsHeight: rect(details)?.height,
+            primaryHeight: rect(action)?.height,
+            hasPrimaryAction: Boolean(action),
+            hasSource: Boolean(card.querySelector('.project-source-button'))
+          }
+        })
+      ))
+      assert(listingActionLayout.every(item =>
+        item.hasPrimaryAction && Math.abs(item.primaryHeight - 47) < 2 &&
+        Math.abs(item.detailsHeight - 47) < 2
+      ), 'Project action button heights or primary links are inconsistent: ' +
+        JSON.stringify(listingActionLayout))
+      const alignment = (items, property) =>
+        Math.max(...items.map(item => item[property])) -
+        Math.min(...items.map(item => item[property]))
+      if (viewport.width >= 1120) {
+        assert(alignment(listingActionLayout, 'primaryTop') < 3 &&
+               alignment(listingActionLayout, 'secondaryTop') < 3,
+          'Desktop listing action rows do not line up: ' + JSON.stringify(listingActionLayout))
+      }
+      assert(alignment(listingActionLayout.map(item => ({
+        bottomGap: item.cardBottom - item.detailsBottom
+      })), 'bottomGap') < 3,
+        'Project details buttons have inconsistent distance from card bottoms')
+      assert(listingActionLayout[1].hasSource && !listingActionLayout[0].hasSource &&
+             !listingActionLayout[2].hasSource,
+        'Project source links must retain their individual permissions')
+      await page.locator('.project-grid--listing .project-consult-button').click()
+      await page.locator('[role="dialog"][data-email-dialog]').waitFor({ state: 'visible' })
+      await page.keyboard.press('Escape')
       const text = await page.locator('.projects-wip-card').innerText()
       assert(text.includes('Steel Trading Quotes'), 'B2B prototype not listed in Work in Progress')
       await page.getByRole('button', { name: 'Work in progress', exact: true }).click()
