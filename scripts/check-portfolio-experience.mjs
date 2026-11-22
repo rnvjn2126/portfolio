@@ -25,6 +25,36 @@ try {
       assert(await page.locator('.hero-car canvas').count() === 1, 'Original 3D car is missing')
       assert(await page.locator('.coffee-art svg').count() === 1, 'Original coffee art is missing')
 
+      // The homepage is a true two-by-two grid: three finished projects and
+      // one deliberately unfilled, non-clickable space for the next project.
+      const cards = page.locator('#work .work-four-grid > *')
+      assert(await cards.count() === 4, 'Homepage should have four grid slots')
+      assert(await page.locator('#work .work-four-grid .project-card').count() === 3,
+        'Homepage should show exactly three actual projects')
+      assert(await page.locator('#work .work-future-card').count() === 1,
+        'Homepage future project placeholder is missing')
+      const names = await page.locator('#work .work-four-grid .project-title-link h3').allInnerTexts()
+      assert(names.join(' | ') === 'AJ Overseas | Career AI Pro | ERP Software Demo',
+        'Unexpected homepage featured projects: ' + names.join(' | '))
+      assert(await page.locator('#work .work-future-card a').count() === 0,
+        'Empty future project card must not be a broken link')
+      const rectangles = await Promise.all([0,1,2,3].map(index => cards.nth(index).boundingBox()))
+      assert(rectangles.every(Boolean), 'A homepage grid cell has no layout box')
+      const same = (a,b) => Math.abs(a-b) < 6
+      if (viewport.width >= 761) {
+        assert(same(rectangles[0].y,rectangles[1].y) &&
+               same(rectangles[2].y,rectangles[3].y) &&
+               same(rectangles[0].x,rectangles[2].x) &&
+               same(rectangles[1].x,rectangles[3].x),
+          'Homepage projects are not arranged in two rows and two columns')
+      } else {
+        assert(rectangles[0].y < rectangles[1].y &&
+               rectangles[1].y < rectangles[2].y &&
+               rectangles[2].y < rectangles[3].y,
+          'Homepage project grid does not stack correctly on mobile')
+      }
+
+
       await page.locator('#contact .email-card').click()
       await page.locator('[role="dialog"][data-email-dialog]').waitFor({ state: 'visible' })
       assert(await page.getByRole('button', { name: 'Copy email address' }).isVisible(), 'Copy email choice missing')
