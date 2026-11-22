@@ -1,0 +1,59 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'index.html'
+      - 'package*.json'
+      - 'scripts/security-check.mjs'
+      - '.github/workflows/security-audit.yml'
+  schedule:
+    - cron: '23 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-fund
+      - name: Build website
+        run: npm run build
+      - name: Check static website safeguards
+        run: node scripts/security-check.mjs
+      - name: Check dependency advisories
+        run: |
+          npm audit --json > security-audit-results.json || true
+          node --input-type=module <<'JS'
+          import {readFileSync} from 'node:fs'
+          const report = JSON.parse(readFileSync('security-audit-results.json','utf8'))
+          if (report.error || !report.metadata?.vulnerabilities) {
+            console.error('Could not complete registry vulnerability audit', report.error || '')
+            process.exit(1)
+          }
+          const v=report.metadata.vulnerabilities
+          console.log('Dependency advisories:', JSON.stringify(v))
+          if ((v.moderate || 0) + (v.high || 0) + (v.critical || 0) > 0) {
+            console.error('Known moderate or higher vulnerabilities need review and remediation')
+            process.exit(1)
+          }
+          JS
+      - name: Save dependency report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-dependency-audit
+          path: security-audit-results.json
+          if-no-files-found: ignore
+          retention-days: 14
