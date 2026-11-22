@@ -269,6 +269,25 @@ try {
     }
   }
 
+  // Coarse-pointer mobile: verify the smallest filter control is at least 48x48.
+  const touchPage = await browser.newPage({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    reducedMotion: 'reduce',
+  })
+  try {
+    await touchPage.goto(root + '#/projects', { waitUntil: 'domcontentloaded' })
+    const allFilter = touchPage.getByRole('button', { name: 'All', exact: true })
+    await allFilter.waitFor({ state: 'visible' })
+    const bounds = await allFilter.boundingBox()
+    assert(bounds.width >= 48 && bounds.height >= 48,
+      'Coarse-pointer project filter should meet the 48x48 touch-target minimum')
+    console.log('PASS: mobile coarse-pointer control has a 48x48 or larger target')
+  } finally {
+    await touchPage.close()
+  }
+
   // UX 1: simulate a slow screenshot to verify the skeleton is delayed
   // and occupies the image's final dimensions without layout movement.
   const slowPage = await browser.newPage({ viewport: { width: 1280, height: 850 }, reducedMotion: 'reduce' })
