@@ -78,6 +78,35 @@ try {
       const mainCount = await page.locator('.project-grid--listing .project-card').count()
       const wipCount = await page.locator('.projects-wip-card').count()
       assert(mainCount === 3, 'Expected three core projects, saw ' + mainCount)
+
+      // Every project card keeps its main action at the same distance from
+      // the bottom; Details always occupies the bottom-right action slot.
+      const actionLayout = await page.locator('.project-grid--listing .project-card').evaluateAll(cards => cards.map(card => {
+        const bounds = card.getBoundingClientRect()
+        const main = card.querySelector('.project-primary-action')?.getBoundingClientRect()
+        const details = card.querySelector('.project-details-button')?.getBoundingClientRect()
+        return main && details ? {
+          mainBottom: bounds.bottom - main.bottom,
+          detailsBottom: bounds.bottom - details.bottom,
+          detailsRight: bounds.right - details.right,
+          mainHeight: main.height,
+          detailsHeight: details.height,
+        } : null
+      }))
+      assert(actionLayout.length === 3 && actionLayout.every(Boolean),
+        'Some project cards have missing primary or Details actions')
+      const aligned = (field) => Math.max(...actionLayout.map(item => item[field])) -
+        Math.min(...actionLayout.map(item => item[field])) < 3
+      assert(aligned('mainBottom') && aligned('detailsBottom') && aligned('detailsRight'),
+        'Project card buttons are not placed consistently: ' + JSON.stringify(actionLayout))
+      assert(actionLayout.every(item => Math.abs(item.mainHeight - 48) < 2 &&
+        Math.abs(item.detailsHeight - 48) < 2),
+        'Project card action heights should be 48px: ' + JSON.stringify(actionLayout))
+      assert(await page.locator('.project-grid--listing .project-primary-action').count() === 3,
+        'All three project cards require a primary action')
+      assert((await page.locator('.project-grid--listing .project-primary-action').nth(2).innerText())
+        .includes('Discuss your ERP'), 'ERP card should have a relevant primary contact button')
+
       assert(wipCount === 1, 'Expected one B2B Work in Progress project, saw ' + wipCount)
       // Every listing card must put its primary and secondary actions in
       // identical positions despite varying descriptions, research or notes.
@@ -135,6 +164,27 @@ try {
 
       await page.goto(root + '#/projects/ERP-Software-Demo', { waitUntil: 'domcontentloaded' })
       await page.locator('.erp-custom-banner').waitFor({ state: 'visible' })
+      const erpActions = await page.locator('.detail-bottom-actions > *').evaluateAll(actions =>
+        actions.map(action => ({
+          width: action.getBoundingClientRect().width,
+          height: action.getBoundingClientRect().height,
+          top: action.getBoundingClientRect().top,
+          left: action.getBoundingClientRect().left,
+        }))
+      )
+      assert(erpActions.length === 2, 'ERP details need two consistently placed actions')
+      assert(erpActions.every(item => Math.abs(item.height - 50) < 2),
+        'ERP details buttons should be 50px high')
+      if (viewport.width > 530) {
+        assert(Math.abs(erpActions[0].width - erpActions[1].width) < 2 &&
+          Math.abs(erpActions[0].top - erpActions[1].top) < 2,
+          'ERP detail buttons should align in equally sized columns')
+      } else {
+        assert(Math.abs(erpActions[0].width - erpActions[1].width) < 2 &&
+          erpActions[1].top > erpActions[0].top,
+          'ERP detail buttons should be equal width and stacked on narrow screens')
+      }
+
       assert((await page.locator('.erp-custom-banner h2').innerText()).includes('built to your specifications'),
         'ERP customization promise not highlighted')
       assert(await page.locator('.detail-back').isVisible(), 'Back to all projects link missing')
@@ -145,6 +195,14 @@ try {
       await page.goto(root + '#/projects/Steel-Quotes', { waitUntil: 'domcontentloaded' })
       await page.locator('h1.page-heading').waitFor({ state: 'visible' })
       assert(await page.locator('.detail-gallery-item').count() === 3, 'B2B prototype screenshot walkthrough missing')
+      assert(await page.locator('.detail-bottom-actions > *').count() === 2,
+        'The B2B case study should have the same two bottom action positions')
+      const b2bSizes = await page.locator('.detail-bottom-actions > *').evaluateAll(actions =>
+        actions.map(action => action.getBoundingClientRect().height)
+      )
+      assert(b2bSizes.every(height => Math.abs(height - 50) < 2),
+        'B2B detail action heights should match the ERP')
+
       console.log('PASS:', viewport.width+'x'+viewport.height,
         'original car and coffee, 8 services, 3 main projects, 1 WIP, email modal and ERP customization')
     } finally {
