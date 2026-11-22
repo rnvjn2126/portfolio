@@ -106,7 +106,19 @@ jobs:
             echo "Screenshots already match the current run."
           else
             git commit -m "Capture genuine Steel Quotes Django demo screenshots"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            published=false
+            for attempt in $(seq 1 8); do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then
+                published=true
+                break
+              fi
+              echo "Main changed during screenshot publication. Retrying: $attempt"
+              sleep 3
+            done
+            if [ "$published" != true ]; then
+              echo "::error::Unable to publish screenshots after retries"
+              exit 1
+            fi
             gh workflow run deploy.yml --ref main
           fi
