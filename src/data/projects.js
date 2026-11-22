@@ -11,7 +11,6 @@ export const projects = [
     cover: import.meta.env.BASE_URL + 'images/screenshots/aj-overseas.png',
     fallbackCover: import.meta.env.BASE_URL + 'images/aj-overseas-showcase.svg',
     coverAlt: 'Illustrative website showcase for AJ Overseas in a desktop browser',
-    githubUrl: 'https://github.com/rnvjn2126/ajos-website',
     liveUrl: 'https://www.aj-overseas.in',
     featured: true,
   },
