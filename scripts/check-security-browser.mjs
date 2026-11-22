@@ -53,7 +53,7 @@ try {
         anchors.map(a => ({ href: a.href, rel: a.rel, target: a.target }))
       )
       for (const link of links) {
-        assert(/\\b(?:noopener|noreferrer)\\b/.test(link.rel),
+        assert(link.rel.split(' ').some(token => token === 'noopener' || token === 'noreferrer'),
           'External link missing opener protection: ' + link.href)
       }
     }
