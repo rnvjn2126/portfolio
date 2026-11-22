@@ -21,9 +21,9 @@ try {
       await page.goto(root, { waitUntil: 'domcontentloaded' })
       const car = page.locator('.hero-car')
       await car.waitFor({ state: 'visible', timeout: 20000 })
-      const status = car.locator('span').last()
+      const status = car.locator('.hero-car__status')
       await page.waitForFunction(() => {
-        const label = document.querySelector('.hero-car > span')?.textContent || ''
+        const label = document.querySelector('.hero-car > .hero-car__status')?.textContent || ''
         return !label.startsWith('Loading 3D car')
       }, null, { timeout: 60000 })
       const message = await status.innerText()
