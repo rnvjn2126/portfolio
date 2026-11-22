@@ -14,6 +14,9 @@ try {
     const page = await browser.newPage({ viewport, reducedMotion: 'reduce' })
     try {
       await page.goto(root + '#/', { waitUntil: 'domcontentloaded' })
+      assert((await page.locator('meta[name="viewport"]').getAttribute('content')).includes('viewport-fit=cover'),
+        'The portfolio should honor device safe-area insets')
+
       await page.locator('#services .service-tile').first().waitFor({ state: 'visible' })
       // Accessibility: reduced-motion visitors do not get cursor trails.
       assert(await page.locator('.cursor-brush-trail').count() === 1,
