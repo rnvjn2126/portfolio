@@ -4182,3 +4182,39 @@ body {
         transform: none;
     }
 }
+
+
+/* ORIGINAL SITE BACKGROUND: white → beige → olive, left to right */
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html,
+body {
+  background: linear-gradient(
+    90deg,
+    #FFFEFC 0%,
+    #F9F6EF 25%,
+    #F1EBDD 50%,
+    #D9DDC9 75%,
+    #A8B18F 100%
+  );
+  background-attachment: fixed;
+}
+
+body {
+  background-color: transparent;
+}
+
+.hero {
+  background: transparent;
+}
+
+@media (max-width: 760px) {
+  html,
+  body {
+    background-attachment: scroll;
+  }
+}
