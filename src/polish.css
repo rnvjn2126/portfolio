@@ -1660,3 +1660,30 @@ body{-webkit-font-smoothing:antialiased}
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
   .cursor-brush-trail { display: none !important; }
 }
+
+/* UX 13: comfortable tap targets without enlarging the visible icons.
+   Touch targets are isolated, so adjacent controls cannot overlap. */
+:where(.menu-toggle, .nav-links > a, .filter-chip, .detail-back,
+  .home-wip-all, .research-paper-download, .research-paper-open,
+  .research-manuscript-link, .research-view-link, .research-heading-link,
+  .project-research-link, .email-choice-close, .footer-bottom a) {
+  min-height: 44px;
+}
+:where(.menu-toggle, .email-choice-close) {
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-bottom a { display: inline-flex; align-items: center; }
+@media (pointer: coarse) {
+  :where(.menu-toggle, .nav-links > a, .filter-chip, .detail-back,
+    .home-wip-all, .research-paper-download, .research-paper-open,
+    .research-manuscript-link, .research-view-link, .research-heading-link,
+    .project-research-link, .email-choice-close, .footer-bottom a,
+    .project-live-button, .project-source-button, .project-details-button,
+    .project-consult-button) {
+    min-height: 48px;
+  }
+  :where(.menu-toggle, .email-choice-close) { min-width: 48px; }
+}
