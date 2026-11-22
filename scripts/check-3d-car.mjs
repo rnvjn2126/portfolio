@@ -35,6 +35,24 @@ try {
         firstErrors: issues.slice(0, 3),
       }))
       assert(message.toLowerCase().includes('disassemble'), 'F1 car not loaded: ' + message)
+      // The full original glTF is painted before CPU-intensive assembly
+      // segmentation; never substitute a poster or low-detail proxy.
+      const preload = await page.locator('link[rel="preload"][as="fetch"]').getAttribute('href')
+      assert(preload?.endsWith('/portfolio/models/formula-car.glb'),
+        'Browser must start downloading the actual car from the initial HTML')
+      await page.waitForFunction(() => performance.getEntriesByName('portfolio:f1-exploded-controls-ready').length > 0,
+        null, { timeout: 30000 })
+      const firstRender = await page.evaluate(() => {
+        const visible = performance.getEntriesByName('portfolio:f1-complete-model-rendered')[0]?.startTime
+        const controls = performance.getEntriesByName('portfolio:f1-exploded-controls-ready')[0]?.startTime
+        const modelFetches = performance.getEntriesByType('resource')
+          .filter(entry => entry.name.includes('/models/formula-car.glb'))
+          .map(entry => Math.round(entry.startTime))
+        return { visible, controls, modelFetches }
+      })
+      assert(Number.isFinite(firstRender.visible) && firstRender.controls > firstRender.visible,
+        'The complete car should be drawn before exploded-view preparation completes')
+      console.log('F1 early model render', viewport.width, JSON.stringify(firstRender))
       const pixels = await canvas.evaluate(element => ({
         width: element.width,
         height: element.height,
