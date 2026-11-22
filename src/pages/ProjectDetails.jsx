@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, ArrowUpRight, Download, FileText } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Download, FileText, Sparkles } from 'lucide-react'
+import { EmailTrigger } from '../components/EmailContact'
 import { projects } from '../data/projects'
 import Button from '../components/Button'
 
@@ -18,12 +19,26 @@ export default function ProjectDetails() {
 
   return (
     <section className="page-section shell detail-page">
-      <Link className="text-link detail-back" to="/projects"><ArrowLeft size={16} /> All projects</Link>
+      <Link className="text-link detail-back" to="/projects"><ArrowLeft size={20} aria-hidden="true" /><span>Back to all projects</span></Link>
       <div className="detail-heading">
         <span className="eyebrow">{project.category} / {project.year}</span>
         <h1 className="page-heading">{project.title}<span className="gradient-text">.</span></h1>
         <p className="page-lede">{project.description}</p>
       </div>
+      {project.customizable && (
+        <section className="erp-custom-banner" aria-label="Custom ERP development">
+          <div className="erp-custom-banner-copy">
+            <span className="erp-custom-eyebrow"><Sparkles size={16} aria-hidden="true" /> MADE FOR YOUR BUSINESS</span>
+            <h2>{project.customizationHeading}</h2>
+            <p>{project.customizationDescription}</p>
+            <span className="erp-custom-demo-note">The screens below show a working demo. Your version can be designed around your own workflows.</span>
+          </div>
+          <EmailTrigger className="erp-custom-cta">
+            Discuss your ERP needs <ArrowUpRight size={18} aria-hidden="true" />
+          </EmailTrigger>
+        </section>
+      )}
+
       <img className="detail-cover" src={project.cover} alt={project.coverAlt} decoding="async" onError={event => { const image = event.currentTarget; if (project.fallbackCover && !image.dataset.fallbackApplied) { image.dataset.fallbackApplied = 'true'; image.src = project.fallbackCover } }} />
       <p className="projects-note">
         {project.developmentNote
@@ -69,7 +84,7 @@ export default function ProjectDetails() {
             <span id="detail-gallery-heading">APPLICATION WALKTHROUGH</span>
             <span className="line" />
           </div>
-          <p className="detail-gallery-intro">Screenshots captured from the actual running application with fictional customer, supplier and quotation data.</p>
+          <p className="detail-gallery-intro">Real screenshots from the running development demo, captured with fictional records and no production customer information.</p>
           <div className="detail-gallery-grid">
             {project.screenshots.map(image => (
               <figure className="detail-gallery-item" key={image.src}>
