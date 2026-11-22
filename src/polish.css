@@ -462,3 +462,28 @@ body{-webkit-font-smoothing:antialiased}
   .work-live-actions { flex-direction: column; width: 100%; }
   .work-live-actions .button { justify-content: center; width: 100%; }
 }
+
+/* Project detail navigation: live demo first, browse all projects second. */
+.detail-bottom-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 13px;
+  margin-top: 14px;
+}
+.detail-bottom-actions .detail-live-button,
+.detail-bottom-actions .button {
+  margin-top: 0;
+  min-height: 49px;
+}
+@media (max-width: 480px) {
+  .detail-bottom-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .detail-bottom-actions .detail-live-button,
+  .detail-bottom-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+}
