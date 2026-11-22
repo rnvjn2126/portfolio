@@ -22,7 +22,7 @@ import { Stagger, StaggerItem, TextReveal, SpotlightCard, TiltCard } from '../co
 
 
 
-const paperUrl = 'https://ieee-shortened-format.tiiny.site/?mode=suggestions'
+
 
 function Hero() {
   const ref = useRef(null)
