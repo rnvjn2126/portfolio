@@ -392,3 +392,41 @@ body{-webkit-font-smoothing:antialiased}
   .research-paper-links .research-paper-open,
   .research-paper-links .research-paper-download { width: 100%; }
 }
+
+/* Prominent live demo shortcut inside each individual project page. */
+.detail-live-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: fit-content;
+  min-height: 49px;
+  margin-top: 25px;
+  padding: 13px 19px;
+  border: 1px solid #556b2f;
+  border-radius: 12px;
+  background: #556b2f;
+  color: #fffdf8;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 8px 21px rgba(85,107,47,.14);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.detail-live-button:hover {
+  background: #3e4d23;
+  box-shadow: 0 12px 24px rgba(85,107,47,.2);
+  transform: translateY(-2px);
+}
+.detail-live-button:focus-visible {
+  outline: 2px solid #556b2f;
+  outline-offset: 4px;
+}
+@media (max-width: 480px) {
+  .detail-live-button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .detail-live-button { transition: none; }
+  .detail-live-button:hover { transform: none; }
+}
