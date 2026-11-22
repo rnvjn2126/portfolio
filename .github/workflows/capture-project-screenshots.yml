@@ -9,6 +9,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: write
 jobs:
   capture:
     runs-on: ubuntu-24.04
@@ -27,6 +28,8 @@ jobs:
       - name: Capture screenshots of live projects
         run: node scripts/capture-project-screenshots.mjs
       - name: Commit actual screenshots to portfolio
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -37,4 +40,5 @@ jobs:
             git commit -m "Update genuine live project screenshots"
             git pull --rebase origin main
             git push origin HEAD:main
+            gh workflow run deploy.yml --ref main
           fi
