@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight, FileText, Github, Globe, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
+import { EmailTrigger } from './EmailContact'
 
 export default function ProjectCard({ project, index = 0, showActions = false }) {
   const reduce = useReducedMotion()
@@ -57,18 +58,26 @@ export default function ProjectCard({ project, index = 0, showActions = false })
         )}
         {showActions ? (
           <div className="project-actions">
-            {project.liveUrl && (
-              <a className="project-live-button" href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={'Open live demo of ' + project.title + ' in a new tab'}>
+            {project.liveUrl ? (
+              <a className="project-live-button project-primary-action" href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={'Open live demo of ' + project.title + ' in a new tab'}>
                 <Globe size={17} aria-hidden="true" /> <span>View live project</span> <ArrowUpRight className="project-live-arrow" size={16} aria-hidden="true" />
               </a>
+            ) : project.customizable ? (
+              <EmailTrigger className="project-live-button project-primary-action" aria-label={'Ask about a customized ' + project.title}>
+                <Sparkles size={17} aria-hidden="true" /> <span>Discuss your ERP</span> <ArrowUpRight className="project-live-arrow" size={16} aria-hidden="true" />
+              </EmailTrigger>
+            ) : (
+              <Link className="project-live-button project-primary-action" to={'/projects/' + project.slug}>
+                <ArrowUpRight size={17} aria-hidden="true" /> <span>Explore project</span>
+              </Link>
             )}
             {project.githubUrl && (
               <a className="project-source-button" href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={'View ' + project.title + ' source code'}>
-                <Github size={17} aria-hidden="true" /> Source
+                <Github size={17} aria-hidden="true" /> <span>Source</span>
               </a>
             )}
             <Link className="project-details-button" to={'/projects/' + project.slug} aria-label={'Read the ' + project.title + ' case study'}>
-              Details <ArrowRight size={16} aria-hidden="true" />
+              <span>Details</span> <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
         ) : (
