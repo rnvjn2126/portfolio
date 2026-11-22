@@ -37,8 +37,10 @@ async function openPage(path, heading, requiredText) {
 async function capture(name, scrollToComparison = false) {
   if (scrollToComparison) {
     const element = page.getByRole('heading', { name: 'Requested items and supplier comparison' })
-    await element.scrollIntoViewIfNeeded()
-    await page.evaluate(() => window.scrollBy({ top: -92, behavior: 'instant' }))
+    // Align the comparison heading near the top, so actual supplier prices appear
+    // in the screenshot instead of being cut off below the viewport.
+    await element.evaluate(node => node.scrollIntoView({ block: 'start', behavior: 'instant' }))
+    await page.evaluate(() => window.scrollBy({ top: -28, behavior: 'instant' }))
   } else {
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
   }
